@@ -1,5 +1,6 @@
-package com.codecool.queststore.helpers;
+package com.codecool.queststore.handlers;
 
+import com.codecool.queststore.helpers.MimeTypeResolver;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
