@@ -2,7 +2,6 @@ package com.codecool.queststore.handlers;
 
 import com.codecool.queststore.models.Reward;
 import com.codecool.queststore.services.RewardService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -26,7 +25,7 @@ public class RewardHandler implements HttpHandler {
         System.out.println(Arrays.toString(actions));
         System.out.println(actions.length);
         String action = actions.length == 2 ? "" : actions[2].matches("\\d+") ? "reward" : actions[2] ;
-        ObjectMapper mapper = new ObjectMapper();
+//        ObjectMapper mapper = new ObjectMapper();
         String response = "";
 
         try {
@@ -38,12 +37,12 @@ public class RewardHandler implements HttpHandler {
                     //np. http://localhost:8001/rewards/reward/1
                     Reward reward = rewardService.getReward(Integer.parseInt(actions[3]));
 //                    Student student = this.studentsDao.getStudent(Integer.parseInt(actions[3]));
-                    response = mapper.writeValueAsString(reward);
+//                    response = mapper.writeValueAsString(reward);
                     break;
                 default:
                     //np. http://localhost:8001/rewards
                     List<Reward> rewards = rewardService.getRewards();
-                    response = mapper.writeValueAsString(rewards);
+//                    response = mapper.writeValueAsString(rewards);
             }
             sendResponse(response, exchange, 200);
 
