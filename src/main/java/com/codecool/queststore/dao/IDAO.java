@@ -7,6 +7,6 @@ public interface IDAO<T> {
     void add(T t);
     void edit(T t, String[] params);
     void remove(T t);
-    List<T> getAll();
+    List<T> getAll() throws Exception;
     T get(int id);
 }
