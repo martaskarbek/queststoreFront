@@ -108,7 +108,7 @@ CREATE TABLE orders
 
 CREATE TABLE sessions
 (
-    id BIGSERIAL NOT NULL PRIMARY KEY,
+    uuid VARCHAR(50) NOT NULL UNIQUE,
     user_id BIGSERIAL REFERENCES users (id)
 );
 
