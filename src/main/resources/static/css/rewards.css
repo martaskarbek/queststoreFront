@@ -1,0 +1,35 @@
+.main-content {
+    min-width: 60%;
+    max-width: 72%;
+}
+
+.item-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.item-content p {
+    margin-bottom: 1em;
+}
+.item-desc {
+    margin-left: 5%;
+    margin-top: 20%;
+    color: white;
+}
+
+.item-name {
+    margin-top: 80%;
+    margin-left: 25%;
+    color: black;
+}
+
+#artifact-1, #artifact-2, #artifact-3, #artifact-4, #artifact-5 {
+    border: 5px solid green;
+} 
+
+#artifact-6, #artifact-7, #artifact-8 {
+    border: 5px solid red;
+} 
+
+

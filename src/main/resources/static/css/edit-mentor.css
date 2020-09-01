@@ -1,0 +1,93 @@
+
+.options ul li a div {
+    background: url(../img/severus.png) no-repeat center center;
+    background-size: cover;
+    margin: 1em;
+    padding: 5%;
+    /* width: 10vh; */
+    height: 30vh;
+}
+
+.options ul li a:hover {
+    background-color: transparent;
+    color: black;
+    cursor: auto;
+}
+
+
+.main-content {
+    max-width: 64%;
+}
+
+
+.items-content {
+    /* padding-left: 40%; */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 80vh;
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 50%;
+    width: 80%;
+
+}
+
+form > .input {
+    margin: 0 1em 1em 1em;
+    padding-left: 0.5em;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25), inset 0 4px 5px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    line-height: 1.8em;
+    background-color: #ccc;
+
+}
+
+
+#button {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+
+}
+
+button {
+    margin-left: 2vh;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+    background-color: #ccc;
+    color: black;
+    height: 4vh;
+    width: 10vh;
+    
+}
+
+button:hover {
+    background-color: #eee;
+}
+
+button, form > input {
+    font-size: 1em;
+    border-radius: 5px;
+}
+
+#right-bar-left div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 2em;
+}
+
+#right-bar-left h2 {
+    font-size: 1.2em;
+    margin-left: 0.5em;
+}
+#right-bar-left p {
+    font-size: 1.2em;
+    margin-left: 0.5em;
+}

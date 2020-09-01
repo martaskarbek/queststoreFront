@@ -1,0 +1,51 @@
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+    height: 40vh;
+    width: 100%;
+    background: url(../img/class.jpg) no-repeat center center;
+    background-size: cover;
+}
+
+.right-bar img {
+    background-size: cover;
+    margin: 1em;
+    padding: 5%;
+    /* width: 10vh; */
+    height: 28vh;
+}
+
+.item {
+    background-image: url(../img/parchment2.jpg);
+    background-size: cover;
+    padding: 5%;
+    width: 20em;
+    height: 15em;
+    background-color: blue;
+    opacity: 0.7;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+.items-content {
+    margin: 0 auto;
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.items-content .item a {
+    margin: 0;
+    font-size: 1.3em;
+    color: black;
+    text-decoration: none;
+    text-align: center;
+
+}

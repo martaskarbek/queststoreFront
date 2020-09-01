@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="../css/style.css">
+  <link rel="stylesheet" type="text/css" href="../css/login-page.css">
+  <script src="../js/login.js" defer></script>
+  <title>School log in</title>
+</head>
+<body>
+
+  <div class="container">
+
+    <header>
+      <div>
+        <h1>School of Code</h1><br>
+        <p>Magical ways of coding</p>
+      </div>
+    </header>
+
+    <nav>
+      <ul>
+        <li><a href="login-page.html">Start</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+
+    <main>
+
+      <aside class="options">
+        <div id="options-left"></div>
+        <div id="options-right">
+          <h1>For presentation</h1>
+          <ul>
+            <li><a href="admin-menu.html"><p>Admin page</p></a></li>
+            <li><a href="mentor-menu.html"><p>Mentor page</p></a></li>
+            <li><a href="student-menu.html"><p>Student Page</p></a></li>
+          </ul>
+        </div>
+      </aside>
+
+      <section>
+        <div class="items-content form-image">
+          <div class="login-form">
+            <form action= "../../index.html" name="form" onkeyup="changeButtonStatus()">
+              <label for="email"></label>
+              <br>
+              <input type="text" id="email" name="email" placeholder="email">
+              <label for="password"></label>
+              <br>
+              <input type="password" id="password" name="password" placeholder="password" onclick="alertTheUser(document.getElementById('email').value)">
+              <br>
+              <input class="button" type="submit" value="LogIn" id="login-btn" name="login-btn"
+                     disabled="disabled" >
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <aside class="right-bar">
+        <div id="right-bar-left">
+        </div>
+        <div id="right-bar-right">
+
+        </div>
+      </aside>
+
+    </main>
+
+    <footer>&copy; Dumbledore's Army</footer>
+
+  </div>
+
+  <script  onload="document.form.name.focus()"></script>
+</body>
+</html>
