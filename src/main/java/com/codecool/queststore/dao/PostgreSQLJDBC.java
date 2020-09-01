@@ -25,4 +25,9 @@ public class PostgreSQLJDBC {
             System.out.println("Not connected");
         }
     }
+
+    public void disconnect() throws SQLException {
+        connection.close();
+        connection = null;
+    }
 }
