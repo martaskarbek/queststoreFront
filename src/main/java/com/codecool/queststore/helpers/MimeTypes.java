@@ -1,4 +1,4 @@
-package guestbook.helpers;
+package com.codecool.queststore.helpers;
 
 import java.util.HashMap;
 

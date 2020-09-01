@@ -1,0 +1,15 @@
+
+#right-bar-left div {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-top: 2em;
+}
+
+#right-bar-left h2 {
+    font-size: 1.2em;
+}
+#right-bar-left p {
+    font-size: 1.2em;
+    margin-top: 0.5em;
+}

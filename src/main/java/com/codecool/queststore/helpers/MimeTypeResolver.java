@@ -12,7 +12,7 @@ public class MimeTypeResolver {
     }
 
     public String getMimeType() {
-        return guestbook.helpers.MimeTypes.mimeTypeMapping.get(getFileExtension().toLowerCase());
+        return MimeTypes.mimeTypeMapping.get(getFileExtension().toLowerCase());
     }
 
     public String getFileExtension(){

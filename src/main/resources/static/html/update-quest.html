@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../css/add-artifact.css">
+    <link rel="stylesheet" type="text/css" href="../css/update-artifact.css">
+    <link rel="icon" href="../img/favicon.ico">
+    <title>Update quest</title>
+</head>
+
+<body>
+    <div class="container">
+
+        <header>
+            <div>
+                <h1>School of Code</h1><br>
+                <p>Magical ways of coding</p>
+            </div>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="login-page.html">Start</a></li>
+                <li><a href="#">Quests</a></li>
+                <li><a href="#">Rewards</a></li>
+                <li><a href="login-page.html">Logout</a></li>
+            </ul>
+        </nav>
+
+        <main>
+
+            <aside class="options">
+                <div id="options-left"></div>
+                <div id="options-right">
+                    <h1>QUEST</h1>
+                    <ul>
+                        <li><a href="#"><div></div></a></li>
+                    </ul>
+                </div>
+            </aside>
+
+            <section class="main-content">
+                <div class="items-content">
+                    
+                    <form action="#">
+                        <h1>UPDATE QUEST</h1>
+                        <label for="name"></label>
+                        <input class="input" id="name" type="text" placeholder="Name of quest">
+
+                        <label for ="value"></label>
+                        <input class="input" id="value" type="text" placeholder="Value">
+
+                        <label for="description"></label>
+                        <textarea class="input" id="description" placeholder="Description"></textarea>
+
+                        <div id="button">
+                            <button type="submit">SUBMIT</button>
+                        <button type="reset">RESET</button>
+                        <div class="radio">
+                            <label><input id="quest-basic" type="radio" name="role"> Basic</label>
+                            <label><input id="quest-extra" type="radio" name="role"> Extra</label>
+                        </div>
+                        </div>
+                    </form>
+                    <div id="item">
+
+                    </div>
+
+                </div>
+            </section>
+
+            <aside class="right-bar">
+                <div id="right-bar-left">
+                    <div>
+                        <h2>Name:</h2>
+                        <p>Day out of school</p></div>
+                    <div>
+                        <h2>Value:</h2>
+                        <p>20000 mc</p></div>
+                    <div id="quest-description">
+                        <h2>Description:</h2>
+                        <p>Students and a mentor have classes outside the school.</p>
+                    </div>
+                </div>
+                <div id="right-bar-right">
+
+                </div>
+            </aside>
+
+        </main>
+
+        <footer>&copy; Dumbledore's Army</footer>
+    </div>
+
+</body>
+
+</html>
