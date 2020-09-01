@@ -1,6 +1,7 @@
 package com.codecool.queststore.models.users;
 
 import com.codecool.queststore.models.Role;
+import com.codecool.queststore.models.Session;
 
 public abstract class User {
     private int id;
@@ -10,6 +11,7 @@ public abstract class User {
     private boolean isActive;
     private String email;
     private String password;
+    private Session session;
 
     public User(int id, String firstName, String lastName,
                 Role role, boolean isActive, String email, String password
@@ -58,5 +60,13 @@ public abstract class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public Session getSession() {
+        return session;
+    }
+
+    public void setSession(Session session) {
+        this.session = session;
     }
 }
