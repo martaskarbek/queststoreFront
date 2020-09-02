@@ -87,7 +87,7 @@ form .radio input {
 }
 
 #avatar {
-    background: url(../img/card_template.png) no-repeat center center;
+    background: url(/static/img/card_template.png/) no-repeat center center;
     background-size: cover;
     margin: 1em;
     padding: 5%;
