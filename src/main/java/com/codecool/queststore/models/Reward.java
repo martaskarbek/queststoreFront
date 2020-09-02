@@ -17,54 +17,60 @@ public class Reward {
         this.mentorId = mentorId;
     }
 
-    public Reward(){}
+    public Reward(){};
+
+    public Reward setId(int id) {
+        this.id = id;
+        return this;
+    }
+
+    public Reward setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public Reward setDescription(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public Reward setPrice(int price) {
+        this.price = price;
+        return this;
+    }
+
+    public Reward setCategory(Category category) {
+        this.category = category;
+        return this;
+    }
+
+    public Reward setMentorId(int mentorId) {
+        this.mentorId = mentorId;
+        return this;
+    }
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public int getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
     public Category getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
     public int getMentorId() {
         return mentorId;
-    }
-
-    public void setMentorId(int mentorId) {
-        this.mentorId = mentorId;
     }
 
     @Override

@@ -3,10 +3,8 @@ package com.codecool.queststore.dao;
 import com.codecool.queststore.models.Category;
 import com.codecool.queststore.models.Reward;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,30 +39,15 @@ public class RewardDAO implements IRewardDao{
         int categoryId = rs.getInt("category_id");
         int mentorId = rs.getInt("mentor_id");
 
-        Reward reward = new Reward();
-        reward.setId(id);
-        reward.setName(name);
-        reward.setDescription(description);
-        reward.setPrice(price);
-        reward.setCategory(Category.valueOf(categoryId));
-        reward.setMentorId(mentorId);
-        return reward;
+        return new Reward(id, name, description, price, Category.valueOf(categoryId), mentorId);
     }
 
-//    private int id;
-//    private String name;
-//    private String description;
-//    private int price;
-//    private Category category;
-//    private int mentorId;
 
     @Override
     public List<Reward> getAll() throws Exception {
         List<Reward> rewards = new ArrayList<>();
 
-
         try {
-
             postgreSQLJDBC.connect();
             ResultSet rs = postgreSQLJDBC.statement.executeQuery("SELECT * FROM rewards;");
             while (rs.next()) {
