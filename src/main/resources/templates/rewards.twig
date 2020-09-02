@@ -1,89 +1,89 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/static/css/style.css/">
+{% extends 'base.twig' %}
+
+{% block title %}
+    {{ parent() }} | rewards
+{% endblock %}
+
+{% block styles %}
+    {{ parent() }}
     <link rel="stylesheet" type="text/css" href="/static/css/student-menu.css/">
     <link rel="stylesheet" type="text/css" href="/static/css/rewards.css/">
-    <link rel="icon" href="/static/img/favicon.ico/">
+{% endblock %}
+
+{% block scripts %}
     <script src="/static/js/rewards.js" defer></script>
-    <title>Rewards</title>
-</head>
-<body>
-    <div class="container">
+{% endblock %}
 
-        <header>
-            <div>
-                <h1>School of Code</h1><br>
-                <p>Magical ways of coding</p>
-            </div>
-        </header>
+{% block container %}
+    <header>
+        <div>
+            <h1>School of Code</h1><br>
+            <p>Magical ways of coding</p>
+        </div>
+    </header>
 
-        <nav>
-            <ul>
-                <li><a href="logout">Start</a></li>
-                <li><a href="#">Quests</a></li>
-                <li><a href="#">Rewards</a></li>
-                <li><a href="logout">Logout</a></li>
-            </ul>
+    <nav>
+        <ul>
+            <li><a href="logout">Start</a></li>
+            <li><a href="#">Quests</a></li>
+            <li><a href="#">Rewards</a></li>
+            <li><a href="logout">Logout</a></li>
+        </ul>
 
-        </nav>
+    </nav>
 
-        <main>
+    <main>
 
-            <aside class="options">
-                <div id="options-right">
-                  <ul>
+        <aside class="options">
+            <div id="options-right">
+                <ul>
                     <li><a href="#"><p>BUY FOR YOURSELF</p></a></li>
                     <li><a href="#"><p>BUY WITH TEAMMATES</p></a></li>
                     <li><a href="student-menu.html"><p>BACK TO PROFILE</p></a></li>
-                  </ul>
-                    <br><br><br><br><br><br><br><br><br><br><br>
-                    <p id="green">RED BORDER - Could be bought only with teammates</p>
-                    <br><br>
-                    <p id="red">GREEN BORDER - You can buy it for yourself</p>
-                </div>
-              </aside>
+                </ul>
+                <br><br><br><br><br><br><br><br><br><br><br>
+                <p id="green">RED BORDER - Could be bought only with teammates</p>
+                <br><br>
+                <p id="red">GREEN BORDER - You can buy it for yourself</p>
+            </div>
+        </aside>
 
-            <section class="main-content">
-                <h1>ARTIFACTS</h1>
-                <div class="items-content">
+        <section class="main-content">
+            <h1>ARTIFACTS</h1>
+            <div class="items-content">
 
-                    {% for reward in rewards %}
+                {% for reward in rewards %}
 
-                       <div class="item-content">
-                           <div class="item" id="artifact-{{ reward.getId() }}">
-                               <p class="item-desc">{{ reward.getDescription() }}</p>
-                               <p class="item-name">{{ reward.getName() }}</p>
-                           </div>
-                           <p>Price: {{ reward.getPrice() }} mc</p>
-                       </div>
-
-                    {% endfor %}
-
-
-                </div>
-            </section>
-
-            <aside class="right-bar">
-                <div id="right-bar-left">
-                    <div id="avatar">
-
+                    <div class="item-content">
+                        <div class="item" id="artifact-{{ reward.getId() }}">
+                            <p class="item-desc">{{ reward.getDescription() }}</p>
+                            <p class="item-name">{{ reward.getName() }}</p>
+                            <a href="/rewards/remove/{{ reward.getId() }}">REMOVE</a>
+                        </div>
+                        <p>Price: {{ reward.getPrice() }} mc</p>
                     </div>
-                    <div>
-                        <h2>Your coins:</h2>
-                        <p>124 mc</p></div>
+
+                {% endfor %}
+
+
+            </div>
+        </section>
+
+        <aside class="right-bar">
+            <div id="right-bar-left">
+                <div id="avatar">
 
                 </div>
-                <div id="right-bar-right">
-                </div>
-            </aside>
+                <div>
+                    <h2>Your coins:</h2>
+                    <p>124 mc</p></div>
 
-        </main>
+            </div>
+            <div id="right-bar-right">
+            </div>
+        </aside>
 
-        <footer>&copy; Dumbledore's Army</footer>
-    </div>
+    </main>
 
-</body>
-</html>
+    <footer>&copy; Dumbledore's Army</footer>
+{% endblock %}

@@ -31,8 +31,9 @@ public class Reward {
         return name;
     }
 
-    public void setName(String name) {
+    public Reward setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getDescription() {

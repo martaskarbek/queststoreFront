@@ -7,9 +7,9 @@ import java.sql.SQLException;
 public class Connector {
     java.sql.Connection connection;
 
-    private String user = "wt80"; //TODO please provide your user password and connection string
-    private String password = "dupa123";
-    private static final String CONNECTION_STRING = "jdbc:postgresql://localhost:5432/adrianWebinar";
+    private String user = "xmrjilbigxplni";
+    private String password = "1a08ce40551a4345ec91ed018f0228060232574e369c314df5385f3377125549";
+    private static final String CONNECTION_STRING = "jdbc:postgresql://ec2-46-137-79-235.eu-west-1.compute.amazonaws.com:5432/d8c6uv529kaagk";
 
 
     public Connector() throws ClassNotFoundException {

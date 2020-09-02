@@ -1,77 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="/static/css/style.css">
-  <link rel="stylesheet" type="text/css" href="/static/css/login-page.css">
-  <script src="/static/js/login.js" defer></script>
-  <title>School log in</title>
-</head>
-<body>
+{% extends 'base.twig' %}
 
-  <div class="container">
+{% block styles %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="/static/css/login-page.css">
+{% endblock %}
 
+{% block scripts %}
+    <script src="/static/js/login.js" defer></script>
+{% endblock %}
+
+{% block title %}
+    {{ parent() }} | log in
+{% endblock %}
+
+{% block container %}
     <header>
-      <div>
-        <h1>School of Code</h1><br>
-        <p>Magical ways of coding</p>
-      </div>
+        <div>
+            <h1>School of Code</h1><br>
+            <p>Magical ways of coding</p>
+        </div>
     </header>
 
     <nav>
-      <ul>
-        <li><a href="/login">Start</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
+        <ul>
+            <li><a href="/login">Start</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
     </nav>
 
     <main>
 
-      <aside class="options">
-        <div id="options-left"></div>
-        <div id="options-right">
-          <h1>For presentation</h1>
-          <ul>
-            <li><a href="admin-menu.html"><p>Admin page</p></a></li>
-            <li><a href="mentor-menu.html"><p>Mentor page</p></a></li>
-            <li><a href="student-menu.html"><p>Student Page</p></a></li>
-          </ul>
-        </div>
-      </aside>
+        <aside class="options">
+            <div id="options-left"></div>
+            <div id="options-right">
+                <h1>For presentation</h1>
+                <ul>
+                    <li><a href="admin-menu.html"><p>Admin page</p></a></li>
+                    <li><a href="mentor-menu.html"><p>Mentor page</p></a></li>
+                    <li><a href="student-menu.html"><p>Student Page</p></a></li>
+                </ul>
+            </div>
+        </aside>
 
-      <section>
-        <div class="items-content form-image">
-          <div class="login-form">
-            <form action="/login" name="form" onkeyup="changeButtonStatus()" method="POST">
-              <label for="email"></label>
-              <br>
-              <input type="text" id="email" name="email" placeholder="email">
-              <label for="password"></label>
-              <br>
-              <input type="password" id="password" name="password" placeholder="password">
-              <br>
-              <input class="button" type="submit" value="LogIn" id="login-btn" name="login-btn"
-                      >
-            </form>
-          </div>
-        </div>
-      </section>
+        <section>
+            <div class="items-content form-image">
+                <div class="message">
+                    {% if foo is empty %}
+                        {{ message }}
+                    {% endif %}
+                </div>
+                <div class="login-form">
+                    <form action="/login" name="form" onkeyup="changeButtonStatus()" method="POST">
+                        <label for="email"></label>
+                        <br>
+                        <input type="text" id="email" name="email" placeholder="email">
+                        <label for="password"></label>
+                        <br>
+                        <input type="password" id="password" name="password" placeholder="password">
+                        <br>
+                        <input class="button" type="submit" value="LogIn" id="login-btn" name="login-btn"
+                        >
+                    </form>
+                </div>
+            </div>
+        </section>
 
-      <aside class="right-bar">
-        <div id="right-bar-left">
-        </div>
-        <div id="right-bar-right">
+        <aside class="right-bar">
+            <div id="right-bar-left">
+            </div>
+            <div id="right-bar-right">
 
-        </div>
-      </aside>
+            </div>
+        </aside>
 
     </main>
 
     <footer>&copy; Dumbledore's Army</footer>
 
-  </div>
+    <script onload="document.form.name.focus()"></script>
 
-  <script  onload="document.form.name.focus()"></script>
-</body>
-</html>
+{% endblock %}
