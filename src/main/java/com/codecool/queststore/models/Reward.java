@@ -34,6 +34,7 @@ public class Reward {
         return this;
     }
 
+
     public Reward setPrice(int price) {
         this.price = price;
         return this;

@@ -61,6 +61,6 @@ public class RewardHandler implements HttpHandler {
         List<Reward> rewards = rewardService.getRewards();
         model.with("rewards", rewards);
         response = template.render(model);
-        helpers.send200response(httpExchange, response);
+        helpers.sendResponse(httpExchange, response, Helpers.OK);
     }
 }

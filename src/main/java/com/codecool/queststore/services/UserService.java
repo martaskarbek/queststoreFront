@@ -2,7 +2,6 @@ package com.codecool.queststore.services;
 
 import com.codecool.queststore.dao.SessionPostgreSQLDAO;
 import com.codecool.queststore.dao.UserPostgreSQLDAO;
-import com.codecool.queststore.models.Credentials;
 import com.codecool.queststore.models.Session;
 import com.codecool.queststore.models.users.User;
 
@@ -18,8 +17,8 @@ public class UserService {
         this.sessionDAO = sessionDAO;
     }
 
-    public User login(Credentials credentials) {
-        User user = this.userDAO.getByCredentials(credentials);
+    public User login(String email, String password) {
+        User user = this.userDAO.getByCredentials(email, password);
 
         if (user.getId() != 0) {
             UUID uuid = UUID.randomUUID();
