@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
-    <link rel="stylesheet" type="text/css" href="../css/student-menu.css">
-    <link rel="stylesheet" type="text/css" href="../css/rewards.css">
-    <link rel="icon" href="../img/favicon.ico">
-    <script src="../js/rewards.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css/">
+    <link rel="stylesheet" type="text/css" href="/static/css/student-menu.css/">
+    <link rel="stylesheet" type="text/css" href="/static/css/rewards.css/">
+    <link rel="icon" href="/static/img/favicon.ico/">
+    <script src="/static/js/rewards.js" defer></script>
     <title>Rewards</title>
 </head>
 <body>
@@ -22,12 +22,12 @@
 
         <nav>
             <ul>
-                <li><a href="login-page.html">Start</a></li>
+                <li><a href="logout">Start</a></li>
                 <li><a href="#">Quests</a></li>
                 <li><a href="#">Rewards</a></li>
-                <li><a href="login-page.html">Logout</a></li>
+                <li><a href="logout">Logout</a></li>
             </ul>
-                
+
         </nav>
 
         <main>
@@ -50,29 +50,26 @@
                 <h1>ARTIFACTS</h1>
                 <div class="items-content">
 
+                    {% for reward in rewards %}
 
-<!--                    <div class="item-content">-->
-<!--                        <div class="item" id="artifact-1">-->
-<!--                            <p class="item-desc">Description 1</p>-->
-<!--                            <p class="item-name">REWARD 1</p>-->
-<!--                        </div>-->
-<!--                        <p>Price: 3000 mc</p>-->
-<!--                    </div>-->
+                       <div class="item-content">
+                           <div class="item" id="artifact-{{ reward.getId() }}">
+                               <p class="item-desc">{{ reward.getDescription() }}</p>
+                               <p class="item-name">{{ reward.getName() }}</p>
+                           </div>
+                           <p>Price: {{ reward.getPrice() }} mc</p>
+                       </div>
 
+                    {% endfor %}
 
-<!--                    <div class="item-content">-->
-<!--                        <div class="item" id="artifact-2">-->
-<!--                        </div>-->
-<!--                        <p>Price: 7000 mc</p>-->
-<!--                    </div>-->
 
                 </div>
             </section>
 
-            <aside class="right-bar">    
+            <aside class="right-bar">
                 <div id="right-bar-left">
                     <div id="avatar">
-                        
+
                     </div>
                     <div>
                         <h2>Your coins:</h2>
@@ -87,6 +84,6 @@
 
         <footer>&copy; Dumbledore's Army</footer>
     </div>
-    
+
 </body>
 </html>

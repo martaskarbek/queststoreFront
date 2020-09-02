@@ -7,9 +7,13 @@ import java.sql.Statement;
 
 public class PostgreSQLJDBC {
 
-    private final String URL = System.getenv("URL");
-    private final String USER = System.getenv("USER");
-    private final String PASSWORD = System.getenv("PASSWORD");
+//    private final String URL = System.getenv("URL");
+//    private final String USER = System.getenv("USER");
+//    private final String PASSWORD = System.getenv("PASSWORD");
+
+    private final String URL = "jdbc:postgresql://localhost:5432/QUESTstore";
+    private final String USER = "wt80";
+    private final String PASSWORD = "dupa123";
 
     protected Connection connection = null;
     protected Statement statement;

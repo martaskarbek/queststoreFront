@@ -1,5 +1,5 @@
 header{
-    background: url(../img/class.jpg) no-repeat center center;
+    background: url(/static/img/class.jpg/) no-repeat center center;
 }
 
 .options ul li a {
@@ -90,7 +90,7 @@ form .radio input {
 }
 
 #avatar {
-    background: url(../img/class.jpg) no-repeat center center;
+    background: url(/static/img/class.jpg/) no-repeat center center;
     background-size: cover;
     margin: 1em;
     padding: 5%;

@@ -1,5 +1,5 @@
 .form-image {
-    background-image: url("../img/platform.jpg");
+    background-image: url("/static/img/platform.jpg/");
     height: 80vh;
     width: 60vh;
     background-position: center;

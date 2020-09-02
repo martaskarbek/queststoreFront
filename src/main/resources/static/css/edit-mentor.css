@@ -1,6 +1,6 @@
 
 .options ul li a div {
-    background: url(../img/severus.png) no-repeat center center;
+    background: url(/static/img/severus.png/) no-repeat center center;
     background-size: cover;
     margin: 1em;
     padding: 5%;
