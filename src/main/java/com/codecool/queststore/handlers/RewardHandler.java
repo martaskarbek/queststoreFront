@@ -10,9 +10,6 @@ import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class RewardHandler implements HttpHandler {
@@ -56,11 +53,11 @@ public class RewardHandler implements HttpHandler {
 
     private void initializeGet(HttpExchange httpExchange) throws Exception {
         String response = "";
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/rewards.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/rewards_mentor.twig");
         JtwigModel model = JtwigModel.newModel();
         List<Reward> rewards = rewardService.getRewards();
         model.with("rewards", rewards);
         response = template.render(model);
-        helpers.send200response(httpExchange, response);
+        helpers.sendResponse(httpExchange, response, Helpers.OK);
     }
 }

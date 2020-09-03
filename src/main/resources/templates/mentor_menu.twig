@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="/static/css/style.css/">
+  <link rel="stylesheet" type="text/css" href="/static/css/mentor-menu.css/">
+  <link rel="icon" href="/static/img/favicon.ico/">
+  <!-- <script src="main.js" defer></script> -->
+  <title>Profile</title>
+</head>
+<body>
+
+  <div class="container">
+
+    <header>
+      <div> 
+        <h1>School of Code</h1><br>
+        <p>Magical ways of coding</p>
+      </div>
+
+    </header>
+
+    <nav>
+      <ul>
+        <li><a href="login-page.html">Start</a></li>
+        <li><a href="#">Quests</a></li>
+        <li><a href="/rewards_mentor">Rewards</a></li>
+        <li><a href="login-page.html">Logout</a></li>
+      </ul>
+
+    </nav>
+
+    <main>
+
+
+      <aside class="options">
+        <div id="options-right">
+          <h1>Sort options by: </h1>
+          <ul>
+            <li><a href="#"><p>ADD</p></a></li>
+            <li><a href="#"><p>SHOW</p></a></li>
+            <li><a href="#"><p>UPDATE</p></a></li>
+            <li><a href="#"><p>DELETE</p></a></li>
+          </ul>
+        </div>
+      </aside>
+
+      <section class="main-content">
+        <h1>Select action: </h1>
+        <div class="items-content">
+          <div class="item">
+            <a href="#">Show students' list</a>
+          </div>
+          <div class="item">
+            <a href="student-account.html">Create a new student account</a>
+          </div>
+          <div class="item">
+            <a href="#">Mark a quest as done</a>
+          </div>
+          <div class="item">
+            <a href="#">See students' wallets</a>
+          </div>
+          <div class="item">
+            <a href="add-quest.html">Add new quest</a>
+          </div>
+          <div class="item">
+            <a href="/mentor/add_artifact">Add new reward</a>
+          </div>
+        </div>
+      </section>
+
+      <aside class="right-bar">
+        <div id="right-bar-left">
+          <img alt="severus" src="/static/img/severus.png">
+          <h2>Name: {{ mentor.getFirstName() }}</h2><br>
+          <h2>Surname: {{ mentor.getLastName() }}</h2><br>
+          <h2>Spec: Code brewing</h2><br>
+        </div>
+        <div id="right-bar-right">
+
+        </div>
+      </aside>
+
+    </main>
+
+    <footer>&copy; Dumbledore's Army</footer>
+  </div>
+
+</body>
+</html>

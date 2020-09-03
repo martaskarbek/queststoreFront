@@ -69,4 +69,18 @@ public abstract class User {
     public void setSession(Session session) {
         this.session = session;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", role=" + role +
+                ", isActive=" + isActive +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", session=" + session +
+                '}';
+    }
 }

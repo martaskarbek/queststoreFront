@@ -55,10 +55,13 @@
                 {% for reward in rewards %}
 
                     <div class="item-content">
+                        <div>
+                            <a href="/rewards/remove/{{ reward.getId() }}">DEL </a>
+                            <a href="/rewards/update/{{ reward.getId() }}"> UPDATE</a>
+                        </div>
                         <div class="item" id="artifact-{{ reward.getId() }}">
                             <p class="item-desc">{{ reward.getDescription() }}</p>
                             <p class="item-name">{{ reward.getName() }}</p>
-                            <a href="/rewards/remove/{{ reward.getId() }}">REMOVE</a>
                         </div>
                         <p>Price: {{ reward.getPrice() }} mc</p>
                     </div>

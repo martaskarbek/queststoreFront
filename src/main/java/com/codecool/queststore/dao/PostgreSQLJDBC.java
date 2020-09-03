@@ -11,9 +11,9 @@ public class PostgreSQLJDBC {
 //    private final String USER = System.getenv("USER");
 //    private final String PASSWORD = System.getenv("PASSWORD");
 
-    private final String URL = "jdbc:postgresql://localhost:5432/QUESTstore";
-    private final String USER = "wt80";
-    private final String PASSWORD = "dupa123";
+    private String user = "wt80";
+    private String password = "dupa123";
+    private static final String CONNECTION_STRING = "jdbc:postgresql://localhost:5432/QUESTstore2";
 
     protected Connection connection = null;
     protected Statement statement;
@@ -21,7 +21,7 @@ public class PostgreSQLJDBC {
     public void connect() {
         try {
             Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            connection = DriverManager.getConnection(CONNECTION_STRING, user, password);
             System.out.println("Connected to DB");
             statement = connection.createStatement();
         } catch(SQLException | ClassNotFoundException e) {

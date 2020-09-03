@@ -9,6 +9,8 @@ public class Session {
         this.userId = userId;
     }
 
+    public Session(){};
+
     public String getUuid() {
         return uuid;
     }
