@@ -69,25 +69,24 @@ public class MentorHandler implements HttpHandler {
         String url = httpExchange.getRequestURI().getRawPath();
         String[] actions = url.split("/");
         String action = actions.length == 2 ? "" : actions[2];
-//        String action = actions[2];
         String response = "";
 
         try {
+            //todo  add new user -> POST
+            //np. http://localhost:8005/users/details/1
+            //                    Student student = this.studentsDao.getStudent(Integer.parseInt(actions[3]));
+            //np. http://localhost:8005/users
             switch (action) {
-                case "add_artifact":
+                case "add_artifact" -> {
                     String addRewardPath = "templates/add_artifact.twig";
-                    sendPage(user, httpExchange, addRewardPath);
-                    //todo  add new user -> POST
-                    break;
-                case "details":
-                    //np. http://localhost:8005/users/details/1
-//                    Student student = this.studentsDao.getStudent(Integer.parseInt(actions[3]));
-                    response = "";
-                    break;
-                default:
-                    //np. http://localhost:8005/users
+                    sendUserPage(user, httpExchange, addRewardPath);
+                }
+                case "details" -> response = "";
+                default -> {
                     String templatePath = "templates/mentor_menu.twig";
-                    sendPage(user, httpExchange, templatePath);
+                    sendUserPage(user, httpExchange, templatePath);
+
+                }
             }
             helpers.sendResponse(httpExchange, response,  Helpers.OK);
 
@@ -97,7 +96,7 @@ public class MentorHandler implements HttpHandler {
     }
 
 
-    private void sendPage(User user, HttpExchange httpExchange, String templatePath) throws IOException {
+    private void sendUserPage(User user, HttpExchange httpExchange, String templatePath) throws IOException {
         String response = "";
         JtwigTemplate template = JtwigTemplate.classpathTemplate(templatePath);
         JtwigModel model = JtwigModel.newModel();
