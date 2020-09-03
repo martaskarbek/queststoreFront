@@ -3,6 +3,7 @@ package com.codecool.queststore.services;
 import com.codecool.queststore.dao.SessionPostgreSQLDAO;
 import com.codecool.queststore.dao.UserPostgreSQLDAO;
 import com.codecool.queststore.models.Session;
+import com.codecool.queststore.models.users.Mentor;
 import com.codecool.queststore.models.users.User;
 
 import java.util.UUID;
@@ -28,4 +29,12 @@ public class UserService {
         }
         return user;
     }
+
+    public User getUserBySessionId(String sessionId) throws Exception {
+        Session session = sessionDAO.getSessionBySessionId(sessionId);
+        System.out.println(session);
+        return userDAO.get(session.getUserId());
+
+    }
 }
+

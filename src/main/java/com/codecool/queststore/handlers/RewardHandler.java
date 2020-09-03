@@ -56,7 +56,7 @@ public class RewardHandler implements HttpHandler {
 
     private void initializeGet(HttpExchange httpExchange) throws Exception {
         String response = "";
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/rewards.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/rewards_mentor.twig");
         JtwigModel model = JtwigModel.newModel();
         List<Reward> rewards = rewardService.getRewards();
         model.with("rewards", rewards);

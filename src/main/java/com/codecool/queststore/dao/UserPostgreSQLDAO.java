@@ -1,5 +1,7 @@
 package com.codecool.queststore.dao;
 
+import com.codecool.queststore.models.Category;
+import com.codecool.queststore.models.Reward;
 import com.codecool.queststore.models.Role;
 import com.codecool.queststore.models.users.User;
 import com.codecool.queststore.models.users.UserFactory;
@@ -38,8 +40,27 @@ public class UserPostgreSQLDAO implements IUserDAO {
     }
 
     @Override
-    public User get(int id) {
-        return null;
+    public User get(int userId) {
+        postgreSQLJDBC.connect();
+        User user = UserFactory.USER_NOT_FOUND;
+        try {
+            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("SELECT * FROM users WHERE id = ?;");
+            preparedStatement.setInt(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String firstName = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+                Role role = Role.valueOf(resultSet.getInt("role_id"));
+                boolean isActive = resultSet.getBoolean("isactive");
+                String email = resultSet.getString("email");
+                String password = resultSet.getString("password");
+                user = UserFactory.create(id, firstName, lastName, role, isActive, email, password);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 
     @Override
@@ -64,4 +85,6 @@ public class UserPostgreSQLDAO implements IUserDAO {
         }
         return user;
     }
+
+
 }

@@ -23,6 +23,15 @@
     margin-left: 25%;
     color: black;
 }
+.del {
+    color: red;
+    text-decoration: none;
+}
+
+.upd {
+    color: yellow;
+    text-decoration: none;
+}
 
 #artifact-1, #artifact-2, #artifact-3, #artifact-4, #artifact-5 {
     border: 5px solid green;
