@@ -25,7 +25,6 @@ public class MentorHandler implements HttpHandler {
 
     private Helpers helpers = new Helpers();
     private CookieHelper cookieHelper = new CookieHelper();
-    static final String SESSION_COOKIE_NAME = "SessionID";
     private String response;
     private HttpExchange httpExchange;
 
@@ -120,7 +119,7 @@ public class MentorHandler implements HttpHandler {
         System.out.println(cookieStr);
         List<HttpCookie> cookies = cookieHelper.parseCookies(cookieStr);
         System.out.println(cookies);
-        return cookieHelper.findCookieByName(SESSION_COOKIE_NAME, cookies);
+        return cookieHelper.findCookieByName(Helpers.SESSION_COOKIE_NAME, cookies);
 
     }
 }

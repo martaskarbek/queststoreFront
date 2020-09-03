@@ -41,7 +41,7 @@ public class LoginHandler implements HttpHandler {
         Map<String, String> inputs = parseFormData(formData);
         User user = userService.login(inputs.get("email"), inputs.get("password"));
         if (user.getSession() != null && user.getSession().getUuid() != null) {
-            HttpCookie httpCookie = new HttpCookie("SessionID", user.getSession().getUuid());
+            HttpCookie httpCookie = new HttpCookie(Helpers.SESSION_COOKIE_NAME, user.getSession().getUuid());
             exchange.getResponseHeaders().add("Set-Cookie", httpCookie.toString());
             String redirectURL = "";
             switch (user.getRole()) {
