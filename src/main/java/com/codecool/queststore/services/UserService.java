@@ -30,11 +30,16 @@ public class UserService {
         return user;
     }
 
-    public User getUserBySessionId(String sessionId) throws Exception {
+    public User getUserBySessionId(String sessionId) {
         Session session = sessionDAO.getSessionBySessionId(sessionId);
         System.out.println(session);
         return userDAO.get(session.getUserId());
 
+    }
+
+    public void logout(String sessionId) {
+        Session session = sessionDAO.getSessionBySessionId(sessionId);
+        sessionDAO.remove(session);
     }
 }
 
