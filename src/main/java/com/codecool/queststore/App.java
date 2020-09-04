@@ -1,5 +1,6 @@
 package com.codecool.queststore;
 
+import com.codecool.queststore.dao.LogoutHandler;
 import com.codecool.queststore.handlers.LoginHandler;
 import com.codecool.queststore.handlers.RewardHandler;
 import com.codecool.queststore.handlers.Static;
@@ -13,6 +14,7 @@ public class App {
 
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
         server.createContext("/login", new LoginHandler());
+        server.createContext("/logout", new LogoutHandler());
         server.createContext("/mentor", new MentorHandler());
         server.createContext("/rewards", new RewardHandler());
         /*
@@ -29,4 +31,3 @@ public class App {
         server.start();
     }
 }
-

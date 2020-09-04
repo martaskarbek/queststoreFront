@@ -39,7 +39,14 @@ public class SessionPostgreSQLDAO implements ISessionDAO {
 
     @Override
     public void remove(Session session) {
-
+        postgreSQLJDBC.connect();
+        try {
+            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("DELETE FROM sessions WHERE uuid = ?;");
+            preparedStatement.setString(1, session.getUuid());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -54,7 +61,7 @@ public class SessionPostgreSQLDAO implements ISessionDAO {
 
 
     @Override
-    public Session getSessionBySessionId(String sessionId) throws Exception {
+    public Session getSessionBySessionId(String sessionId) {
         postgreSQLJDBC.connect();
         Session session = new Session();
         try {
