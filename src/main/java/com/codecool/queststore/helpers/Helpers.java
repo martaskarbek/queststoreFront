@@ -7,6 +7,7 @@ import java.io.OutputStream;
 
 public class Helpers {
 
+    public static final String SESSION_COOKIE_NAME = "SessionID";
     public static final int CREATED = 201;
     public static final int OK = 200;
     public static final int NOT_FOUND = 404;
