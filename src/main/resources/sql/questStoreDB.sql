@@ -28,12 +28,16 @@ CREATE TABLE modules
     name VARCHAR(50) NOT NULL
 );
 
-
 CREATE TABLE mentors
 (
     id BIGSERIAL NOT NULL PRIMARY KEY,
-    user_id BIGINT REFERENCES users (id),
-    module_id BIGINT REFERENCES modules (id)
+    user_id BIGINT REFERENCES users (id)
+);
+
+CREATE TABLE mentor_modules
+(
+    module_id BIGINT REFERENCES modules (id),
+    mentor_id BIGINT REFERENCES mentors (id)
 );
 
 

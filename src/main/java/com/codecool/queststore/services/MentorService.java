@@ -12,5 +12,10 @@ public class MentorService {
         this.mentorDAO = mentorDAO;
     };
 
+    public Mentor getMentorByUserId(int id) {
+        return mentorDAO.get(id);
+
+    }
+
 
 }

@@ -36,6 +36,8 @@ function createItem(reward) {
 `;
 }
 
+getRewards();
+
 // function innerRewards(rewards) {
 //     let itemContent = document.createElement("div");
 //     table.innerHTML = "<tr><th>NAME</th><th>SURNAME</th><th>EMAIL</th></tr>";
@@ -52,4 +54,3 @@ function createItem(reward) {
 //     });
 // }
 
-getRewards();

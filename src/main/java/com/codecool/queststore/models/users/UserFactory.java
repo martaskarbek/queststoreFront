@@ -11,16 +11,13 @@ public class UserFactory {
 
         switch (role.toString()) {
             case "ADMIN":
-                User admin = new Admin(id, firstName, lastName, role, isActive, email, password);
-                return admin;
+                return new Admin(id, firstName, lastName, role, isActive, email, password);
 
             case "MENTOR":
-                User mentor = new Mentor(id, firstName, lastName, role, isActive, email, password);
-                return mentor;
+                return new Mentor(id, firstName, lastName, role, isActive, email, password);
 
             case "STUDENT":
-                User student = new Student(id, firstName, lastName, role, isActive, email, password);
-                return student;
+                return new Student(id, firstName, lastName, role, isActive, email, password);
 
             default:
                 return null;
@@ -28,3 +25,4 @@ public class UserFactory {
         }
     }
 }
+

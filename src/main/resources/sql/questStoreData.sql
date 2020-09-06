@@ -5,7 +5,7 @@ insert into roles (role) values ('student');
 
 
 insert into users (first_name, last_name, role_id, isActive, email, password) values
-('Mateusz', 'Steliga', 2, TRUE, 'mateusz.eliga@codecool.com', 'mateusz123');
+('Severus', 'Snape', 2, TRUE, 'severus@snape.com', 'severus123');
 insert into users (first_name, last_name, role_id, isActive, email, password) values
 ('Agnieszka', 'Koszany', 2, TRUE, 'agnieszka.koszany@codecool.com', 'agnieszka123');
 insert into users (first_name, last_name, role_id, isActive, email, password) values
@@ -54,12 +54,18 @@ insert into modules (name) values ('JavaOOP');
 insert into modules (name) values ('Web with SQL');
 insert into modules (name) values ('Advanced');
 
-insert into mentors (user_id, module_id) values (1, 1);
-insert into mentors (user_id, module_id) values (2, 2);
-insert into mentors (user_id, module_id) values (3, 3);
-insert into mentors (user_id, module_id) values (1, 2);
-insert into mentors (user_id, module_id) values (2, 3);
-insert into mentors (user_id, module_id) values (3, 4);
+insert into mentors (user_id) values (1);
+insert into mentors (user_id) values (2);
+insert into mentors (user_id) values (3);
+
+
+insert into mentor_modules (module_id, mentor_id) values (1, 1);
+insert into mentor_modules (module_id, mentor_id) values (2, 2);
+insert into mentor_modules (module_id, mentor_id) values (3, 3);
+insert into mentor_modules (module_id, mentor_id) values (2, 1);
+insert into mentor_modules (module_id, mentor_id) values (3, 2);
+insert into mentor_modules (module_id, mentor_id) values (4, 3);
+
 
 insert into rewards (name, description, price, category_id, mentor_id) values ('reward 1', 'description 1', 10000, 1, 1);
 insert into rewards (name, description, price, category_id, mentor_id) values ('reward 2', 'description 2', 13000, 1, 1);
