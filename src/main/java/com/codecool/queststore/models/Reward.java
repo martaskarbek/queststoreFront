@@ -7,7 +7,6 @@ public class Reward {
     private int price;
     private Category category;
     private int mentorId;
-    private String stringCat;
 
     public Reward(int id, String name, String description, int price, Category category, int mentorId) {
         this.id = id;
@@ -22,15 +21,6 @@ public class Reward {
 
     public Reward setId(int id) {
         this.id = id;
-        return this;
-    }
-
-    public String getStringCat() {
-        return stringCat;
-    }
-
-    public Reward setStringCat(String stringCat) {
-        this.stringCat = stringCat;
         return this;
     }
 
@@ -93,7 +83,6 @@ public class Reward {
                 ", price=" + price +
                 ", category=" + category +
                 ", mentorId=" + mentorId +
-                ", stringCat='" + stringCat + '\'' +
                 '}';
     }
 }

@@ -6,9 +6,9 @@ import com.codecool.queststore.models.Role;
 import java.util.List;
 
 public class Mentor extends User{
-    int mentorId;
-    List<Module> modules;
-    List<Reward> rewards;
+    private int mentorId;
+    private List<Module> modules;
+    private List<Reward> rewards;
 
     public Mentor(int id, String firstName, String lastName, Role role, boolean isActive, String email, String password) {
         super(id, firstName, lastName, role, isActive, email, password);
@@ -20,26 +20,32 @@ public class Mentor extends User{
         return mentorId;
     }
 
-    public Mentor setMentorId(int mentorId) {
+    public void setMentorId(int mentorId) {
         this.mentorId = mentorId;
-        return this;
     }
 
     public List<Module> getModules() {
         return modules;
     }
 
-    public Mentor setModules(List<Module> modules) {
-        this.modules = modules;
-        return this;
-    }
-
     public List<Reward> getRewards() {
         return rewards;
     }
 
-    public Mentor setRewards(List<Reward> rewards) {
+    public void setModules(List<Module> modules) {
+        this.modules = modules;
+    }
+
+    public void setRewards(List<Reward> rewards) {
         this.rewards = rewards;
-        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Mentor{" +
+                "mentorId=" + mentorId +
+                ", modules=" + modules +
+                ", rewards=" + rewards +
+                "} " + super.toString();
     }
 }

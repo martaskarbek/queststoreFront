@@ -20,6 +20,14 @@ public enum Category {
         return categoryId;
     }
 
+    public static int getCategoryValue(Category category){
+        return category.getCategoryId();
+    }
+
+    public static Map<Integer, Category> getMap() {
+        return map;
+    }
+
     public static Category valueOf(int categoryId) {
         for (Category category : Category.values()) {
             map.put(category.categoryId, category);

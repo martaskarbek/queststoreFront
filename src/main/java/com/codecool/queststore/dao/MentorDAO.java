@@ -4,6 +4,7 @@ import com.codecool.queststore.models.Category;
 import com.codecool.queststore.models.Reward;
 import com.codecool.queststore.models.Session;
 import com.codecool.queststore.models.users.Mentor;
+import com.codecool.queststore.models.users.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -65,6 +66,27 @@ public class MentorDAO implements IMentorDAO{
             e.printStackTrace();
         }
         return mentor;
+    }
+
+    @Override
+    public int getMentorId(User user) {
+        postgreSQLJDBC.connect();
+        int mentorId = 0;
+        try {
+            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("select mentors.id as mentor_id\n" +
+                    "from mentors, users\n" +
+                    "where users.id = mentors.user_id\n" +
+                    "and\n" +
+                    "users.id = ?;");
+            preparedStatement.setInt(1, user.getId());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                mentorId = resultSet.getInt("mentor_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return mentorId;
     }
 }
 

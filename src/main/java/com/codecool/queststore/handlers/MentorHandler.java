@@ -1,11 +1,9 @@
 package com.codecool.queststore.handlers;
 
-import com.codecool.queststore.dao.MentorDAO;
-import com.codecool.queststore.dao.PostgreSQLJDBC;
-import com.codecool.queststore.dao.SessionPostgreSQLDAO;
-import com.codecool.queststore.dao.UserPostgreSQLDAO;
+import com.codecool.queststore.dao.*;
 import com.codecool.queststore.helpers.CookieHelper;
 import com.codecool.queststore.helpers.Helpers;
+import com.codecool.queststore.models.Category;
 import com.codecool.queststore.models.Reward;
 import com.codecool.queststore.models.users.Mentor;
 import com.codecool.queststore.models.users.User;
@@ -25,7 +23,7 @@ public class MentorHandler implements HttpHandler {
 
     private PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
     private UserService userService = new UserService(new UserPostgreSQLDAO(postgreSQLJDBC), new SessionPostgreSQLDAO(postgreSQLJDBC));
-    private MentorService mentorService = new MentorService(new MentorDAO(postgreSQLJDBC));
+    private MentorService mentorService = new MentorService(new MentorDAO(postgreSQLJDBC), new RewardDAO(postgreSQLJDBC));
 
     private Helpers helpers = new Helpers();
     private CookieHelper cookieHelper = new CookieHelper();
@@ -49,7 +47,11 @@ public class MentorHandler implements HttpHandler {
                 e.printStackTrace();
             }
 
-        mentor = mentorService.getMentorByUserId(user.getId());
+        try {
+            mentor = mentorService.getMentorByUser(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         checkMethod(method, actions);
 
@@ -108,35 +110,11 @@ public class MentorHandler implements HttpHandler {
 
 
     private void postReward(HttpExchange httpExchange) throws IOException {
-//        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), StandardCharsets.UTF_8);
-//        BufferedReader br = new BufferedReader(isr);
-//        String formData = br.readLine();
-//        Map<String,String> inputs = parseFormData(formData);
-//        System.out.println(inputs);
-//        Reward reward = new Reward();
-//        reward.setName(inputs.get("name"));
-//        reward.setPrice(Integer.parseInt(inputs.get("price")));
-//        reward.setDescription(inputs.get("description"));
-//        reward.setStringCat(inputs.get("radio"));
-//        reward.setMentorId(user.getId());
-//        System.out.println(reward);
-
-
-
-
         InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
         BufferedReader br = new BufferedReader(isr);
-
         Map<String, String> data = parseFormData(br.readLine());
-        System.out.println(data);
-
-        Reward reward = new Reward();
-        reward.setName(data.get("name"));
-        reward.setPrice(Integer.parseInt(data.get("price")));
-        reward.setDescription(data.get("description"));
-        reward.setStringCat(data.get("radio"));
-
-        System.out.println(reward);
+        Reward reward = createReward(data);
+        mentorService.addRewardToDB(reward);
         response = "data saved";
 
     }
@@ -153,13 +131,13 @@ public class MentorHandler implements HttpHandler {
         return map;
     }
 
-    private Reward createReward(Map<String, String> inputs) {
+    private Reward createReward(Map<String, String> data) {
         Reward reward = new Reward();
-        reward.setName(inputs.get("name"));
-        reward.setPrice(Integer.parseInt(inputs.get("price")));
-        reward.setDescription(inputs.get("description"));
-        reward.setStringCat(inputs.get("role"));
-        reward.setMentorId(user.getId());
+        reward.setName(data.get("name"));
+        reward.setPrice(Integer.parseInt(data.get("price")));
+        reward.setDescription(data.get("description"));
+        reward.setCategory(Category.valueOf(Integer.parseInt(data.get("radio"))));
+        reward.setMentorId(mentor.getMentorId());
 
         return reward;
 
@@ -171,7 +149,7 @@ public class MentorHandler implements HttpHandler {
         JtwigTemplate template = JtwigTemplate.classpathTemplate(templatePath);
         JtwigModel model = JtwigModel.newModel();
 
-        model.with("mentor", user);
+        model.with("mentor", mentor);
         response = template.render(model);
         helpers.sendResponse(httpExchange, response, Helpers.OK);
 
