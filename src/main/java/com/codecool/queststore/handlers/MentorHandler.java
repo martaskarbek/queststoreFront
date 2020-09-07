@@ -8,6 +8,7 @@ import com.codecool.queststore.models.Reward;
 import com.codecool.queststore.models.users.Mentor;
 import com.codecool.queststore.models.users.User;
 import com.codecool.queststore.services.MentorService;
+import com.codecool.queststore.services.RewardService;
 import com.codecool.queststore.services.UserService;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -24,6 +25,7 @@ public class MentorHandler implements HttpHandler {
     private PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
     private UserService userService = new UserService(new UserPostgreSQLDAO(postgreSQLJDBC), new SessionPostgreSQLDAO(postgreSQLJDBC));
     private MentorService mentorService = new MentorService(new MentorDAO(postgreSQLJDBC), new RewardDAO(postgreSQLJDBC));
+    private RewardService rewardService = new RewardService();
 
     private Helpers helpers = new Helpers();
     private CookieHelper cookieHelper = new CookieHelper();
@@ -31,6 +33,7 @@ public class MentorHandler implements HttpHandler {
     private HttpExchange httpExchange;
     private User user;
     private Mentor mentor;
+    private List<Reward> rewards;
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
@@ -48,17 +51,23 @@ public class MentorHandler implements HttpHandler {
             }
 
         try {
+            rewards = rewardService.getRewards();
             mentor = mentorService.getMentorByUser(user);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        checkMethod(method, actions);
+        try {
+            checkMethod(method, actions);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
     }
 
-    private void checkMethod(String method, String[] actions) throws IOException {
+    private void checkMethod(String method, String[] actions) throws Exception {
         if (method.equals("GET")) {
             getActions(httpExchange, actions);
         }
@@ -74,6 +83,9 @@ public class MentorHandler implements HttpHandler {
             case "add_artifact":
                 postReward(httpExchange);
                 break;
+            case "add_quest":
+                postQuest(httpExchange);
+                break;
 
         }
         String redirectURL = "/mentor";
@@ -81,7 +93,9 @@ public class MentorHandler implements HttpHandler {
         sendResponse(301);
     }
 
-    private void getActions(HttpExchange httpExchange, String[] actions) throws IOException {
+
+
+    private void getActions(HttpExchange httpExchange, String[] actions) throws Exception {
         if (actions[1].equals("mentor") && actions.length == 2) {
             String templatePath = "templates/mentor_menu.twig";
             sendMentorPage(httpExchange, templatePath);
@@ -92,8 +106,18 @@ public class MentorHandler implements HttpHandler {
                 String addRewardPath = "templates/add_artifact.twig";
                 sendMentorPage(httpExchange, addRewardPath);
                 return;
+            case "rewards_mentor":
+                String showRewardPath = "templates/rewards_mentor.twig";
+                sendMentorPage(httpExchange, showRewardPath);
+                return;
+            case "add_quest":
+                String addQuestPath = "templates/add_quest.twig";
+                sendMentorPage(httpExchange, addQuestPath);
+
         }
     }
+
+
 
     private void checkUser(HttpExchange httpExchange) throws Exception {
         Optional<HttpCookie> cookie = cookieHelper.getSessionIdCookie(httpExchange);
@@ -118,6 +142,18 @@ public class MentorHandler implements HttpHandler {
         response = "data saved";
 
     }
+
+    private void postQuest(HttpExchange httpExchange) throws IOException {
+        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
+        BufferedReader br = new BufferedReader(isr);
+        Map<String, String> data = parseFormData(br.readLine());
+        System.out.println(data);
+
+        response = "data saved";
+
+    }
+
+
 
     private static Map<String, String> parseFormData(String formData) throws UnsupportedEncodingException {
         Map<String, String> map = new HashMap<>();
@@ -144,16 +180,17 @@ public class MentorHandler implements HttpHandler {
     }
 
 
-    private void sendMentorPage(HttpExchange httpExchange, String templatePath) throws IOException {
+    private void sendMentorPage(HttpExchange httpExchange, String templatePath) throws Exception {
         String response = "";
         JtwigTemplate template = JtwigTemplate.classpathTemplate(templatePath);
         JtwigModel model = JtwigModel.newModel();
-
         model.with("mentor", mentor);
+        model.with("rewards", rewards);
         response = template.render(model);
         helpers.sendResponse(httpExchange, response, Helpers.OK);
-
     }
+
+
 
     private void sendResponse(int status) throws IOException {
         httpExchange.sendResponseHeaders(status, response.getBytes().length);

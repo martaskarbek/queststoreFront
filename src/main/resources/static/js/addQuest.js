@@ -2,8 +2,7 @@ const form = document.querySelector("#add-reward");
 
 form.addEventListener('submit', function (e) {
     e.preventDefault();
-    //name=Agnieszka&surname=Kowalska&email=a.kowalska%40codecool.com
-    const data = `name=${this.name.value}&price=${this.price.value}&description=${this.description.value}&radio=${getRadioVal(form, "radio")}&checkbox=${getCheckValue(form)}`;
+    const data = `name=${this.name.value}&price=${this.price.value}&description=${this.description.value}&radio=${getRadioVal(form, "radio")}&checkbox=${getCheckValue(form)}&modules=${getModuleValue(form)}`;
     console.log(data);
     setReward(data);
 });
@@ -23,6 +22,12 @@ function getRadioVal(form, name) {
     return val; // return value of checked radio or undefined if none checked
 }
 
+function getModuleValue(form) {
+    var e = document.getElementById("modules");
+    var userChoice = e.options[e.selectedIndex].value;
+    return userChoice;
+}
+
 function getCheckValue(form) {
     var val = false;
     var checkbox = document.getElementById('checkbox');
@@ -36,7 +41,7 @@ function getCheckValue(form) {
 
 
 function setReward(data) {
-    fetch("http://localhost:8000/mentor/add_artifact",
+    fetch("http://localhost:8000/mentor/add_quest",
         {
             mode: 'no-cors',
             method: "POST",

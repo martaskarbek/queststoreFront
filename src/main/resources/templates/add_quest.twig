@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css/">
+    <link rel="stylesheet" type="text/css" href="/static/css/add-artifact.css/">
+    <link rel="icon" href="/static/img/favicon.ico/">
+    <script src="/static/js/addQuest.js" defer></script>
+    <title>Add quest</title>
+</head>
+
+<body>
+    <div class="container">
+
+        <header>
+            <div>
+                <h1>School of Code</h1><br>
+                <p>Magical ways of coding</p>
+            </div>
+
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="/mentor">Back</a></li>
+            </ul>
+
+        </nav>
+
+        <main>
+            <aside class="options">
+                <div id="options-right">
+                  <ul>
+                    <li><a href="#"><p>ACTION</p></a></li>
+                  </ul>
+                </div>
+              </aside>
+
+            <section class="main-content">
+                <div class="items-content">
+                    
+                    <form id="add-reward" action="http://localhost:8000/mentor/add_quest" method="POST">
+                            <h1>NEW QUEST</h1>
+                            <label for="name"></label>
+                            <input class="input" id="name" name="name" type="text" placeholder="Name of quest">
+
+                            <label for="price"></label>
+                            <input class="input" id="price" name="price" type="text" placeholder="Coins to earn">
+
+                            <label for="description"></label>
+                            <textarea class="input" id="description" name="description" placeholder="Description"></textarea>
+                            <label for="modules" id="modules-label">Module name</label>
+                            <select id="modules" name="modules" size="1">
+                                <option value="1">ProgBase</option>
+                                <option value="2">JavaOOP</option>
+                                <option value="3">Web with SQL</option>
+                                <option value="4">Advanced</option>
+                            </select>
+
+                            <div id="button">
+                                <button type="submit">SUBMIT</button>
+                                <button type="reset">RESET</button>
+                                <div class="radio">
+                                    <label><input id="quest-basic" type="radio" name="radio" value="1"> Basic</label>
+                                    <label><input id="quest-extra" type="radio" name="radio" value="2"> Extra</label>
+                                </div>
+                                <div class="checkbox">
+                                    <label><input id="checkbox" type="checkbox" name="checkbox" value="true"> Is active</label>
+                                </div>
+                            </div>
+
+                    </form>
+                    <div id="item">
+
+                    </div>
+                </div>
+            </section>
+
+            <aside class="right-bar">    
+                <div id="right-bar-left">
+                    <h1>QUEST</h1>
+                    
+                    <div id="avatar">
+                        
+                    </div>
+                </div>
+                <div id="right-bar-right">
+                </div>
+            </aside>
+
+        </main>
+
+        <footer>&copy; Dumbledore's Army</footer>
+    </div>
+
+</body>
+
+</html>

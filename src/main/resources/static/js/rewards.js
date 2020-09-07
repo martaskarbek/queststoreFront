@@ -1,7 +1,14 @@
 const container = document.querySelector(".items-content");
+const rightBar = document.getElementById("")
+
+
+
+
+
+
 
 function getRewards() {
-    fetch(`http://localhost:8001/rewards`)
+    fetch(`http://localhost:8000/rewards_mentor`)
         .then(function (response) {
             return response.json();
         })
@@ -36,7 +43,7 @@ function createItem(reward) {
 `;
 }
 
-getRewards();
+//getRewards();
 
 // function innerRewards(rewards) {
 //     let itemContent = document.createElement("div");

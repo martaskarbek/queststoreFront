@@ -13,7 +13,7 @@ import java.util.List;
 
 public class RewardDAO implements IRewardDao{
 
-    private  PostgreSQLJDBC postgreSQLJDBC;
+    private final PostgreSQLJDBC postgreSQLJDBC;
 
     public RewardDAO(PostgreSQLJDBC postgreSQLJDBC) {
         this.postgreSQLJDBC = postgreSQLJDBC;
@@ -63,7 +63,7 @@ public class RewardDAO implements IRewardDao{
 
 
     @Override
-    public List<Reward> getAll() throws Exception {
+    public List<Reward> getAll() {
         List<Reward> rewards = new ArrayList<>();
 
         try {
@@ -73,16 +73,10 @@ public class RewardDAO implements IRewardDao{
                 Reward reward = create(rs);
                 rewards.add(reward);
             }
-            rs.close();
-            postgreSQLJDBC.statement.close();
-            postgreSQLJDBC.connection.close();
-
-            return rewards;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        throw new Exception("Data not found");
+        return rewards;
     }
 
     @Override
@@ -91,7 +85,7 @@ public class RewardDAO implements IRewardDao{
     }
 
     @Override
-    public List<Reward> getAllMentorRewards(User user) throws Exception {
+    public List<Reward> getAllMentorRewards(User user) {
         List<Reward> mentorRewards = new ArrayList<>();
 
         try {
@@ -107,15 +101,11 @@ public class RewardDAO implements IRewardDao{
                 mentorRewards.add(reward);
 
             }
-            resultSet.close();
-            postgreSQLJDBC.statement.close();
-            postgreSQLJDBC.connection.close();
-
-            return mentorRewards;
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        throw new Exception("Data not found");
+        return mentorRewards;
     }
 }
+
