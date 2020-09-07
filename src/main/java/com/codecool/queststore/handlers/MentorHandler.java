@@ -138,7 +138,7 @@ public class MentorHandler implements HttpHandler {
         reward.setDescription(data.get("description"));
         reward.setCategory(Category.valueOf(Integer.parseInt(data.get("radio"))));
         reward.setMentorId(mentor.getMentorId());
-
+        reward.setActive(Boolean.parseBoolean(data.get("checkbox")));
         return reward;
 
     }

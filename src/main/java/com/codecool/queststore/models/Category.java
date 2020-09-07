@@ -5,8 +5,8 @@ import java.util.Map;
 
 public enum Category {
 
-    SINGLEUSER(1),
-    MULTIPLEUSER(2);
+    BASIC(1),
+    EXTRA(2);
 
     private final int categoryId;
     private static final Map<Integer, Category> map = new HashMap<>();

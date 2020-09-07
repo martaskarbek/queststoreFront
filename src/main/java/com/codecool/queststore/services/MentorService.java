@@ -29,10 +29,7 @@ public class MentorService {
         mentor.setMentorId(mentorDAO.getMentorId(user));
         mentor.setRewards(rewardDAO.getAllMentorRewards(user));
 
-
-
         return mentor;
-
     }
 
 

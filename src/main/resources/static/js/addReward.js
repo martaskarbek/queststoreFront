@@ -3,7 +3,7 @@ const form = document.querySelector("#add-reward");
 form.addEventListener('submit', function (e) {
     e.preventDefault();
     //name=Agnieszka&surname=Kowalska&email=a.kowalska%40codecool.com
-    const data = `name=${this.name.value}&price=${this.price.value}&description=${this.description.value}&radio=${getRadioVal(form, "radio")}`;
+    const data = `name=${this.name.value}&price=${this.price.value}&description=${this.description.value}&radio=${getRadioVal(form, "radio")}&checkbox=${getCheckValue(form)}`;
     console.log(data);
     setReward(data);
 });
@@ -21,6 +21,24 @@ function getRadioVal(form, name) {
         }
     }
     return val; // return value of checked radio or undefined if none checked
+}
+
+function getCheckValue(form){
+    var checkedValue = true;
+    var inputElements = document.getElementsById'messageCheckbox');
+    for(var i=0; inputElements[i]; ++i){
+        if(inputElements[i].checked){
+            checkedValue = inputElements[i].value;
+            break;
+      }
+    }
+}
+function getCheckValue(form){
+    var checkedValue = true;
+    var inputElement = document.getElementsById('checkbox');
+    if(inputElement.checked){
+        checkedValue = inputElement.value;
+    }
 }
 
 function setReward(data) {

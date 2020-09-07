@@ -24,12 +24,13 @@ public class RewardDAO implements IRewardDao{
         postgreSQLJDBC.connect();
         try {
             PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("INSERT INTO rewards" +
-                    "(name, description, price, category_id, mentor_id) VALUES (?, ?, ?, ?, ?)");
+                    "(name, description, price, category_id, mentor_id, isactive) VALUES (?, ?, ?, ?, ?, ?)");
             preparedStatement.setString(1, reward.getName());
             preparedStatement.setString(2, reward.getDescription());
             preparedStatement.setInt(3, reward.getPrice());
             preparedStatement.setInt(4, Category.getCategoryValue(reward.getCategory()));
             preparedStatement.setInt(5, reward.getMentorId());
+            preparedStatement.setBoolean(6, reward.getIsActive());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -55,8 +56,9 @@ public class RewardDAO implements IRewardDao{
         int price = rs.getInt("price");
         int categoryId = rs.getInt("category_id");
         int mentorId = rs.getInt("mentor_id");
+        Boolean isActive = rs.getBoolean("isactive");
 
-        return new Reward(id, name, description, price, Category.valueOf(categoryId), mentorId);
+        return new Reward(id, name, description, price, Category.valueOf(categoryId), mentorId, isActive);
     }
 
 
@@ -94,7 +96,7 @@ public class RewardDAO implements IRewardDao{
 
         try {
             postgreSQLJDBC.connect();
-            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("SELECT rewards.id, rewards.name, rewards.description, rewards.price, rewards.category_id, rewards.mentor_id\n" +
+            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("SELECT rewards.id, rewards.name, rewards.description, rewards.price, rewards.category_id, rewards.mentor_id, rewards.isactive\n" +
                     "FROM rewards, mentors, users\n" +
                     "WHERE mentors.user_id = users.id\n" +
                     "AND mentors.id = rewards.mentor_id AND users.id=?;");

@@ -7,14 +7,16 @@ public class Reward {
     private int price;
     private Category category;
     private int mentorId;
+    private Boolean isActive;
 
-    public Reward(int id, String name, String description, int price, Category category, int mentorId) {
+    public Reward(int id, String name, String description, int price, Category category, int mentorId, boolean isActive) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.category = category;
         this.mentorId = mentorId;
+        this.isActive = isActive;
     }
 
     public Reward(){};
@@ -40,14 +42,20 @@ public class Reward {
         return this;
     }
 
-    public Reward setCategory(Category category) {
+    public void setCategory(Category category) {
         this.category = category;
-        return this;
     }
 
-    public Reward setMentorId(int mentorId) {
+    public void setMentorId(int mentorId) {
         this.mentorId = mentorId;
-        return this;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
     }
 
     public int getId() {
@@ -73,6 +81,8 @@ public class Reward {
     public int getMentorId() {
         return mentorId;
     }
+
+
 
     @Override
     public String toString() {
