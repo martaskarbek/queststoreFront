@@ -3,7 +3,6 @@ package com.codecool.queststore.services;
 
 import com.codecool.queststore.dao.PostgreSQLJDBC;
 import com.codecool.queststore.dao.RewardDAO;
-import com.codecool.queststore.dao.UserPostgreSQLDAO;
 import com.codecool.queststore.models.Reward;
 
 import java.util.List;
@@ -22,5 +21,10 @@ public class RewardService {
 
     public List<Reward> getRewards() throws Exception {
         return  rewardDAO.getAll();
+    }
+
+
+    public void addRewardToDB(Reward reward) {
+        rewardDAO.add(reward);
     }
 }

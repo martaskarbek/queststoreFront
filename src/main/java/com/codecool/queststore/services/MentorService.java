@@ -2,6 +2,7 @@ package com.codecool.queststore.services;
 
 import com.codecool.queststore.dao.MentorDAO;
 import com.codecool.queststore.dao.RewardDAO;
+import com.codecool.queststore.models.Quest;
 import com.codecool.queststore.models.Reward;
 import com.codecool.queststore.models.users.Mentor;
 import com.codecool.queststore.models.users.User;
@@ -27,13 +28,13 @@ public class MentorService {
                 .setEmail(user.getEmail())
                 .setPassword(user.getPassword());
         mentor.setMentorId(mentorDAO.getMentorId(user));
-        mentor.setRewards(rewardDAO.getAllMentorRewards(user));
+//        mentor.setRewards(rewardDAO.getAllMentorRewards(user));
 
         return mentor;
     }
 
 
-    public void addRewardToDB(Reward reward) {
-        rewardDAO.add(reward);
-    }
+
+
+
 }

@@ -4,12 +4,13 @@ import com.codecool.queststore.dao.*;
 import com.codecool.queststore.helpers.CookieHelper;
 import com.codecool.queststore.helpers.Helpers;
 import com.codecool.queststore.models.Category;
+import com.codecool.queststore.models.Quest;
 import com.codecool.queststore.models.Reward;
+import com.codecool.queststore.models.Role;
 import com.codecool.queststore.models.users.Mentor;
+import com.codecool.queststore.models.users.Student;
 import com.codecool.queststore.models.users.User;
-import com.codecool.queststore.services.MentorService;
-import com.codecool.queststore.services.RewardService;
-import com.codecool.queststore.services.UserService;
+import com.codecool.queststore.services.*;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.jtwig.JtwigModel;
@@ -26,6 +27,8 @@ public class MentorHandler implements HttpHandler {
     private UserService userService = new UserService(new UserPostgreSQLDAO(postgreSQLJDBC), new SessionPostgreSQLDAO(postgreSQLJDBC));
     private MentorService mentorService = new MentorService(new MentorDAO(postgreSQLJDBC), new RewardDAO(postgreSQLJDBC));
     private RewardService rewardService = new RewardService();
+    private QuestService questService = new QuestService();
+    private StudentService studentService = new StudentService();
 
     private Helpers helpers = new Helpers();
     private CookieHelper cookieHelper = new CookieHelper();
@@ -80,18 +83,15 @@ public class MentorHandler implements HttpHandler {
 
     private void postActions(HttpExchange httpExchange, String[] actions) throws IOException {
         switch (actions[2]) {
-            case "add_artifact":
-                postReward(httpExchange);
-                break;
-            case "add_quest":
-                postQuest(httpExchange);
-                break;
-
+            case "add_artifact" -> postReward(httpExchange);
+            case "add_quest" -> postQuest(httpExchange);
+            case "add_student" -> postStudent(httpExchange);
         }
         String redirectURL = "/mentor";
         httpExchange.getResponseHeaders().add("Location", redirectURL);
         sendResponse(301);
     }
+
 
 
 
@@ -102,18 +102,22 @@ public class MentorHandler implements HttpHandler {
             return;
         }
         switch (actions[2]) {
-            case "add_artifact":
+            case "add_artifact" -> {
                 String addRewardPath = "templates/add_artifact.twig";
                 sendMentorPage(httpExchange, addRewardPath);
-                return;
-            case "rewards_mentor":
+            }
+            case "rewards_mentor" -> {
                 String showRewardPath = "templates/rewards_mentor.twig";
                 sendMentorPage(httpExchange, showRewardPath);
-                return;
-            case "add_quest":
+            }
+            case "add_quest" -> {
                 String addQuestPath = "templates/add_quest.twig";
                 sendMentorPage(httpExchange, addQuestPath);
-
+            }
+            case "add_student" -> {
+                String addStudentPath = "templates/student_account.twig";
+                sendMentorPage(httpExchange, addStudentPath);
+            }
         }
     }
 
@@ -137,8 +141,9 @@ public class MentorHandler implements HttpHandler {
         InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
         BufferedReader br = new BufferedReader(isr);
         Map<String, String> data = parseFormData(br.readLine());
+        System.out.println(data);
         Reward reward = createReward(data);
-        mentorService.addRewardToDB(reward);
+        rewardService.addRewardToDB(reward);
         response = "data saved";
 
     }
@@ -148,24 +153,62 @@ public class MentorHandler implements HttpHandler {
         BufferedReader br = new BufferedReader(isr);
         Map<String, String> data = parseFormData(br.readLine());
         System.out.println(data);
-
+        Quest quest = createQuest(data);
+        questService.addQuestToDB(quest);
         response = "data saved";
 
     }
 
-
-
-    private static Map<String, String> parseFormData(String formData) throws UnsupportedEncodingException {
-        Map<String, String> map = new HashMap<>();
-        String[] pairs = formData.split("&");
-        for(String pair : pairs){
-            String[] keyValue = pair.split("=");
-            // We have to decode the value because it's urlencoded. see: https://en.wikipedia.org/wiki/POST_(HTTP)#Use_for_submitting_web_forms
-            String value = new URLDecoder().decode(keyValue[1], "UTF-8");
-            map.put(keyValue[0], value);
-        }
-        return map;
+    private void postStudent(HttpExchange httpExchange) throws IOException {
+        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
+        BufferedReader br = new BufferedReader(isr);
+        Map<String, String> data = parseFormData(br.readLine());
+        System.out.println(data);
+        User userStudent = createUserStudent(data);
+        userService.addUserToDB(userStudent);
+//        Student student = createStudentAccount(data);
+//        studentService.addStudentToDB(student);
+        response = "data saved";
     }
+
+    private Student createStudentAccount(Map<String, String> data) {
+        Student student = new Student();
+        User studentUser = userService.getUserByCredentials(data.get("email"), data.get("password"));
+        System.out.println(studentUser);
+        student.setId(studentUser.getId());
+        student.setModuleId(Integer.parseInt(data.get("modules")));
+        student.setWallet(Integer.parseInt(data.get("coins")));
+        student.setSharedWalletId(0);
+        return student;
+
+    }
+
+
+    private User createUserStudent(Map<String, String> data) {
+        User user = new Student();
+        user.setFirstName(data.get("name"));
+        user.setLastName(data.get("surname"));
+        user.setEmail(data.get("email"));
+        user.setPassword(data.get("password"));
+        user.setActive(Boolean.parseBoolean(data.get("checkbox")));
+        user.setRole(Role.STUDENT);
+        return user;
+    }
+
+
+    private Quest createQuest(Map<String, String> data) {
+        Quest quest = new Quest();
+        quest.setName(data.get("name"));
+        quest.setDescription(data.get("description"));
+        quest.setCoinsToEarn(Integer.parseInt(data.get("price")));
+        quest.setModuleId(Integer.parseInt(data.get("modules")));
+        quest.setMentorId(mentor.getMentorId());
+        quest.setCategoryId(Integer.parseInt(data.get("radio")));
+        quest.setActive(Boolean.parseBoolean(data.get("checkbox")));
+        return quest;
+
+    }
+
 
     private Reward createReward(Map<String, String> data) {
         Reward reward = new Reward();
@@ -179,6 +222,17 @@ public class MentorHandler implements HttpHandler {
 
     }
 
+    private static Map<String, String> parseFormData(String formData) throws UnsupportedEncodingException {
+        Map<String, String> map = new HashMap<>();
+        String[] pairs = formData.split("&");
+        for(String pair : pairs){
+            String[] keyValue = pair.split("=");
+            // We have to decode the value because it's urlencoded. see: https://en.wikipedia.org/wiki/POST_(HTTP)#Use_for_submitting_web_forms
+            String value = new URLDecoder().decode(keyValue[1], "UTF-8");
+            map.put(keyValue[0], value);
+        }
+        return map;
+    }
 
     private void sendMentorPage(HttpExchange httpExchange, String templatePath) throws Exception {
         String response = "";

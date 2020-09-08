@@ -1,7 +1,6 @@
 package com.codecool.queststore.dao;
 
 import com.codecool.queststore.models.Category;
-import com.codecool.queststore.models.Reward;
 import com.codecool.queststore.models.Role;
 import com.codecool.queststore.models.users.User;
 import com.codecool.queststore.models.users.UserFactory;
@@ -20,6 +19,20 @@ public class UserPostgreSQLDAO implements IUserDAO {
 
     @Override
     public void add(User user) {
+        postgreSQLJDBC.connect();
+        try {
+            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("INSERT INTO users" +
+                    "(first_name, last_name, role_id, isactive, email, password) VALUES (?, ?, ?, ?, ?, ?)");
+            preparedStatement.setString(1, user.getFirstName());
+            preparedStatement.setString(2, user.getLastName());
+            preparedStatement.setInt(3, Role.getRoleValue(user.getRole()));
+            preparedStatement.setBoolean(4, user.isActive());
+            preparedStatement.setString(5, user.getEmail());
+            preparedStatement.setString(6, user.getPassword());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 

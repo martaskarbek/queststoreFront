@@ -3,6 +3,7 @@ package com.codecool.queststore.models.users;
 //import com.codecool.queststore.model.Quest;
 //import com.codecool.queststore.model.Reward;
 
+import com.codecool.queststore.models.Quest;
 import com.codecool.queststore.models.Reward;
 import com.codecool.queststore.models.Role;
 
@@ -12,17 +13,18 @@ public class Student extends User{
 
     int studentId;
     int moduleId;
-    int studentQuestId;
     int wallet;
     int sharedWalletId;
-//    List<Quest> questList;
+    List<Quest> questList;
     List<Reward> rewardList;
 
     public Student(int id, String firstName, String lastName, Role role, boolean isActive, String email, String password) {
         super(id, firstName, lastName, role, isActive, email, password);
     }
 
-    public Student() {};
+    public Student() {
+
+    }
 
     public int getStudentId() {
         return studentId;
@@ -38,14 +40,6 @@ public class Student extends User{
 
     public void setModuleId(int moduleId) {
         this.moduleId = moduleId;
-    }
-
-    public int getStudentQuestId() {
-        return studentQuestId;
-    }
-
-    public void setStudentQuestId(int studentQuestId) {
-        this.studentQuestId = studentQuestId;
     }
 
     public int getWallet() {
@@ -64,13 +58,13 @@ public class Student extends User{
         this.sharedWalletId = sharedWalletId;
     }
 
-//    public List<Quest> getQuestList() {
-//        return questList;
-//    }
-//
-//    public void setQuestList(List<Quest> questList) {
-//        this.questList = questList;
-//    }
+    public List<Quest> getQuestList() {
+        return questList;
+    }
+
+    public void setQuestList(List<Quest> questList) {
+        this.questList = questList;
+    }
 
     public List<Reward> getRewardList() {
         return rewardList;
@@ -78,5 +72,17 @@ public class Student extends User{
 
     public void setRewardList(List<Reward> rewardList) {
         this.rewardList = rewardList;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "studentId=" + studentId +
+                ", moduleId=" + moduleId +
+                ", wallet=" + wallet +
+                ", sharedWalletId=" + sharedWalletId +
+                ", questList=" + questList +
+                ", rewardList=" + rewardList +
+                "} " + super.toString();
     }
 }

@@ -3,42 +3,95 @@
     max-width: 72%;
 }
 
-.item-content {
+.items-content {
+    width: 90%;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 95%;
 }
 
-.item-content p {
-    margin-bottom: 1em;
+.item-content {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    margin-top: 1em;
 }
-.item-desc {
-    margin-left: 5%;
-    margin-top: 20%;
-    color: white;
+
+.item {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 2%;
+    margin: 2em;
+    min-width: 10.6em;
+
 }
+
+.data {
+
+    margin-top: 1em;
+}
+
+.data > p > span {
+
+    font-weight: bold;
+    color: chocolate;
+}
+
+.data > p {
+    margin-top: 1em;
+    line-height: 1.6;
+}
+
 
 .item-name {
-    margin-top: 80%;
-    margin-left: 25%;
-    color: black;
+    margin: 3em auto;
+    color: white;
+    font-weight: bold;
 }
+
+.item-price {
+    margin: 3em auto;
+    color: black;
+    font-weight: bold;
+}
+
+
 .del {
-    color: red;
+    color: crimson;
     text-decoration: none;
 }
 
 .upd {
-    color: yellow;
+    color: burlywood;
     text-decoration: none;
 }
 
-#artifact-1, #artifact-2, #artifact-3, #artifact-4, #artifact-5 {
-    border: 5px solid green;
-} 
+.edit {
+    display: block;
+    margin-top: 1em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+    background-color: #ccc;
+    color: black;
+    line-height: 1.5em;
+    text-decoration: none;
+    text-align: center;
+    width: 3em;
+    border-radius: 5px;
+    border: 2px solid green;
+}
 
-#artifact-6, #artifact-7, #artifact-8 {
-    border: 5px solid red;
-} 
+.edit:hover {
+    background-color: #eee;
+    cursor: pointer;
+}
+
+
+
 
 

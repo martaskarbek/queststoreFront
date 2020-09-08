@@ -41,5 +41,13 @@ public class UserService {
         Session session = sessionDAO.getSessionBySessionId(sessionId);
         sessionDAO.remove(session);
     }
+
+    public void addUserToDB(User user){
+        userDAO.add(user);
+    }
+
+    public User getUserByCredentials(String email, String password){
+        return userDAO.getByCredentials(email, password);
+    }
 }
 

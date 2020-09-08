@@ -46,22 +46,25 @@
         </aside>
 
         <section class="main-content">
-            <h1>ARTIFACTS</h1>
+            <h1>REWARDS</h1>
             <div class="items-content">
 
                 {% for reward in rewards %}
-
                     <div class="item-content">
-                        <div>
-                            <a href="/rewards/remove/{{ reward.getId() }}">DEL </a>
-                            <a href="/rewards/update/{{ reward.getId() }}"> UPDATE</a>
-                        </div>
-                        <div class="item" id="artifact-{{ reward.getId() }}">
-                            <p class="item-desc">{{ reward.getDescription() }}</p>
+                        <div class="item">
                             <p class="item-name">{{ reward.getName() }}</p>
+                            <p class="item-price">{{ reward.getPrice() }}</p>
                         </div>
-                        <p>Price: {{ reward.getPrice() }} mc</p>
+                        <div class="data">
+                            <p><span>Description: </span>{{ reward.getDescription() }}
+                            </p>
+                            <p><span>Category: </span>{{ reward.getCategory() }}</p>
+                            <p><span>Author: </span>{{ reward.getMentorId() }}</p>
+                            <p><span>Is active: </span>{{ reward.getIsActive() }}</p>
+                            <a class="edit" href="/rewards/remove/{{ reward.getId() }}">EDIT</a>
+                        </div>
                     </div>
+
 
                 {% endfor %}
 
