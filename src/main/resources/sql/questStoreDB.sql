@@ -48,7 +48,8 @@ CREATE TABLE rewards
     description VARCHAR(500) NOT NULL,
     price BIGINT,
     category_id BIGINT REFERENCES categories (id),
-    mentor_id BIGINT REFERENCES users (id)
+    mentor_id BIGINT REFERENCES users (id),
+    isActive BOOLEAN NOT NULL
 );
 
 
@@ -73,7 +74,10 @@ CREATE TABLE quests
     name VARCHAR(50) NOT NULL,
     description VARCHAR(500) NOT NULL,
     coins_to_earn BIGINT,
-    module_id BIGINT REFERENCES modules (id)
+    module_id BIGINT REFERENCES modules (id),
+    mentor_id BIGINT REFERENCES mentors (id),
+    category_id BIGINT REFERENCES categories (id),
+    isActive BOOLEAN NOT NULL
 );
 
 
