@@ -96,6 +96,9 @@ public class MentorHandler implements HttpHandler {
 
 
     private void getActions(HttpExchange httpExchange, String[] actions) throws Exception {
+
+        System.out.println(Arrays.toString(actions));
+
         if (actions[1].equals("mentor") && actions.length == 2) {
             String templatePath = "templates/mentor_menu.twig";
             sendMentorPage(httpExchange, templatePath);
@@ -109,6 +112,11 @@ public class MentorHandler implements HttpHandler {
             case "rewards_mentor" -> {
                 String showRewardPath = "templates/rewards_mentor.twig";
                 sendMentorPage(httpExchange, showRewardPath);
+                if(actions[3].equals("edit") && actions[4].matches("\\d+")) {
+                    Reward reward = rewardService.getReward(Integer.parseInt(actions[4]));
+                    System.out.println(reward);
+
+                }
             }
             case "add_quest" -> {
                 String addQuestPath = "templates/add_quest.twig";

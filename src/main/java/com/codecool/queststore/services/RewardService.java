@@ -13,8 +13,7 @@ public class RewardService {
     RewardDAO rewardDAO = new RewardDAO(postgreSQLJDBC);
 
     public Reward getReward(int id){
-
-        return null;
+        return rewardDAO.get(id);
         
     }
 

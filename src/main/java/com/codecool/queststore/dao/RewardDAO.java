@@ -36,7 +36,6 @@ public class RewardDAO implements IRewardDao{
             e.printStackTrace();
         }
 
-
     }
 
     @Override
@@ -81,7 +80,19 @@ public class RewardDAO implements IRewardDao{
 
     @Override
     public Reward get(int id) {
-        return null;
+        postgreSQLJDBC.connect();
+        Reward reward = new Reward();
+        try {
+            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("SELECT * FROM rewards WHERE id = ?;");
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                reward = create(resultSet);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return reward;
     }
 
     @Override
