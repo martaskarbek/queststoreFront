@@ -37,7 +37,7 @@ public class UserPostgreSQLDAO implements IUserDAO {
     }
 
     @Override
-    public void edit(User user, String[] params) {
+    public void edit(User user) {
 
     }
 

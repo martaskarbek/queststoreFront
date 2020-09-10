@@ -26,7 +26,7 @@ public class MentorDAO implements IMentorDAO{
     }
 
     @Override
-    public void edit(Mentor mentor, String[] params) {
+    public void edit(Mentor mentor) {
 
     }
 
@@ -41,12 +41,12 @@ public class MentorDAO implements IMentorDAO{
     }
 
     public Mentor create(ResultSet rs) throws SQLException {
-        int id = rs.getInt("id");
-        String name = rs.getString("name");
-        String description = rs.getString("description");
-        int price = rs.getInt("price");
-        int categoryId = rs.getInt("category_id");
-        int mentorId = rs.getInt("mentor_id");
+//        int id = rs.getInt("id");
+//        String name = rs.getString("name");
+//        String description = rs.getString("description");
+//        int price = rs.getInt("price");
+//        int categoryId = rs.getInt("category_id");
+//        int mentorId = rs.getInt("mentor_id");
 
         return null;
     }

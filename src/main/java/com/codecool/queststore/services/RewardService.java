@@ -26,4 +26,8 @@ public class RewardService {
     public void addRewardToDB(Reward reward) {
         rewardDAO.add(reward);
     }
+
+    public void updateRewardInDB(Reward reward) {
+        rewardDAO.edit(reward);
+    }
 }

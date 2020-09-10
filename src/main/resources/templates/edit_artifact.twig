@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/static/css/style.css/">
     <link rel="stylesheet" type="text/css" href="/static/css/add-artifact.css/">
     <link rel="icon" href="/static/img/favicon.ico/">
-    <script src="/static/js/addReward.js" defer></script>
+    <script src="/static/js/editReward.js" defer></script>
     <title>Add artifact</title>
 </head>
 
@@ -42,16 +42,16 @@
             <section class="main-content">
                 <div class="items-content">
                     
-                    <form id="add-reward" action="http://localhost:8000/mentor/add_artifact" method="POST">
-                        <h1>NEW REWARD</h1>
+                    <form id="add-reward">
+                        <h1>UPDATE REWARD <span id="rewardId">{{ reward.getId() }}</span></h1>
                         <label for="name"></label>
-                        <input class="input" id="name" name="name" type="text" placeholder="Name of artifact" value="">
+                        <input class="input" id="name" name="name" type="text" placeholder="Name of artifact" value="{{ reward.getName() }}">
 
                         <label for="price"></label>
-                        <input class="input" id="price" name="price" type="text" placeholder="Value">
+                        <input class="input" id="price" name="price" type="text" placeholder="Value" value="{{ reward.getPrice() }}">
 
                         <label for="description"></label>
-                        <textarea class="input" id="description" name="description" placeholder="Description"></textarea>
+                        <textarea class="input" id="description" name="description" placeholder="Description">{{ reward.Description }}</textarea>
 
                         <div class="button">
                             <button type="submit">SUBMIT</button>

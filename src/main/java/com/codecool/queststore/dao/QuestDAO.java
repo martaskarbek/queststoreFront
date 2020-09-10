@@ -37,7 +37,7 @@ public class QuestDAO implements IQuestDAO {
     }
 
     @Override
-    public void edit(Quest quest, String[] params) {
+    public void edit(Quest quest) {
 
     }
 

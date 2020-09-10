@@ -39,7 +39,21 @@ public class RewardDAO implements IRewardDao{
     }
 
     @Override
-    public void edit(Reward reward, String[] params) {
+    public void edit(Reward reward) {
+        postgreSQLJDBC.connect();
+        try {
+            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("UPDATE rewards SET name=?, description=?, price=?, category_id=?, mentor_id=?, isactive=? WHERE id=?");
+            preparedStatement.setString(1, reward.getName());
+            preparedStatement.setString(2, reward.getDescription());
+            preparedStatement.setInt(3, reward.getPrice());
+            preparedStatement.setInt(4, Category.getCategoryValue(reward.getCategory()));
+            preparedStatement.setInt(5, reward.getMentorId());
+            preparedStatement.setBoolean(6, reward.getIsActive());
+            preparedStatement.setInt(7, reward.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 

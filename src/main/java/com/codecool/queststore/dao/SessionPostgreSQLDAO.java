@@ -33,7 +33,7 @@ public class SessionPostgreSQLDAO implements ISessionDAO {
     }
 
     @Override
-    public void edit(Session session, String[] params) {
+    public void edit(Session session) {
 
     }
 

@@ -35,7 +35,7 @@ public class StudentDAO implements IStudentDAO {
     }
 
     @Override
-    public void edit(Student student, String[] params) {
+    public void edit(Student student) {
 
     }
 
