@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="/static/css/student-menu.css/">
 
     <link rel="stylesheet" type="text/css" href="/static/css/rewards.css/">
+    <link rel="stylesheet" type="text/css" href="/static/css/quests.css/">
 {% endblock %}
 
 {% block scripts %}
@@ -46,22 +47,23 @@
         </aside>
 
         <section class="main-content">
-            <h1>REWARDS</h1>
+            <h1>QUESTS</h1>
             <div class="items-content">
 
-                {% for reward in rewards %}
+                {% for quest in quests %}
                     <div class="item-content">
                         <div class="item">
-                            <p class="item-name">{{ reward.getName() }}</p>
-                            <p class="item-price">{{ reward.getPrice() }}</p>
+                            <p class="item-name">{{ quest.getName() }}</p>
+                            <p class="item-value">Value</p>
+                            <p class="item-price">{{ quest.getCoinsToEarn }}</p>
                         </div>
                         <div class="data">
-                            <p><span>Description: </span>{{ reward.getDescription() }}
+                            <p><span>Description: </span>{{ quest.getDescription() }}
                             </p>
-                            <p><span>Category: </span>{{ reward.getCategory() }}</p>
-                            <p><span>Author: </span>{{ reward.getAuthor() }}</p>
-                            <p><span>Is active: </span>{{ reward.getIsActive() }}</p>
-                            <a class="edit" href="/mentor/rewards_mentor/edit/{{ reward.getId() }}">EDIT</a>
+                            <p><span>Category: </span>{{ quest.getCategory() }}</p>
+                            <p><span>Author: </span>{{ quest.getAuthor() }}</p>
+                            <p><span>Is active: </span>{{ quest.getActive() }}</p>
+                            <a class="edit" href="/mentor/quests_mentor/edit/{{ quest.getId() }}">EDIT</a>
                         </div>
                     </div>
 
@@ -73,16 +75,16 @@
         </section>
 
         <aside class="right-bar">
-                <div id="right-bar-left">
-                  <img alt="severus" src="/static/img/severus.png">
-                  <h2>Name: {{ mentor.getFirstName() }}</h2><br>
-                  <h2>Surname: {{ mentor.getLastName() }}</h2><br>
-                  <h2>Spec: Code brewing</h2><br>
-                </div>
-                <div id="right-bar-right">
+            <div id="right-bar-left">
+                <img alt="severus" src="/static/img/severus.png">
+                <h2>Name: {{ mentor.getFirstName() }}</h2><br>
+                <h2>Surname: {{ mentor.getLastName() }}</h2><br>
+                <h2>Spec: Code brewing</h2><br>
+            </div>
+            <div id="right-bar-right">
 
-                </div>
-              </aside>
+            </div>
+        </aside>
 
     </main>
 

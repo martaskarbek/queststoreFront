@@ -22,11 +22,10 @@ public class StudentDAO implements IStudentDAO {
         postgreSQLJDBC.connect();
         try {
             PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("INSERT INTO students" +
-                    "(user_id, module_id, wallet, shared_wallet_id) VALUES (?, ?, ?, ?)");
+                    "(user_id, module_id, wallet) VALUES (?, ?, ?)");
             preparedStatement.setInt(1, student.getId());
             preparedStatement.setInt(2, student.getModuleId());
             preparedStatement.setInt(3, student.getWallet());
-            preparedStatement.setInt(4, student.getSharedWalletId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

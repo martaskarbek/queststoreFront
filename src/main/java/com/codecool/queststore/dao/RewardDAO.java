@@ -71,8 +71,18 @@ public class RewardDAO implements IRewardDao{
         int mentorId = rs.getInt("mentor_id");
         Boolean isActive = rs.getBoolean("isactive");
 
-        return new Reward(id, name, description, price, Category.valueOf(categoryId), mentorId, isActive);
+        Reward reward = new Reward(id, name, description, price, Category.valueOf(categoryId), mentorId, isActive);
+
+        try {
+            rs.findColumn("author");
+            String author = rs.getString("author");
+            reward.setAuthor(author);
+            return reward;
+        } catch (SQLException sqlex){
+            return reward;
+        }
     }
+
 
 
     @Override
@@ -81,7 +91,11 @@ public class RewardDAO implements IRewardDao{
 
         try {
             postgreSQLJDBC.connect();
-            ResultSet rs = postgreSQLJDBC.statement.executeQuery("SELECT * FROM rewards;");
+            ResultSet rs = postgreSQLJDBC.statement.executeQuery("select rewards.id, rewards.name, rewards.description, rewards.price, rewards.category_id, rewards.mentor_id, rewards.isactive, CONCAT(users.first_name, ' ', users.last_name) as author\n" +
+                    "from rewards\n" +
+                    "inner join mentors on rewards.mentor_id=mentors.id\n" +
+                    "inner join users on mentors.user_id=users.id\n" +
+                    "group by rewards.id, author;");
             while (rs.next()) {
                 Reward reward = create(rs);
                 rewards.add(reward);

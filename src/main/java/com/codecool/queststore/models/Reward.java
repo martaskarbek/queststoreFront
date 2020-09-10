@@ -1,5 +1,7 @@
 package com.codecool.queststore.models;
 
+import com.codecool.queststore.models.users.Mentor;
+
 public class Reward {
     private int id;
     private String name;
@@ -8,6 +10,7 @@ public class Reward {
     private Category category;
     private int mentorId;
     private Boolean isActive;
+    private String author;
 
     public Reward(int id, String name, String description, int price, Category category, int mentorId, boolean isActive) {
         this.id = id;
@@ -20,6 +23,20 @@ public class Reward {
     }
 
     public Reward(){};
+
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public Reward setAuthor(String author) {
+        this.author = author;
+        return this;
+    }
 
     public Reward setId(int id) {
         this.id = id;

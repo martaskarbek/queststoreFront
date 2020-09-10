@@ -7,18 +7,19 @@ public class Quest {
     private int moduleId;
     private String description;
     private int mentorId;
-    private int categoryId;
+    private Category category;
     private Boolean isActive;
+    private String author;
 
 
-    public Quest(int id, String name, String description, int coinsToEarn, int moduleId, int mentorId, int categoryId, Boolean isActive) {
+    public Quest(int id, String name, String description, int coinsToEarn, int moduleId, int mentorId, Category category, Boolean isActive) {
         this.id = id;
         this.name = name;
         this.coinsToEarn = coinsToEarn;
         this.moduleId = moduleId;
         this.description = description;
         this.mentorId = mentorId;
-        this.categoryId = categoryId;
+        this.category = category;
         this.isActive = isActive;
     }
 
@@ -43,6 +44,14 @@ public class Quest {
 
     public int getCoinsToEarn() {
         return coinsToEarn;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public void setCoinsToEarn(int coinsToEarn) {
@@ -73,12 +82,12 @@ public class Quest {
         this.mentorId = mentorId;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public Boolean getActive() {
@@ -98,7 +107,7 @@ public class Quest {
                 ", moduleId=" + moduleId +
                 ", description='" + description + '\'' +
                 ", mentorId=" + mentorId +
-                ", categoryId=" + categoryId +
+                ", category=" + category +
                 ", isActive=" + isActive +
                 '}';
     }

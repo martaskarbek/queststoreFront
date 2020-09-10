@@ -15,7 +15,7 @@ public class QuestService {
 
     public Quest getQuest(int id){
 
-        return null;
+        return questDAO.get(id);
 
     }
 
@@ -27,5 +27,9 @@ public class QuestService {
 
     public void addQuestToDB(Quest quest) {
         questDAO.add(quest);
+    }
+
+    public void updateQuestInDB(Quest quest) {
+        questDAO.edit(quest);
     }
 }

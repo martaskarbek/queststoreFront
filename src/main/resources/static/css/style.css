@@ -30,7 +30,7 @@ header {
     align-items: flex-end;
     height: 40vh;
     width: 100%;
-    background: url(/static/img/train.jpg/) no-repeat center center;
+    background: url(/static/img/train.jpg) no-repeat center center;
     background-size: cover;
 
 }
@@ -147,7 +147,7 @@ main {
 }
 
 .options ul li a div {
-    background: url(/static/img/plus.png/) no-repeat center center;
+    background: url(/static/img/plus.png) no-repeat center center;
     height: 4em;
 }
 
@@ -178,7 +178,7 @@ main {
 }
 
 .item {
-    background-image: url(/static/img/empty-cart.png/);
+    background-image: url(/static/img/empty-cart.png);
     background-size: cover;
     margin: 1em;
     padding: 5%;
@@ -219,7 +219,7 @@ footer {
 
 }
 .options ul li a div {
-    background: url(/static/img/card_template.png/) no-repeat center center;
+    background: url(/static/img/card_template.png) no-repeat center center;
     background-size: cover;
     margin: 1em;
     padding: 5%;
