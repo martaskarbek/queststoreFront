@@ -1,7 +1,5 @@
 package com.codecool.queststore.models.users;
 
-//import com.codecool.queststore.model.Quest;
-//import com.codecool.queststore.model.Reward;
 
 import com.codecool.queststore.models.Quest;
 import com.codecool.queststore.models.Reward;
@@ -14,7 +12,7 @@ public class Student extends User{
     int studentId;
     int moduleId;
     int wallet;
-    int sharedWalletId;
+    String moduleName;
     List<Quest> questList;
     List<Reward> rewardList;
 
@@ -24,6 +22,14 @@ public class Student extends User{
 
     public Student() {
 
+    }
+
+    public String getModuleName() {
+        return moduleName;
+    }
+
+    public void setModuleName(String moduleName) {
+        this.moduleName = moduleName;
     }
 
     public int getStudentId() {
@@ -50,14 +56,6 @@ public class Student extends User{
         this.wallet = wallet;
     }
 
-    public int getSharedWalletId() {
-        return sharedWalletId;
-    }
-
-    public void setSharedWalletId(int sharedWalletId) {
-        this.sharedWalletId = sharedWalletId;
-    }
-
     public List<Quest> getQuestList() {
         return questList;
     }
@@ -70,19 +68,21 @@ public class Student extends User{
         return rewardList;
     }
 
-    public void setRewardList(List<Reward> rewardList) {
-        this.rewardList = rewardList;
-    }
-
     @Override
     public String toString() {
         return "Student{" +
                 "studentId=" + studentId +
                 ", moduleId=" + moduleId +
                 ", wallet=" + wallet +
-                ", sharedWalletId=" + sharedWalletId +
+                ", moduleName='" + moduleName + '\'' +
                 ", questList=" + questList +
                 ", rewardList=" + rewardList +
-                "} " + super.toString();
+                '}';
     }
+
+    public void setRewardList(List<Reward> rewardList) {
+        this.rewardList = rewardList;
+    }
+
+
 }

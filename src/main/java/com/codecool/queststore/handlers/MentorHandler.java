@@ -163,6 +163,12 @@ public class MentorHandler implements HttpHandler {
                     String addRewardPath = "templates/edit_student.twig";
                     sendUpdateStudentPage(httpExchange, addRewardPath, student);
                 }
+                else if(actions[3].equals("view") && actions[4].matches("\\d+")) {
+                    Student student = studentService.getStudent(Integer.parseInt(actions[4]));
+                    System.out.println(student);
+                    String addRewardPath = "templates/view_student.twig";
+                    sendUpdateStudentPage(httpExchange, addRewardPath, student);
+                }
 
             }
         }
@@ -240,7 +246,18 @@ public class MentorHandler implements HttpHandler {
         response = "data saved";
     }
 
-    private void updateStudent(HttpExchange httpExchange, String[] actions) {
+    private void updateStudent(HttpExchange httpExchange, String[] actions) throws IOException {
+        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
+        BufferedReader br = new BufferedReader(isr);
+        Map<String, String> data = parseFormData(br.readLine());
+        System.out.println(data);
+        int userId = Integer.parseInt(data.get("userId"));
+        User userStudent = createUserStudent(data);
+        userStudent.setId(userId);
+        userService.updateUserStudent(userStudent);
+        studentService.updateStudentByUser(userStudent, data);
+        response = "data saved";
+
     }
 
     private Student createStudentAccount(Map<String, String> data) {
@@ -311,6 +328,7 @@ public class MentorHandler implements HttpHandler {
         model.with("mentor", mentor);
         model.with("rewards", rewards);
         model.with("quests", quests);
+        model.with("students", students);
         response = template.render(model);
         helpers.sendResponse(httpExchange, response, Helpers.OK);
     }
@@ -335,7 +353,14 @@ public class MentorHandler implements HttpHandler {
         helpers.sendResponse(httpExchange, response, Helpers.OK);
     }
 
-    private void sendUpdateStudentPage(HttpExchange httpExchange, String addRewardPath, Student student) {
+    private void sendUpdateStudentPage(HttpExchange httpExchange, String templatePath, Student student) throws IOException {
+        String response = "";
+        JtwigTemplate template = JtwigTemplate.classpathTemplate(templatePath);
+        JtwigModel model = JtwigModel.newModel();
+        model.with("mentor", mentor);
+        model.with("student", student);
+        response = template.render(model);
+        helpers.sendResponse(httpExchange, response, Helpers.OK);
     }
 
 

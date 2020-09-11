@@ -38,6 +38,20 @@ public class UserPostgreSQLDAO implements IUserDAO {
 
     @Override
     public void edit(User user) {
+        postgreSQLJDBC.connect();
+        try {
+            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("UPDATE users SET first_name=?, last_name=?, role_id=?, isactive=?, email=?, password=? WHERE id=?");
+            preparedStatement.setString(1, user.getFirstName());
+            preparedStatement.setString(2, user.getLastName());
+            preparedStatement.setInt(3, Role.getRoleValue(user.getRole()));
+            preparedStatement.setBoolean(4, user.isActive());
+            preparedStatement.setString(5, user.getEmail());
+            preparedStatement.setString(6, user.getPassword());
+            preparedStatement.setInt(7, user.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 

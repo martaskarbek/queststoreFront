@@ -49,5 +49,9 @@ public class UserService {
     public User getUserByCredentials(String email, String password){
         return userDAO.getByCredentials(email, password);
     }
+
+    public void updateUserStudent(User userStudent) {
+        userDAO.edit(userStudent);
+    }
 }
 
