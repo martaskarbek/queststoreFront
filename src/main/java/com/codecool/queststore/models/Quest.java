@@ -10,6 +10,10 @@ public class Quest {
     private Category category;
     private Boolean isActive;
     private String author;
+    private String moduleName;
+    private QuestStatus questStatus;
+    private String questInputArea;
+
 
 
     public Quest(int id, String name, String description, int coinsToEarn, int moduleId, int mentorId, Category category, Boolean isActive) {
@@ -25,6 +29,30 @@ public class Quest {
 
     public Quest() {
     };
+
+    public String getModuleName() {
+        return moduleName;
+    }
+
+    public QuestStatus getQuestStatus() {
+        return questStatus;
+    }
+
+    public void setQuestStatus(QuestStatus questStatus) {
+        this.questStatus = questStatus;
+    }
+
+    public void setModuleName(String moduleName) {
+        this.moduleName = moduleName;
+    }
+
+    public String getQuestInputArea() {
+        return questInputArea;
+    }
+
+    public void setQuestInputArea(String questInputArea) {
+        this.questInputArea = questInputArea;
+    }
 
     public int getId() {
         return id;
@@ -109,6 +137,10 @@ public class Quest {
                 ", mentorId=" + mentorId +
                 ", category=" + category +
                 ", isActive=" + isActive +
+                ", author='" + author + '\'' +
+                ", moduleName='" + moduleName + '\'' +
+                ", questStatus=" + questStatus +
+                ", questInputArea='" + questInputArea + '\'' +
                 '}';
     }
 }

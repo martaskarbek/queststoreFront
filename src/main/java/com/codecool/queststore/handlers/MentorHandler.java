@@ -165,7 +165,8 @@ public class MentorHandler implements HttpHandler {
                 }
                 else if(actions[3].equals("view") && actions[4].matches("\\d+")) {
                     Student student = studentService.getStudent(Integer.parseInt(actions[4]));
-                    System.out.println(student);
+                    System.out.println(student.getRewardList());
+                    System.out.println(student.getQuestList());
                     String addRewardPath = "templates/view_student.twig";
                     sendUpdateStudentPage(httpExchange, addRewardPath, student);
                 }

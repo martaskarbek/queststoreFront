@@ -11,6 +11,7 @@ public class Reward {
     private int mentorId;
     private Boolean isActive;
     private String author;
+    private OrderStatus orderStatus;
 
     public Reward(int id, String name, String description, int price, Category category, int mentorId, boolean isActive) {
         this.id = id;
@@ -24,6 +25,13 @@ public class Reward {
 
     public Reward(){};
 
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
 
     public Boolean getActive() {
         return isActive;
@@ -110,6 +118,7 @@ public class Reward {
                 ", price=" + price +
                 ", category=" + category +
                 ", mentorId=" + mentorId +
+                ", orderStatus=" + orderStatus +
                 '}';
     }
 }

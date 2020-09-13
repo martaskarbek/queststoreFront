@@ -1,8 +1,10 @@
 package com.codecool.queststore.dao;
 
 import com.codecool.queststore.models.Category;
+import com.codecool.queststore.models.OrderStatus;
 import com.codecool.queststore.models.Reward;
 import com.codecool.queststore.models.users.Mentor;
+import com.codecool.queststore.models.users.Student;
 import com.codecool.queststore.models.users.User;
 
 import java.sql.PreparedStatement;
@@ -71,6 +73,7 @@ public class RewardDAO implements IRewardDao{
         int mentorId = rs.getInt("mentor_id");
         Boolean isActive = rs.getBoolean("isactive");
 
+
         Reward reward = new Reward(id, name, description, price, Category.valueOf(categoryId), mentorId, isActive);
 
         try {
@@ -81,6 +84,7 @@ public class RewardDAO implements IRewardDao{
         } catch (SQLException sqlex){
             return reward;
         }
+
     }
 
 
@@ -145,6 +149,32 @@ public class RewardDAO implements IRewardDao{
         }
 
         return mentorRewards;
+    }
+
+    public List<Reward> getStudentRewards(Student student) {
+        List<Reward> studentRewards = new ArrayList<>();
+
+        try {
+            postgreSQLJDBC.connect();
+            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("select rewards.id, rewards.name, rewards.description, rewards.price, rewards.category_id, rewards.mentor_id, rewards.isactive, orders.order_status_id\n" +
+                    "from rewards, orders\n" +
+                    "where orders.reward_id=rewards.id\n" +
+                    "and orders.student_id=?;");
+            preparedStatement.setInt(1, student.getStudentId());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Reward reward = create(resultSet);
+                int orderStatusId = resultSet.getInt("order_status_id");
+                OrderStatus orderStatus = OrderStatus.valueOf(orderStatusId);
+                reward.setOrderStatus(orderStatus);
+                studentRewards.add(reward);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return studentRewards;
     }
 }
 

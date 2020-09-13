@@ -98,23 +98,23 @@ insert into quests (name, description, coins_to_earn, module_id, mentor_id, cate
 insert into quests (name, description, coins_to_earn, module_id, mentor_id, category_id, isactive) values ('quest 9', 'description 9', 3200, 2, 1, 1, TRUE);
 insert into quests (name, description, coins_to_earn, module_id, mentor_id, category_id, isactive) values ('quest 10', 'description 10', 4200, 4, 2, 2, TRUE);
 
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (4, 2, 5000, 1);
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (5, 2, 6500, null);
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (6, 3, 7200, null);
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (8, 2, 8000, null);
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (9, 3, 7100, 2);
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (10, 4, 6200, null);
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (11, 2, 4200, null);
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (12, 3, 7000, null);
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (13, 2, 7650, null);
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (14, 3, 8000, null);
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (15, 2, 5500, null);
+insert into students (user_id, module_id, wallet) values (4, 2, 5000);
+insert into students (user_id, module_id, wallet) values (5, 2, 6500);
+insert into students (user_id, module_id, wallet) values (6, 3, 7200);
+insert into students (user_id, module_id, wallet) values (8, 2, 8000);
+insert into students (user_id, module_id, wallet) values (9, 3, 7100);
+insert into students (user_id, module_id, wallet) values (10, 4, 6200);
+insert into students (user_id, module_id, wallet) values (11, 2, 4200);
+insert into students (user_id, module_id, wallet) values (12, 3, 7000);
+insert into students (user_id, module_id, wallet) values (13, 2, 7650);
+insert into students (user_id, module_id, wallet) values (14, 3, 8000);
+insert into students (user_id, module_id, wallet) values (15, 2, 5500);
 
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (16, 3, 6000, null);
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (17, 2, 5800, null);
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (18, 4, 6150, null);
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (19, 3, 6900, null);
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (20, 4, 8100, null);
+insert into students (user_id, module_id, wallet) values (16, 3, 6000);
+insert into students (user_id, module_id, wallet) values (17, 2, 5800);
+insert into students (user_id, module_id, wallet) values (18, 4, 6150);
+insert into students (user_id, module_id, wallet) values (19, 3, 6900);
+insert into students (user_id, module_id, wallet) values (20, 4, 8100);
 
 insert into student_quests (quest_id, student_id, quest_status_id, quest_input_area) values (1, 5, 3, 'quest 1 submission');
 insert into student_quests (quest_id, student_id, quest_status_id, quest_input_area) values (4, 4, 3, 'quest 4 submission');

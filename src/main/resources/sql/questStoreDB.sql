@@ -87,7 +87,6 @@ CREATE TABLE students
     user_id BIGINT REFERENCES users (id),
     module_id BIGINT REFERENCES modules (id),
     wallet BIGINT,
-	shared_wallet_id BIGINT REFERENCES shared_wallets (id)
 );
 
 CREATE TABLE student_quests

@@ -2,7 +2,9 @@ package com.codecool.queststore.dao;
 
 import com.codecool.queststore.models.Category;
 import com.codecool.queststore.models.Quest;
+import com.codecool.queststore.models.QuestStatus;
 import com.codecool.queststore.models.Reward;
+import com.codecool.queststore.models.users.Student;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -123,4 +125,36 @@ public class QuestDAO implements IQuestDAO {
         }
         return quest;
     }
+
+    public List<Quest> getStudentQuests(Student student) {
+        List<Quest> studentQuests = new ArrayList<>();
+
+        try {
+            postgreSQLJDBC.connect();
+            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("select quests.id, quests.name, quests.description, quests.coins_to_earn, quests.module_id, quests.mentor_id, quests.category_id, quests.isactive,\n" +
+                    "modules.name as module_name, student_quests.quest_status_id, student_quests.quest_input_area\n" +
+                    "from quests, modules, student_quests\n" +
+                    "where quests.module_id=modules.id\n" +
+                    "and student_quests.quest_id=quests.id\n" +
+                    "and student_quests.student_id=?;");
+            preparedStatement.setInt(1, student.getStudentId());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Quest quest = create(resultSet);
+                String moduleName = resultSet.getString("module_name");
+                int questStatusId = resultSet.getInt("quest_status_id");
+                String questInputArea = resultSet.getString("quest_input_area");
+                quest.setModuleName(moduleName);
+                quest.setQuestStatus(QuestStatus.valueOf(questStatusId));
+                quest.setQuestInputArea(questInputArea);
+                studentQuests.add(quest);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return studentQuests;
+    }
+
 }
