@@ -1,11 +1,9 @@
 package com.codecool.queststore.handlers;
 
-import com.codecool.queststore.dao.Connector;
-import com.codecool.queststore.dao.SessionPostgreSQLDAO;
-import com.codecool.queststore.dao.UserPostgreSQLDAO;
+import com.codecool.queststore.helpers.Helpers;
 import com.codecool.queststore.helpers.HttpHelper;
 import com.codecool.queststore.models.users.User;
-import com.codecool.queststore.services.UserService;
+import com.codecool.queststore.services.ServiceFactory;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.jtwig.JtwigModel;
@@ -17,10 +15,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LoginHandler implements HttpHandler {
+    private final ServiceFactory serviceFactory;
+    private final Helpers helpers;
     private HttpExchange exchange;
     private String response;
-    private Connector connector = new Connector();
-    private UserService userService = new UserService(new UserPostgreSQLDAO(connector), new SessionPostgreSQLDAO(connector));
+
+    public LoginHandler(ServiceFactory serviceFactory, Helpers helpers) {
+        this.serviceFactory = serviceFactory;
+        this.helpers = helpers;
+    }
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
@@ -39,7 +42,7 @@ public class LoginHandler implements HttpHandler {
     private void tryUserLogin(HttpExchange exchange) throws IOException {
         String formData = transformBodyToString();
         Map<String, String> inputs = parseFormData(formData);
-        User user = userService.login(inputs.get("email"), inputs.get("password"));
+        User user = serviceFactory.getUserService().login(inputs.get("email"), inputs.get("password"));
         if (user.getSession() != null && user.getSession().getUuid() != null) {
             HttpCookie httpCookie = new HttpCookie(HttpHelper.SESSION_COOKIE_NAME, user.getSession().getUuid());
             exchange.getResponseHeaders().add("Set-Cookie", httpCookie.toString());

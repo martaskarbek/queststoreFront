@@ -14,9 +14,13 @@ import java.util.List;
 
 public class RewardHandler implements HttpHandler {
 
+    private final ServiceFactory serviceFactory;
+    private final Helpers helpers;
 
-    private final RewardService rewardService = new RewardService();
-    private final HttpHelper httpHelper = new HttpHelper();
+    public RewardHandler(ServiceFactory serviceFactory, Helpers helpers) {
+        this.serviceFactory = serviceFactory;
+        this.helpers = helpers;
+    }
 
 
     @Override
@@ -55,9 +59,9 @@ public class RewardHandler implements HttpHandler {
         String response = "";
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/rewards_mentor.twig");
         JtwigModel model = JtwigModel.newModel();
-        List<Reward> rewards = rewardService.getRewards();
+        List<Reward> rewards = serviceFactory.getRewardService().getRewards();
         model.with("rewards", rewards);
         response = template.render(model);
-        httpHelper.sendResponse(httpExchange, response, HttpHelper.OK);
+        helpers.getHttpHelper().sendResponse(httpExchange, response, HttpHelper.OK);
     }
 }

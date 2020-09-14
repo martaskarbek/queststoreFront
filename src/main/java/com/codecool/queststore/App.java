@@ -22,10 +22,10 @@ public class App {
         ServiceFactory serviceFactory = new ServiceFactory(connector);
 
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
-        server.createContext("/login", new LoginHandler());
+        server.createContext("/login", new LoginHandler(serviceFactory, helpers));
         server.createContext("/logout", new LogoutHandler());
         server.createContext("/mentor", new MentorHandler(serviceFactory, helpers));
-        server.createContext("/rewards", new RewardHandler());
+        server.createContext("/rewards", new RewardHandler(serviceFactory, helpers));
         /*
             /student/quests
             /student/artifact
