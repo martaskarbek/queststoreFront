@@ -11,9 +11,9 @@ public class PostgreSQLJDBC {
 //    private final String USER = System.getenv("USER");
 //    private final String PASSWORD = System.getenv("PASSWORD");
 
-    private String user = System.getenv("user");
-    private String password = System.getenv("password");
-    private static final String CONNECTION_STRING = System.getenv("CONNECTION_STRING");
+    private String user = "aldona";
+    private String password = "123";
+    private static final String CONNECTION_STRING = "jdbc:postgresql://localhost:5432/qs";
 
     protected Connection connection = null;
     protected Statement statement;

@@ -175,9 +175,6 @@ public class MentorHandler implements HttpHandler {
         }
     }
 
-
-
-
     private void checkUser(HttpExchange httpExchange) throws Exception {
         Optional<HttpCookie> cookie = cookieHelper.getSessionIdCookie(httpExchange);
         if (cookie.isPresent()) {
@@ -364,15 +361,12 @@ public class MentorHandler implements HttpHandler {
         helpers.sendResponse(httpExchange, response, Helpers.OK);
     }
 
-
-
     private void sendResponse(int status) throws IOException {
         httpExchange.sendResponseHeaders(status, response.getBytes().length);
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
         os.close();
     }
-
 
     private void sendResponse2(String response, HttpExchange exchange, int status) throws IOException {
         if (status == 200) {
@@ -384,5 +378,4 @@ public class MentorHandler implements HttpHandler {
         os.write(response.getBytes());
         os.close();
     }
-
 }
