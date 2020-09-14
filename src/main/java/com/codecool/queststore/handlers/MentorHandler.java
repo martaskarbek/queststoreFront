@@ -54,24 +54,19 @@ public class MentorHandler implements HttpHandler {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         try {
             students = studentService.getStudents();
             rewards = rewardService.getRewards();
             quests = questService.getQuests();
             mentor = mentorService.getMentorByUser(user);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         try {
             checkMethod(method, actions);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
     private void checkMethod(String method, String[] actions) throws Exception {
@@ -185,7 +180,6 @@ public class MentorHandler implements HttpHandler {
         }
     }
 
-
     private void postReward(HttpExchange httpExchange) throws IOException {
         InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
         BufferedReader br = new BufferedReader(isr);
@@ -252,7 +246,6 @@ public class MentorHandler implements HttpHandler {
         userService.updateUserStudent(userStudent);
         studentService.updateStudentByUser(userStudent, data);
         response = "data saved";
-
     }
 
     private Student createStudentAccount(Map<String, String> data) {
@@ -262,9 +255,7 @@ public class MentorHandler implements HttpHandler {
         student.setModuleId(Integer.parseInt(data.get("modules")));
         student.setWallet(Integer.parseInt(data.get("coins")));
         return student;
-
     }
-
 
     private User createUserStudent(Map<String, String> data) {
         User user = new Student();
@@ -277,7 +268,6 @@ public class MentorHandler implements HttpHandler {
         return user;
     }
 
-
     private Quest createQuest(Map<String, String> data) {
         Quest quest = new Quest();
         quest.setName(data.get("name"));
@@ -288,9 +278,7 @@ public class MentorHandler implements HttpHandler {
         quest.setCategory(Category.valueOf(Integer.parseInt(data.get("radio"))));
         quest.setActive(Boolean.parseBoolean(data.get("checkbox")));
         return quest;
-
     }
-
 
     private Reward createReward(Map<String, String> data) {
         Reward reward = new Reward();
@@ -301,7 +289,6 @@ public class MentorHandler implements HttpHandler {
         reward.setMentorId(mentor.getMentorId());
         reward.setActive(Boolean.parseBoolean(data.get("checkbox")));
         return reward;
-
     }
 
     private static Map<String, String> parseFormData(String formData) throws UnsupportedEncodingException {
