@@ -1,6 +1,6 @@
 package com.codecool.queststore.handlers;
 
-import com.codecool.queststore.dao.PostgreSQLJDBC;
+import com.codecool.queststore.dao.Connector;
 import com.codecool.queststore.dao.SessionPostgreSQLDAO;
 import com.codecool.queststore.dao.UserPostgreSQLDAO;
 import com.codecool.queststore.helpers.HttpHelper;
@@ -19,8 +19,8 @@ import java.util.Map;
 public class LoginHandler implements HttpHandler {
     private HttpExchange exchange;
     private String response;
-    private PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
-    private UserService userService = new UserService(new UserPostgreSQLDAO(postgreSQLJDBC), new SessionPostgreSQLDAO(postgreSQLJDBC));
+    private Connector connector = new Connector();
+    private UserService userService = new UserService(new UserPostgreSQLDAO(connector), new SessionPostgreSQLDAO(connector));
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {

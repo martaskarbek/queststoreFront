@@ -1,7 +1,7 @@
 package com.codecool.queststore.services;
 
 
-import com.codecool.queststore.dao.PostgreSQLJDBC;
+import com.codecool.queststore.dao.Connector;
 import com.codecool.queststore.dao.RewardDAO;
 import com.codecool.queststore.models.Category;
 import com.codecool.queststore.models.Reward;
@@ -12,8 +12,8 @@ import java.util.Map;
 
 public class RewardService {
 
-    PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
-    RewardDAO rewardDAO = new RewardDAO(postgreSQLJDBC);
+    Connector connector = new Connector();
+    RewardDAO rewardDAO = new RewardDAO(connector);
 
     public Reward getReward(int id){
         return rewardDAO.get(id);

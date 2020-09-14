@@ -1,23 +1,19 @@
 package com.codecool.queststore.dao;
 
-import com.codecool.queststore.models.Category;
-import com.codecool.queststore.models.Reward;
-import com.codecool.queststore.models.Session;
 import com.codecool.queststore.models.users.Mentor;
 import com.codecool.queststore.models.users.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MentorDAO implements IMentorDAO{
 
-    private  PostgreSQLJDBC postgreSQLJDBC;
+    private Connector connector;
 
-    public MentorDAO(PostgreSQLJDBC postgreSQLJDBC) {
-        this.postgreSQLJDBC = postgreSQLJDBC;
+    public MentorDAO(Connector connector) {
+        this.connector = connector;
     }
 
     @Override
@@ -53,10 +49,10 @@ public class MentorDAO implements IMentorDAO{
 
     @Override
     public Mentor get(int id) {
-        postgreSQLJDBC.connect();
+        connector.connect();
         Mentor mentor = new Mentor();
         try {
-            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("SELECT * FROM users WHERE id = ?;");
+            PreparedStatement preparedStatement = connector.connection.prepareStatement("SELECT * FROM users WHERE id = ?;");
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -70,10 +66,10 @@ public class MentorDAO implements IMentorDAO{
 
     @Override
     public int getMentorId(User user) {
-        postgreSQLJDBC.connect();
+        connector.connect();
         int mentorId = 0;
         try {
-            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("select mentors.id as mentor_id\n" +
+            PreparedStatement preparedStatement = connector.connection.prepareStatement("select mentors.id as mentor_id\n" +
                     "from mentors, users\n" +
                     "where users.id = mentors.user_id\n" +
                     "and\n" +

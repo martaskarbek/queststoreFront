@@ -1,9 +1,6 @@
 package com.codecool.queststore.dao;
 
-import com.codecool.queststore.models.Category;
 import com.codecool.queststore.models.Module;
-import com.codecool.queststore.models.Quest;
-import com.codecool.queststore.models.Reward;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,10 +11,10 @@ import java.util.List;
 public class ModuleDAO implements IModuleDAO {
 
 
-    private  PostgreSQLJDBC postgreSQLJDBC;
+    private Connector connector;
 
-    public ModuleDAO(PostgreSQLJDBC postgreSQLJDBC) {
-        this.postgreSQLJDBC = postgreSQLJDBC;
+    public ModuleDAO(Connector connector) {
+        this.connector = connector;
     }
 
     @Override
@@ -49,8 +46,8 @@ public class ModuleDAO implements IModuleDAO {
         List<Module> mentorModules = new ArrayList<>();
 
         try {
-            postgreSQLJDBC.connect();
-            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("select modules.id, modules.name\n" +
+            connector.connect();
+            PreparedStatement preparedStatement = connector.connection.prepareStatement("select modules.id, modules.name\n" +
                     "from modules, mentor_modules\n" +
                     "where modules.id=mentor_modules.module_id\n" +
                     "and mentor_id=?;");

@@ -14,17 +14,17 @@ import java.util.List;
 
 public class RewardDAO implements IRewardDao{
 
-    private final PostgreSQLJDBC postgreSQLJDBC;
+    private final Connector connector;
 
-    public RewardDAO(PostgreSQLJDBC postgreSQLJDBC) {
-        this.postgreSQLJDBC = postgreSQLJDBC;
+    public RewardDAO(Connector connector) {
+        this.connector = connector;
     }
 
     @Override
     public void add(Reward reward) {
-        postgreSQLJDBC.connect();
+        connector.connect();
         try {
-            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("INSERT INTO rewards" +
+            PreparedStatement preparedStatement = connector.connection.prepareStatement("INSERT INTO rewards" +
                     "(name, description, price, category_id, mentor_id, isactive) VALUES (?, ?, ?, ?, ?, ?)");
             preparedStatement.setString(1, reward.getName());
             preparedStatement.setString(2, reward.getDescription());
@@ -41,9 +41,9 @@ public class RewardDAO implements IRewardDao{
 
     @Override
     public void edit(Reward reward) {
-        postgreSQLJDBC.connect();
+        connector.connect();
         try {
-            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("UPDATE rewards SET name=?, description=?, price=?, category_id=?, mentor_id=?, isactive=? WHERE id=?");
+            PreparedStatement preparedStatement = connector.connection.prepareStatement("UPDATE rewards SET name=?, description=?, price=?, category_id=?, mentor_id=?, isactive=? WHERE id=?");
             preparedStatement.setString(1, reward.getName());
             preparedStatement.setString(2, reward.getDescription());
             preparedStatement.setInt(3, reward.getPrice());
@@ -93,8 +93,8 @@ public class RewardDAO implements IRewardDao{
         List<Reward> rewards = new ArrayList<>();
 
         try {
-            postgreSQLJDBC.connect();
-            ResultSet rs = postgreSQLJDBC.statement.executeQuery("select rewards.id, rewards.name, rewards.description, rewards.price, rewards.category_id, rewards.mentor_id, rewards.isactive, CONCAT(users.first_name, ' ', users.last_name) as author\n" +
+            connector.connect();
+            ResultSet rs = connector.statement.executeQuery("select rewards.id, rewards.name, rewards.description, rewards.price, rewards.category_id, rewards.mentor_id, rewards.isactive, CONCAT(users.first_name, ' ', users.last_name) as author\n" +
                     "from rewards\n" +
                     "inner join mentors on rewards.mentor_id=mentors.id\n" +
                     "inner join users on mentors.user_id=users.id\n" +
@@ -111,10 +111,10 @@ public class RewardDAO implements IRewardDao{
 
     @Override
     public Reward get(int id) {
-        postgreSQLJDBC.connect();
+        connector.connect();
         Reward reward = new Reward();
         try {
-            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("SELECT * FROM rewards WHERE id = ?;");
+            PreparedStatement preparedStatement = connector.connection.prepareStatement("SELECT * FROM rewards WHERE id = ?;");
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -131,8 +131,8 @@ public class RewardDAO implements IRewardDao{
         List<Reward> mentorRewards = new ArrayList<>();
 
         try {
-            postgreSQLJDBC.connect();
-            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("SELECT rewards.id, rewards.name, rewards.description, rewards.price, rewards.category_id, rewards.mentor_id, rewards.isactive\n" +
+            connector.connect();
+            PreparedStatement preparedStatement = connector.connection.prepareStatement("SELECT rewards.id, rewards.name, rewards.description, rewards.price, rewards.category_id, rewards.mentor_id, rewards.isactive\n" +
                     "FROM rewards, mentors, users\n" +
                     "WHERE mentors.user_id = users.id\n" +
                     "AND mentors.id = rewards.mentor_id AND users.id=?;");
@@ -154,8 +154,8 @@ public class RewardDAO implements IRewardDao{
         List<Reward> studentRewards = new ArrayList<>();
 
         try {
-            postgreSQLJDBC.connect();
-            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("select rewards.id, rewards.name, rewards.description, rewards.price, rewards.category_id, rewards.mentor_id, rewards.isactive, orders.order_status_id\n" +
+            connector.connect();
+            PreparedStatement preparedStatement = connector.connection.prepareStatement("select rewards.id, rewards.name, rewards.description, rewards.price, rewards.category_id, rewards.mentor_id, rewards.isactive, orders.order_status_id\n" +
                     "from rewards, orders\n" +
                     "where orders.reward_id=rewards.id\n" +
                     "and orders.student_id=?;");

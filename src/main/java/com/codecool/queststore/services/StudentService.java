@@ -12,11 +12,11 @@ import java.util.Map;
 
 public class StudentService {
 
-    PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
-    StudentDAO studentDAO = new StudentDAO(postgreSQLJDBC);
-    IUserDAO userDAO = new UserPostgreSQLDAO(postgreSQLJDBC);
-    RewardDAO rewardDAO = new RewardDAO(postgreSQLJDBC);
-    QuestDAO questDAO = new QuestDAO(postgreSQLJDBC);
+    Connector connector = new Connector();
+    StudentDAO studentDAO = new StudentDAO(connector);
+    IUserDAO userDAO = new UserPostgreSQLDAO(connector);
+    RewardDAO rewardDAO = new RewardDAO(connector);
+    QuestDAO questDAO = new QuestDAO(connector);
 
     public void addStudent(Student student) {
         studentDAO.add(student);

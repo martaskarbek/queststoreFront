@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class PostgreSQLJDBC {
+public class Connector {
 
 //    private final String URL = System.getenv("URL");
 //    private final String USER = System.getenv("USER");
@@ -21,9 +21,9 @@ public class PostgreSQLJDBC {
     public void connect() {
         try {
             Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection(CONNECTION_STRING, user, password);
+            Connection connection = DriverManager.getConnection(CONNECTION_STRING, user, password);
             System.out.println("Connected to DB");
-            statement = connection.createStatement();
+            Statement statement = connection.createStatement();
         } catch(SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             System.out.println("Not connected");

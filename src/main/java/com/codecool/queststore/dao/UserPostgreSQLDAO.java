@@ -1,6 +1,5 @@
 package com.codecool.queststore.dao;
 
-import com.codecool.queststore.models.Category;
 import com.codecool.queststore.models.Role;
 import com.codecool.queststore.models.users.User;
 import com.codecool.queststore.models.users.UserFactory;
@@ -11,17 +10,17 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class UserPostgreSQLDAO implements IUserDAO {
-    private  PostgreSQLJDBC postgreSQLJDBC;
+    private Connector connector;
 
-    public UserPostgreSQLDAO(PostgreSQLJDBC postgreSQLJDBC) {
-        this.postgreSQLJDBC = postgreSQLJDBC;
+    public UserPostgreSQLDAO(Connector connector) {
+        this.connector = connector;
     }
 
     @Override
     public void add(User user) {
-        postgreSQLJDBC.connect();
+        connector.connect();
         try {
-            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("INSERT INTO users" +
+            PreparedStatement preparedStatement = connector.connection.prepareStatement("INSERT INTO users" +
                     "(first_name, last_name, role_id, isactive, email, password) VALUES (?, ?, ?, ?, ?, ?)");
             preparedStatement.setString(1, user.getFirstName());
             preparedStatement.setString(2, user.getLastName());
@@ -38,9 +37,9 @@ public class UserPostgreSQLDAO implements IUserDAO {
 
     @Override
     public void edit(User user) {
-        postgreSQLJDBC.connect();
+        connector.connect();
         try {
-            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("UPDATE users SET first_name=?, last_name=?, role_id=?, isactive=?, email=?, password=? WHERE id=?");
+            PreparedStatement preparedStatement = connector.connection.prepareStatement("UPDATE users SET first_name=?, last_name=?, role_id=?, isactive=?, email=?, password=? WHERE id=?");
             preparedStatement.setString(1, user.getFirstName());
             preparedStatement.setString(2, user.getLastName());
             preparedStatement.setInt(3, Role.getRoleValue(user.getRole()));
@@ -62,16 +61,16 @@ public class UserPostgreSQLDAO implements IUserDAO {
 
     @Override
     public List<User> getAll() {
-        postgreSQLJDBC.connect();
+        connector.connect();
         return null;
     }
 
     @Override
     public User get(int userId) {
-        postgreSQLJDBC.connect();
+        connector.connect();
         User user = UserFactory.USER_NOT_FOUND;
         try {
-            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("SELECT * FROM users WHERE id = ?;");
+            PreparedStatement preparedStatement = connector.connection.prepareStatement("SELECT * FROM users WHERE id = ?;");
             preparedStatement.setInt(1, userId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -92,10 +91,10 @@ public class UserPostgreSQLDAO implements IUserDAO {
 
     @Override
     public User getByCredentials(String email, String password) {
-        postgreSQLJDBC.connect();
+        connector.connect();
         User user = UserFactory.USER_NOT_FOUND;
         try {
-            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("SELECT * FROM users WHERE email = ? AND password = ?;");
+            PreparedStatement preparedStatement = connector.connection.prepareStatement("SELECT * FROM users WHERE email = ? AND password = ?;");
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();

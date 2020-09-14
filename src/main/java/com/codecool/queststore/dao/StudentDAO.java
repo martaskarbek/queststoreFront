@@ -1,9 +1,5 @@
 package com.codecool.queststore.dao;
 
-import com.codecool.queststore.models.Category;
-import com.codecool.queststore.models.Quest;
-import com.codecool.queststore.models.Reward;
-import com.codecool.queststore.models.Role;
 import com.codecool.queststore.models.users.Student;
 
 import java.sql.PreparedStatement;
@@ -14,20 +10,18 @@ import java.util.List;
 
 public class StudentDAO implements IStudentDAO {
 
+    private Connector connector;
 
-    private PostgreSQLJDBC postgreSQLJDBC;
-
-    public StudentDAO(PostgreSQLJDBC postgreSQLJDBC) {
-        this.postgreSQLJDBC = postgreSQLJDBC;
+    public StudentDAO(Connector connector) {
+        this.connector = connector;
     }
-
 
     @Override
     public void add(Student student) {
 
-        postgreSQLJDBC.connect();
+        connector.connect();
         try {
-            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("INSERT INTO students" +
+            PreparedStatement preparedStatement = connector.connection.prepareStatement("INSERT INTO students" +
                     "(user_id, module_id, wallet) VALUES (?, ?, ?)");
             preparedStatement.setInt(1, student.getId());
             preparedStatement.setInt(2, student.getModuleId());
@@ -41,9 +35,9 @@ public class StudentDAO implements IStudentDAO {
 
     @Override
     public void edit(Student student) {
-        postgreSQLJDBC.connect();
+        connector.connect();
         try {
-            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("UPDATE students SET module_id=?, wallet=? WHERE user_id=?");
+            PreparedStatement preparedStatement = connector.connection.prepareStatement("UPDATE students SET module_id=?, wallet=? WHERE user_id=?");
             preparedStatement.setInt(1, student.getModuleId());
             preparedStatement.setInt(2, student.getWallet());
             preparedStatement.setInt(3, student.getId());
@@ -101,8 +95,8 @@ public class StudentDAO implements IStudentDAO {
         List<Student> students = new ArrayList<>();
 
         try {
-            postgreSQLJDBC.connect();
-            ResultSet rs = postgreSQLJDBC.statement.executeQuery("select users.id as user_id, users.first_name, users.last_name, users.email, users.password, users.isactive, students.id as student_id, students.wallet, students.module_id, modules.name as module_name \n" +
+            connector.connect();
+            ResultSet rs = connector.statement.executeQuery("select users.id as user_id, users.first_name, users.last_name, users.email, users.password, users.isactive, students.id as student_id, students.wallet, students.module_id, modules.name as module_name \n" +
                     "from users\n" +
                     "inner join students on users.id=students.user_id\n" +
                     "inner join modules on students.module_id = modules.id\n" +
@@ -119,10 +113,10 @@ public class StudentDAO implements IStudentDAO {
 
     @Override
     public Student get(int id) {
-        postgreSQLJDBC.connect();
+        connector.connect();
         Student student = new Student();
         try {
-            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("select users.id as user_id, users.first_name, users.last_name, users.email, users.password, users.isactive, students.id as student_id, students.wallet, students.module_id, modules.name as module_name \n" +
+            PreparedStatement preparedStatement = connector.connection.prepareStatement("select users.id as user_id, users.first_name, users.last_name, users.email, users.password, users.isactive, students.id as student_id, students.wallet, students.module_id, modules.name as module_name \n" +
                     "from users, students, modules\n" +
                     "where users.id=students.user_id\n" +
                     "and students.module_id = modules.id\n" +

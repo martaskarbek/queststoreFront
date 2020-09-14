@@ -1,6 +1,6 @@
 package com.codecool.queststore.handlers;
 
-import com.codecool.queststore.dao.PostgreSQLJDBC;
+import com.codecool.queststore.dao.Connector;
 import com.codecool.queststore.dao.SessionPostgreSQLDAO;
 import com.codecool.queststore.dao.UserPostgreSQLDAO;
 import com.codecool.queststore.helpers.CookieHelper;
@@ -21,8 +21,8 @@ import java.util.Optional;
 
 public class StudentHandler implements HttpHandler {
     private CookieHelper cookieHelper = new CookieHelper();
-    private PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
-    private UserService userService = new UserService(new UserPostgreSQLDAO(postgreSQLJDBC), new SessionPostgreSQLDAO(postgreSQLJDBC));
+    private Connector connector = new Connector();
+    private UserService userService = new UserService(new UserPostgreSQLDAO(connector), new SessionPostgreSQLDAO(connector));
     private HttpHelper httpHelper = new HttpHelper();
 
     @Override

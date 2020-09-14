@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LogoutHandler implements HttpHandler {
-    private PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
-    private UserService userService = new UserService(new UserPostgreSQLDAO(postgreSQLJDBC), new SessionPostgreSQLDAO(postgreSQLJDBC));
+    private Connector connector = new Connector();
+    private UserService userService = new UserService(new UserPostgreSQLDAO(connector), new SessionPostgreSQLDAO(connector));
 
     public void handle(HttpExchange exchange) throws IOException {
         String cookieStr = exchange.getRequestHeaders().getFirst("Cookie");

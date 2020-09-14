@@ -1,11 +1,9 @@
 package com.codecool.queststore.services;
 
-import com.codecool.queststore.dao.PostgreSQLJDBC;
+import com.codecool.queststore.dao.Connector;
 import com.codecool.queststore.dao.QuestDAO;
-import com.codecool.queststore.dao.RewardDAO;
 import com.codecool.queststore.models.Category;
 import com.codecool.queststore.models.Quest;
-import com.codecool.queststore.models.Reward;
 import com.codecool.queststore.models.users.Mentor;
 
 import java.util.List;
@@ -13,8 +11,8 @@ import java.util.Map;
 
 public class QuestService {
 
-    PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
-    QuestDAO questDAO = new QuestDAO(postgreSQLJDBC);
+    Connector connector = new Connector();
+    QuestDAO questDAO = new QuestDAO(connector);
 
     public Quest getQuest(int id){
         return questDAO.get(id);

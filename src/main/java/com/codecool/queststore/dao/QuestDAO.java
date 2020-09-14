@@ -3,7 +3,6 @@ package com.codecool.queststore.dao;
 import com.codecool.queststore.models.Category;
 import com.codecool.queststore.models.Quest;
 import com.codecool.queststore.models.QuestStatus;
-import com.codecool.queststore.models.Reward;
 import com.codecool.queststore.models.users.Student;
 
 import java.sql.PreparedStatement;
@@ -14,18 +13,18 @@ import java.util.List;
 
 public class QuestDAO implements IQuestDAO {
 
-    private final PostgreSQLJDBC postgreSQLJDBC;
+    private final Connector connector;
 
-    public QuestDAO(PostgreSQLJDBC postgreSQLJDBC) {
-        this.postgreSQLJDBC = postgreSQLJDBC;
+    public QuestDAO(Connector connector) {
+        this.connector = connector;
     }
 
 
     @Override
     public void add(Quest quest) {
-        postgreSQLJDBC.connect();
+        connector.connect();
         try {
-            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("INSERT INTO quests" +
+            PreparedStatement preparedStatement = connector.connection.prepareStatement("INSERT INTO quests" +
                     "(name, description, coins_to_earn, module_id, mentor_id, category_id, isactive) VALUES (?, ?, ?, ?, ?, ?, ?)");
             preparedStatement.setString(1, quest.getName());
             preparedStatement.setString(2, quest.getDescription());
@@ -43,9 +42,9 @@ public class QuestDAO implements IQuestDAO {
 
     @Override
     public void edit(Quest quest) {
-        postgreSQLJDBC.connect();
+        connector.connect();
         try {
-            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("UPDATE quests SET name=?, description=?, coins_to_earn=?, category_id=?, mentor_id=?, module_id=?, isactive=? WHERE id=?");
+            PreparedStatement preparedStatement = connector.connection.prepareStatement("UPDATE quests SET name=?, description=?, coins_to_earn=?, category_id=?, mentor_id=?, module_id=?, isactive=? WHERE id=?");
             preparedStatement.setString(1, quest.getName());
             preparedStatement.setString(2, quest.getDescription());
             preparedStatement.setInt(3, quest.getCoinsToEarn());
@@ -93,8 +92,8 @@ public class QuestDAO implements IQuestDAO {
         List<Quest> quests = new ArrayList<>();
 
         try {
-            postgreSQLJDBC.connect();
-            ResultSet rs = postgreSQLJDBC.statement.executeQuery("select quests.id, quests.name, quests.description, quests.coins_to_earn, quests.module_id, quests.mentor_id, quests.category_id, quests.isactive, CONCAT(users.first_name, ' ', users.last_name) as author\n" +
+            connector.connect();
+            ResultSet rs = connector.statement.executeQuery("select quests.id, quests.name, quests.description, quests.coins_to_earn, quests.module_id, quests.mentor_id, quests.category_id, quests.isactive, CONCAT(users.first_name, ' ', users.last_name) as author\n" +
                     "from quests\n" +
                     "inner join mentors on quests.mentor_id=mentors.id\n" +
                     "inner join users on mentors.user_id=users.id\n" +
@@ -111,10 +110,10 @@ public class QuestDAO implements IQuestDAO {
 
     @Override
     public Quest get(int id) {
-        postgreSQLJDBC.connect();
+        connector.connect();
         Quest quest = new Quest();
         try {
-            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("SELECT * FROM quests WHERE id = ?;");
+            PreparedStatement preparedStatement = connector.connection.prepareStatement("SELECT * FROM quests WHERE id = ?;");
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -130,8 +129,8 @@ public class QuestDAO implements IQuestDAO {
         List<Quest> studentQuests = new ArrayList<>();
 
         try {
-            postgreSQLJDBC.connect();
-            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("select quests.id, quests.name, quests.description, quests.coins_to_earn, quests.module_id, quests.mentor_id, quests.category_id, quests.isactive,\n" +
+            connector.connect();
+            PreparedStatement preparedStatement = connector.connection.prepareStatement("select quests.id, quests.name, quests.description, quests.coins_to_earn, quests.module_id, quests.mentor_id, quests.category_id, quests.isactive,\n" +
                     "modules.name as module_name, student_quests.quest_status_id, student_quests.quest_input_area\n" +
                     "from quests, modules, student_quests\n" +
                     "where quests.module_id=modules.id\n" +

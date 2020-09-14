@@ -3,10 +3,8 @@ package com.codecool.queststore.handlers;
 import com.codecool.queststore.dao.*;
 import com.codecool.queststore.helpers.CookieHelper;
 import com.codecool.queststore.helpers.HttpHelper;
-import com.codecool.queststore.models.Category;
 import com.codecool.queststore.models.Quest;
 import com.codecool.queststore.models.Reward;
-import com.codecool.queststore.models.Role;
 import com.codecool.queststore.models.users.Mentor;
 import com.codecool.queststore.models.users.Student;
 import com.codecool.queststore.models.users.User;
@@ -18,14 +16,13 @@ import org.jtwig.JtwigTemplate;
 
 import java.io.*;
 import java.net.HttpCookie;
-import java.net.URLDecoder;
 import java.util.*;
 
 public class MentorHandler implements HttpHandler {
 
-    private PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
-    private UserService userService = new UserService(new UserPostgreSQLDAO(postgreSQLJDBC), new SessionPostgreSQLDAO(postgreSQLJDBC));
-    private MentorService mentorService = new MentorService(new MentorDAO(postgreSQLJDBC), new RewardDAO(postgreSQLJDBC), new ModuleDAO(postgreSQLJDBC));
+    private Connector connector = new Connector();
+    private UserService userService = new UserService(new UserPostgreSQLDAO(connector), new SessionPostgreSQLDAO(connector));
+    private MentorService mentorService = new MentorService(new MentorDAO(connector), new RewardDAO(connector), new ModuleDAO(connector));
     private RewardService rewardService = new RewardService();
     private QuestService questService = new QuestService();
     private StudentService studentService = new StudentService();
