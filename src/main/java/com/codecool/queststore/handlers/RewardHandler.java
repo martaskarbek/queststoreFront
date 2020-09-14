@@ -1,6 +1,6 @@
 package com.codecool.queststore.handlers;
 
-import com.codecool.queststore.helpers.Helpers;
+import com.codecool.queststore.helpers.HttpHelper;
 import com.codecool.queststore.models.Reward;
 import com.codecool.queststore.services.RewardService;
 import com.sun.net.httpserver.Headers;
@@ -16,7 +16,7 @@ public class RewardHandler implements HttpHandler {
 
 
     private final RewardService rewardService = new RewardService();
-    private final Helpers helpers = new Helpers();
+    private final HttpHelper httpHelper = new HttpHelper();
 
 
     @Override
@@ -58,6 +58,6 @@ public class RewardHandler implements HttpHandler {
         List<Reward> rewards = rewardService.getRewards();
         model.with("rewards", rewards);
         response = template.render(model);
-        helpers.sendResponse(httpExchange, response, Helpers.OK);
+        httpHelper.sendResponse(httpExchange, response, HttpHelper.OK);
     }
 }

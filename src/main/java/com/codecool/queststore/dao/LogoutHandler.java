@@ -1,6 +1,6 @@
 package com.codecool.queststore.dao;
 
-import com.codecool.queststore.helpers.Helpers;
+import com.codecool.queststore.helpers.HttpHelper;
 import com.codecool.queststore.services.UserService;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -20,7 +20,7 @@ public class LogoutHandler implements HttpHandler {
         List<HttpCookie> cookies = parseCookies(cookieStr);
         String sessionId = findSessionFromCookie(cookies);
         userService.logout(sessionId);
-        HttpCookie cookie = new HttpCookie(Helpers.SESSION_COOKIE_NAME, "");
+        HttpCookie cookie = new HttpCookie(HttpHelper.SESSION_COOKIE_NAME, "");
         cookie.setMaxAge(-1);
         exchange.getResponseHeaders().add("Location", "/login");
         exchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
@@ -43,7 +43,7 @@ public class LogoutHandler implements HttpHandler {
 
     private String findSessionFromCookie(List<HttpCookie> cookies) {
         for (HttpCookie cookie : cookies) {
-            if (cookie.getName().equals(Helpers.SESSION_COOKIE_NAME)) {
+            if (cookie.getName().equals(HttpHelper.SESSION_COOKIE_NAME)) {
                 return cookie.getValue();
             }
         }

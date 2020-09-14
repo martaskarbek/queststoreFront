@@ -5,7 +5,7 @@ import com.sun.net.httpserver.HttpExchange;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class Helpers {
+public class HttpHelper {
 
     public static final String SESSION_COOKIE_NAME = "SessionID";
     public static final int CREATED = 201;
@@ -16,9 +16,8 @@ public class Helpers {
 
     public void sendResponse(HttpExchange httpExchange, String response, int status) throws IOException {
         httpExchange.sendResponseHeaders(status, response.length());
-        OutputStream os = httpExchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
+        OutputStream outputStream = httpExchange.getResponseBody();
+        outputStream.write(response.getBytes());
+        outputStream.close();
     }
-
 }

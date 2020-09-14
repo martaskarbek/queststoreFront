@@ -39,7 +39,7 @@ public class CookieHelper {
     public Optional<HttpCookie> getSessionIdCookie(HttpExchange httpExchange){
         String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
         List<HttpCookie> cookies = parseCookies(cookieStr);
-        return findCookieByName(Helpers.SESSION_COOKIE_NAME, cookies);
+        return findCookieByName(HttpHelper.SESSION_COOKIE_NAME, cookies);
 
     }
 }

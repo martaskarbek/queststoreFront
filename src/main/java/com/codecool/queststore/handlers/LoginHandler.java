@@ -3,7 +3,7 @@ package com.codecool.queststore.handlers;
 import com.codecool.queststore.dao.PostgreSQLJDBC;
 import com.codecool.queststore.dao.SessionPostgreSQLDAO;
 import com.codecool.queststore.dao.UserPostgreSQLDAO;
-import com.codecool.queststore.helpers.Helpers;
+import com.codecool.queststore.helpers.HttpHelper;
 import com.codecool.queststore.models.users.User;
 import com.codecool.queststore.services.UserService;
 import com.sun.net.httpserver.HttpExchange;
@@ -41,7 +41,7 @@ public class LoginHandler implements HttpHandler {
         Map<String, String> inputs = parseFormData(formData);
         User user = userService.login(inputs.get("email"), inputs.get("password"));
         if (user.getSession() != null && user.getSession().getUuid() != null) {
-            HttpCookie httpCookie = new HttpCookie(Helpers.SESSION_COOKIE_NAME, user.getSession().getUuid());
+            HttpCookie httpCookie = new HttpCookie(HttpHelper.SESSION_COOKIE_NAME, user.getSession().getUuid());
             exchange.getResponseHeaders().add("Set-Cookie", httpCookie.toString());
             String redirectURL = "";
             switch (user.getRole()) {
@@ -63,7 +63,7 @@ public class LoginHandler implements HttpHandler {
         model.with("message", message);
         response = template.render(model);
         //HttpResponse
-        sendResponse(Helpers.OK);
+        sendResponse(HttpHelper.OK);
     }
 
     private void sendResponse(int rCode) throws IOException {
