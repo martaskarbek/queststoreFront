@@ -28,7 +28,7 @@ public class StudentService {
         studentDAO.add(student);
     }
 
-    public List<Student> getStudents() throws Exception {
+    public List<Student> getStudents() {
         return studentDAO.getAll();
     }
 

@@ -88,7 +88,7 @@ public class QuestDAO implements IQuestDAO {
     }
 
     @Override
-    public List<Quest> getAll() throws Exception {
+    public List<Quest> getAll() {
         List<Quest> quests = new ArrayList<>();
 
         try {

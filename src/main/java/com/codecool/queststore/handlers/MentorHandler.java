@@ -36,35 +36,37 @@ public class MentorHandler implements HttpHandler {
     }
 
     @Override
-    public void handle(HttpExchange httpExchange) throws IOException {
-
-        this.httpExchange = httpExchange;
-        this.response = "";
+    public void handle(HttpExchange httpExchange) {
+        init(httpExchange);
         String method = httpExchange.getRequestMethod();
         String url = httpExchange.getRequestURI().getRawPath();
         String[] actions = url.split("/");
 
         try {
             checkUser(httpExchange);
+            if (user.getId() == 0) {
+                String redirectURL = "/login";
+                httpExchange.getResponseHeaders().add("Location", redirectURL);
+                sendResponse(HttpHelper.MOVED_PERMANENTLY);
+            }
         } catch (Exception e) {
-            e.printStackTrace();
+            // send page you are not authorized 401
         }
-        try {
-            students = serviceFactory.getStudentService().getStudents();
-            rewards = serviceFactory.getRewardService().getRewards();
-            quests = serviceFactory.getQuestService().getQuests();
-            mentor = serviceFactory.getMentorService().getMentorByUser(user);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            checkMethod(method, actions);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        students = serviceFactory.getStudentService().getStudents();
+        rewards = serviceFactory.getRewardService().getRewards();
+        quests = serviceFactory.getQuestService().getQuests();
+        mentor = serviceFactory.getMentorService().getMentorByUser(user);
+
+        checkMethod(method, actions);
     }
 
-    private void checkMethod(String method, String[] actions) throws Exception {
+    private void init(HttpExchange httpExchange) {
+        this.httpExchange = httpExchange;
+        this.response = "";
+    }
+
+    private void checkMethod(String method, String[] actions) {
         if (method.equals("GET")) {
             getActions(actions);
         }
@@ -75,8 +77,13 @@ public class MentorHandler implements HttpHandler {
         }
     }
 
-    private void postActions(String[] actions) throws IOException {
-        Map<String, String> formData = helpers.getHttpHelper().getFormData(httpExchange);
+    private void postActions(String[] actions) {
+        Map<String, String> formData = null;
+        try {
+            formData = helpers.getHttpHelper().getFormData(httpExchange);
+        } catch (IOException e) {
+            // send page 500
+        }
         switch (actions[2]) {
             case "add_artifact" -> serviceFactory.getRewardService().createReward(formData, mentor);
             case "add_quest" -> serviceFactory.getQuestService().createQuest(formData, mentor);
@@ -87,10 +94,10 @@ public class MentorHandler implements HttpHandler {
         }
         String redirectURL = "/mentor";
         httpExchange.getResponseHeaders().add("Location", redirectURL);
-        helpers.getHttpHelper().sendResponse(httpExchange, response, HttpHelper.MOVED_PERMANENTLY);
+        sendResponse(HttpHelper.MOVED_PERMANENTLY);
     }
 
-    private void getActions(String[] actions) throws Exception {
+    private void getActions(String[] actions) {
 
         if (actions[1].equals("mentor") && actions.length == 2) {
             String templatePath = "templates/mentor_menu.twig";
@@ -169,7 +176,7 @@ public class MentorHandler implements HttpHandler {
         }
     }
 
-    private void sendMentorPage(String templatePath) throws Exception {
+    private void sendMentorPage(String templatePath) {
         JtwigTemplate template = JtwigTemplate.classpathTemplate(templatePath);
         JtwigModel model = JtwigModel.newModel();
         model.with("mentor", mentor);
@@ -180,7 +187,7 @@ public class MentorHandler implements HttpHandler {
         sendResponse(HttpHelper.OK);
     }
 
-    private void sendUpdateRewardPage(String templatePath, Reward reward) throws IOException {
+    private void sendUpdateRewardPage(String templatePath, Reward reward) {
         JtwigTemplate template = JtwigTemplate.classpathTemplate(templatePath);
         JtwigModel model = JtwigModel.newModel();
         model.with("mentor", mentor);
@@ -189,7 +196,7 @@ public class MentorHandler implements HttpHandler {
         sendResponse(HttpHelper.OK);
     }
 
-    private void sendUpdateQuestPage(String templatePath, Quest quest) throws IOException {
+    private void sendUpdateQuestPage(String templatePath, Quest quest) {
         JtwigTemplate template = JtwigTemplate.classpathTemplate(templatePath);
         JtwigModel model = JtwigModel.newModel();
         model.with("mentor", mentor);
@@ -198,7 +205,7 @@ public class MentorHandler implements HttpHandler {
         sendResponse(HttpHelper.OK);
     }
 
-    private void sendUpdateStudentPage(String templatePath, Student student) throws IOException {
+    private void sendUpdateStudentPage(String templatePath, Student student) {
         JtwigTemplate template = JtwigTemplate.classpathTemplate(templatePath);
         JtwigModel model = JtwigModel.newModel();
         model.with("mentor", mentor);
@@ -207,7 +214,11 @@ public class MentorHandler implements HttpHandler {
         sendResponse(HttpHelper.OK);
     }
 
-    private void sendResponse(int statusCode) throws IOException {
-        helpers.getHttpHelper().sendResponse(httpExchange, response, statusCode);
+    private void sendResponse(int statusCode) {
+        try {
+            helpers.getHttpHelper().sendResponse(httpExchange, response, statusCode);
+        } catch (IOException e) {
+            // send page 500
+        }
     }
 }

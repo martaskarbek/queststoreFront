@@ -22,7 +22,7 @@ public class MentorService {
         this.moduleDAO = moduleDAO;
     };
 
-    public Mentor getMentorByUser(User user) throws Exception {
+    public Mentor getMentorByUser(User user) {
         Mentor mentor = new Mentor();
         mentor.setId(user.getId())
                 .setFirstName(user.getFirstName())

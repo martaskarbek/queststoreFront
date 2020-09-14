@@ -1,8 +1,10 @@
 package com.codecool.queststore.handlers;
 
+import com.codecool.queststore.helpers.Helpers;
 import com.codecool.queststore.helpers.HttpHelper;
 import com.codecool.queststore.models.Reward;
 import com.codecool.queststore.services.RewardService;
+import com.codecool.queststore.services.ServiceFactory;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;

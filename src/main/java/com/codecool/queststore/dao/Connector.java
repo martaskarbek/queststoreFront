@@ -21,9 +21,9 @@ public class Connector {
     public void connect() {
         try {
             Class.forName("org.postgresql.Driver");
-            Connection connection = DriverManager.getConnection(CONNECTION_STRING, user, password);
+            connection = DriverManager.getConnection(CONNECTION_STRING, user, password);
             System.out.println("Connected to DB");
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
         } catch(SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             System.out.println("Not connected");

@@ -20,7 +20,7 @@ public class QuestService {
         return questDAO.get(id);
     }
 
-    public List<Quest> getQuests() throws Exception {
+    public List<Quest> getQuests() {
         return  questDAO.getAll();
     }
 

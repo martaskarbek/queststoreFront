@@ -90,7 +90,7 @@ public class StudentDAO implements IStudentDAO {
     }
 
     @Override
-    public List<Student> getAll() throws Exception {
+    public List<Student> getAll() {
 
         List<Student> students = new ArrayList<>();
 

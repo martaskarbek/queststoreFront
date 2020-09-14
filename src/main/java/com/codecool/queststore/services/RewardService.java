@@ -20,7 +20,7 @@ public class RewardService {
         return rewardDAO.get(id);
     }
 
-    public List<Reward> getRewards() throws Exception {
+    public List<Reward> getRewards() {
         return  rewardDAO.getAll();
     }
 
