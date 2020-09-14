@@ -3,7 +3,6 @@ package com.codecool.queststore.dao;
 import com.codecool.queststore.models.Category;
 import com.codecool.queststore.models.OrderStatus;
 import com.codecool.queststore.models.Reward;
-import com.codecool.queststore.models.users.Mentor;
 import com.codecool.queststore.models.users.Student;
 import com.codecool.queststore.models.users.User;
 

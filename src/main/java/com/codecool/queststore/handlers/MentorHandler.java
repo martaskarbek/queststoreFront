@@ -25,7 +25,7 @@ public class MentorHandler implements HttpHandler {
 
     private PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
     private UserService userService = new UserService(new UserPostgreSQLDAO(postgreSQLJDBC), new SessionPostgreSQLDAO(postgreSQLJDBC));
-    private MentorService mentorService = new MentorService(new MentorDAO(postgreSQLJDBC), new RewardDAO(postgreSQLJDBC));
+    private MentorService mentorService = new MentorService(new MentorDAO(postgreSQLJDBC), new RewardDAO(postgreSQLJDBC), new ModuleDAO(postgreSQLJDBC));
     private RewardService rewardService = new RewardService();
     private QuestService questService = new QuestService();
     private StudentService studentService = new StudentService();

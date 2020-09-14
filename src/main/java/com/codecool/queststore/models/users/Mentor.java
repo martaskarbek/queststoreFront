@@ -1,5 +1,6 @@
 package com.codecool.queststore.models.users;
 
+import com.codecool.queststore.models.Module;
 import com.codecool.queststore.models.Quest;
 import com.codecool.queststore.models.Reward;
 import com.codecool.queststore.models.Role;

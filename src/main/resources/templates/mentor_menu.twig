@@ -36,37 +36,37 @@
 
       <aside class="options">
         <div id="options-right">
-          <h1>Sort options by: </h1>
+          <h1>Select option: </h1>
           <ul>
-            <li><a href="#"><p>ADD</p></a></li>
-            <li><a href="#"><p>SHOW</p></a></li>
-            <li><a href="#"><p>UPDATE</p></a></li>
-            <li><a href="#"><p>DELETE</p></a></li>
+            <li><a href="mentor/students_mentor"><p>SHOW STUDENTS</p></a></li>
+            <li><a href="/mentor/add_student"><p>ADD STUDENT</p></a></li>
+            <li><a href="/mentor/add_quest"><p>ADD QUEST</p></a></li>
+            <li><a href="/mentor/add_artifact"><p>ADD ARTIFACT</p></a></li>
           </ul>
         </div>
       </aside>
 
       <section class="main-content">
-        <h1>Select action: </h1>
+        <h1>Assignments to check</h1>
         <div class="items-content">
-          <div class="item">
-            <a href="/mentor/students_mentor">Show students' list</a>
-          </div>
-          <div class="item">
-            <a href="/mentor/add_student">Create a new student account</a>
-          </div>
-          <div class="item">
-            <a href="#">Mark a quest as done</a>
-          </div>
-          <div class="item">
-            <a href="#">See students' wallets</a>
-          </div>
-          <div class="item">
-            <a href="/mentor/add_quest">Add new quest</a>
-          </div>
-          <div class="item">
-            <a href="/mentor/add_artifact">Add new reward</a>
-          </div>
+{#          <div class="item">#}
+{#            <a href="/mentor/students_mentor">Show students' list</a>#}
+{#          </div>#}
+{#          <div class="item">#}
+{#            <a href="/mentor/add_student">Create a new student account</a>#}
+{#          </div>#}
+{#          <div class="item">#}
+{#            <a href="#">Mark a quest as done</a>#}
+{#          </div>#}
+{#          <div class="item">#}
+{#            <a href="#">See students' wallets</a>#}
+{#          </div>#}
+{#          <div class="item">#}
+{#            <a href="/mentor/add_quest">Add new quest</a>#}
+{#          </div>#}
+{#          <div class="item">#}
+{#            <a href="/mentor/add_artifact">Add new reward</a>#}
+{#          </div>#}
         </div>
       </section>
 
@@ -75,7 +75,13 @@
           <img alt="severus" src="/static/img/severus.png">
           <h2>Name: {{ mentor.getFirstName() }}</h2><br>
           <h2>Surname: {{ mentor.getLastName() }}</h2><br>
-          <h2>Spec: Code brewing</h2><br>
+{#          <h2>Your modules:</h2><br>#}
+          {% for module in mentor.getModules() %}
+
+            <h2>Module: {{ module.getName() }}</h2><br>
+
+          {% endfor %}
+
         </div>
         <div id="right-bar-right">
 
