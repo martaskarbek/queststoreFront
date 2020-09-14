@@ -1,5 +1,7 @@
 package com.codecool.queststore.helpers;
 
+import com.sun.net.httpserver.HttpExchange;
+
 import java.net.HttpCookie;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,4 +35,12 @@ public class CookieHelper {
         }
         return Optional.empty();
     }
+
+    public Optional<HttpCookie> getSessionIdCookie(HttpExchange httpExchange){
+        String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
+        List<HttpCookie> cookies = parseCookies(cookieStr);
+        return findCookieByName(Helpers.SESSION_COOKIE_NAME, cookies);
+
+    }
 }
+

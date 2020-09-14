@@ -1,11 +1,10 @@
-
 .options ul li a {
-    margin-top: 4em;
+    margin-top: 0.5em;
 }
 
 .main-content {
     max-width: 64%;
-} 
+}
 
 
 .items-content {
@@ -26,25 +25,32 @@ form {
 
 }
 
-form > .input {
+form > .input, #modules {
     margin: 0 1em 1em 1em;
     padding-left: 0.5em;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25), inset 0 4px 5px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
     line-height: 1.8em;
     background-color: #ccc;
+    font-size: 1em;
 
+}
+
+#modules-label {
+    margin-left: 1em;
+    margin-bottom: 0.25em;
 }
 
 #description {
-    height: 20vh;
+    height: 15vh;
 }
 
 
-#button {
+.button {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+    justify-content: left ;
 
 }
 
@@ -55,8 +61,9 @@ button {
     color: black;
     height: 4vh;
     width: 10vh;
-    
+
 }
+
 
 button:hover {
     background-color: #eee;
@@ -89,7 +96,12 @@ form .radio input {
 #avatar {
     background: url(/static/img/card_template.png/) no-repeat center center;
     background-size: cover;
+    border-radius: 20px;
     margin: 1em;
     padding: 5%;
     height: 30vh;
+}
+
+#checkbox{
+    margin-left: 1em;
 }

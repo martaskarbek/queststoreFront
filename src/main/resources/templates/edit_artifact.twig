@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css/">
+    <link rel="stylesheet" type="text/css" href="/static/css/add-artifact.css/">
+    <link rel="icon" href="/static/img/favicon.ico/">
+    <script src="/static/js/editReward.js" defer></script>
+    <title>Add artifact</title>
+</head>
+
+<body>
+    <div class="container">
+
+        <header>
+            <div>
+                <h1>School of Code</h1><br>
+                <p>Magical ways of coding</p>
+            </div>
+
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="/mentor">Back</a></li>
+
+            </ul>
+
+        </nav>
+
+        <main>
+            <aside class="options">
+                <div id="options-right">
+                  <ul>
+
+                  </ul>
+                </div>
+              </aside>
+
+            <section class="main-content">
+                <div class="items-content">
+                    
+                    <form id="add-reward">
+                        <h1>UPDATE REWARD <span id="rewardId">{{ reward.getId() }}</span></h1>
+                        <label for="name"></label>
+                        <input class="input" id="name" name="name" type="text" placeholder="Name of artifact" value="{{ reward.getName() }}">
+
+                        <label for="price"></label>
+                        <input class="input" id="price" name="price" type="text" placeholder="Value" value="{{ reward.getPrice() }}">
+
+                        <label for="description"></label>
+                        <textarea class="input" id="description" name="description" placeholder="Description">{{ reward.Description }}</textarea>
+
+                        <div class="button">
+                            <button type="submit">SUBMIT</button>
+                            <button type="reset">RESET</button>
+                            <div class="radio">
+                                <label><input id="quest-basic" type="radio" name="radio" value="1"> Basic</label>
+                                <label><input id="quest-extra" type="radio" name="radio" value="2"> Extra</label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input id="checkbox" type="checkbox" name="checkbox" value="true"> Is active</label>
+                            </div>
+                        </div>
+
+                    </form>
+                    <div id="item">
+
+                    </div>
+
+
+                </div>
+            </section>
+
+            <aside class="right-bar">    
+                <div id="right-bar-left">
+                    <h1>REWARD</h1>
+                    
+                    <div id="avatar">
+                        
+                    </div>
+                </div>
+                <div id="right-bar-right">
+                </div>
+            </aside>
+
+        </main>
+
+        <footer>&copy; Dumbledore's Army</footer>
+    </div>
+
+</body>
+
+</html>

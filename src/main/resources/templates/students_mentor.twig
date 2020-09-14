@@ -1,0 +1,99 @@
+{% extends 'base.twig' %}
+
+{% block title %}
+    {{ parent() }} | rewards
+{% endblock %}
+
+{% block styles %}
+    {{ parent() }}
+
+    <link rel="stylesheet" type="text/css" href="/static/css/students.css/">
+{% endblock %}
+
+{% block scripts %}
+    <script src="/static/js/students.js" defer></script>
+{% endblock %}
+
+{% block container %}
+    <header>
+        <div>
+            <h1>School of Code</h1><br>
+            <p>Magical ways of coding</p>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="/mentor">Back</a></li>
+
+        </ul>
+
+    </nav>
+
+    <main>
+
+        <aside class="options">
+            <div id="options-right">
+                <ul>
+
+                </ul>
+                <br><br><br><br><br><br><br><br><br><br><br>
+
+                <br><br>
+
+            </div>
+        </aside>
+
+        <section class="main-content">
+            <h1>STUDENTS</h1>
+            <div class="items-content">
+
+
+                    <table>
+                        <tr>
+                            <th>NAME</th>
+                            <th>SURNAME</th>
+                            <th>EMAIL</th>
+                            <th>COINS</th>
+                            <th>MODULE</th>
+                            <th>IS_ACTIVE</th>
+                            <th>EDIT</th>
+                            <th>VIEW</th>
+                        </tr>
+                        {% for student in students %}
+                        <tr>
+                            <td>{{ student.getFirstName() }}</td>
+                            <td>{{ student.getLastName() }}</td>
+                            <td>{{ student.getEmail() }}</td>
+                            <td>{{ student.getWallet() }}</td>
+                            <td>{{ student.getModuleName() }}</td>
+                            <td>{{ student.isActive() }}</td>
+                            <td><a class="edit" href="/mentor/students_mentor/edit/{{ student.getId() }}">EDIT</a></td>
+                            <td><a class="view" href="/mentor/students_mentor/view/{{ student.getId() }}">VIEW</a></td>
+
+                        </tr>
+                        {% endfor %}
+
+
+
+                    </table>
+
+            </div>
+        </section>
+
+        <aside class="right-bar">
+            <div id="right-bar-left">
+                <img alt="severus" src="/static/img/severus.png">
+                <h2>Name: {{ mentor.getFirstName() }}</h2><br>
+                <h2>Surname: {{ mentor.getLastName() }}</h2><br>
+                <h2>Spec: Code brewing</h2><br>
+            </div>
+            <div id="right-bar-right">
+
+            </div>
+        </aside>
+
+    </main>
+
+    <footer>&copy; Dumbledore's Army</footer>
+{% endblock %}

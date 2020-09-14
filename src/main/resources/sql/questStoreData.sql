@@ -5,7 +5,7 @@ insert into roles (role) values ('student');
 
 
 insert into users (first_name, last_name, role_id, isActive, email, password) values
-('Mateusz', 'Steliga', 2, TRUE, 'mateusz.eliga@codecool.com', 'mateusz123');
+('Severus', 'Snape', 2, TRUE, 'severus@snape.com', 'severus123');
 insert into users (first_name, last_name, role_id, isActive, email, password) values
 ('Agnieszka', 'Koszany', 2, TRUE, 'agnieszka.koszany@codecool.com', 'agnieszka123');
 insert into users (first_name, last_name, role_id, isActive, email, password) values
@@ -45,8 +45,8 @@ insert into users (first_name, last_name, role_id, isActive, email, password) va
 insert into users (first_name, last_name, role_id, isActive, email, password) values
 ('Chris', 'Beck', 3, TRUE, 'chris@beck.com', 'chris123');
 
-insert into categories (category) values ('single user');
-insert into categories (category) values ('multiple users');
+insert into categories (category) values ('basic');
+insert into categories (category) values ('extra');
 
 
 insert into modules (name) values ('ProgBase');
@@ -54,23 +54,29 @@ insert into modules (name) values ('JavaOOP');
 insert into modules (name) values ('Web with SQL');
 insert into modules (name) values ('Advanced');
 
-insert into mentors (user_id, module_id) values (1, 1);
-insert into mentors (user_id, module_id) values (2, 2);
-insert into mentors (user_id, module_id) values (3, 3);
-insert into mentors (user_id, module_id) values (1, 2);
-insert into mentors (user_id, module_id) values (2, 3);
-insert into mentors (user_id, module_id) values (3, 4);
+insert into mentors (user_id) values (1);
+insert into mentors (user_id) values (2);
+insert into mentors (user_id) values (3);
 
-insert into rewards (name, description, price, category_id, mentor_id) values ('reward 1', 'description 1', 10000, 1, 1);
-insert into rewards (name, description, price, category_id, mentor_id) values ('reward 2', 'description 2', 13000, 1, 1);
-insert into rewards (name, description, price, category_id, mentor_id) values ('reward 3', 'description 3', 18000, 1, 3);
-insert into rewards (name, description, price, category_id, mentor_id) values ('reward 4', 'description 4', 22000, 1, 1);
-insert into rewards (name, description, price, category_id, mentor_id) values ('reward 5', 'description 5', 25000, 1, 2);
-insert into rewards (name, description, price, category_id, mentor_id) values ('reward 6', 'description 6', 30000, 1, 1);
-insert into rewards (name, description, price, category_id, mentor_id) values ('reward 7', 'description 7', 32000, 1, 3);
-insert into rewards (name, description, price, category_id, mentor_id) values ('reward 8', 'description 8', 35000, 2, 2);
-insert into rewards (name, description, price, category_id, mentor_id) values ('reward 9', 'description 9', 38000, 2, 1);
-insert into rewards (name, description, price, category_id, mentor_id) values ('reward 10', 'description 10', 40000, 2, 3);
+
+insert into mentor_modules (module_id, mentor_id) values (1, 1);
+insert into mentor_modules (module_id, mentor_id) values (2, 2);
+insert into mentor_modules (module_id, mentor_id) values (3, 3);
+insert into mentor_modules (module_id, mentor_id) values (2, 1);
+insert into mentor_modules (module_id, mentor_id) values (3, 2);
+insert into mentor_modules (module_id, mentor_id) values (4, 3);
+
+
+insert into rewards (name, description, price, category_id, mentor_id, isactive) values ('reward 1', 'description 1', 10000, 1, 1, TRUE);
+insert into rewards (name, description, price, category_id, mentor_id, isactive) values ('reward 2', 'description 2', 13000, 1, 1, FALSE);
+insert into rewards (name, description, price, category_id, mentor_id, isactive) values ('reward 3', 'description 3', 18000, 1, 3, TRUE);
+insert into rewards (name, description, price, category_id, mentor_id, isactive) values ('reward 4', 'description 4', 22000, 1, 1, TRUE);
+insert into rewards (name, description, price, category_id, mentor_id, isactive) values ('reward 5', 'description 5', 25000, 1, 2, TRUE);
+insert into rewards (name, description, price, category_id, mentor_id, isactive) values ('reward 6', 'description 6', 30000, 1, 1, TRUE);
+insert into rewards (name, description, price, category_id, mentor_id, isactive) values ('reward 7', 'description 7', 32000, 1, 3, TRUE);
+insert into rewards (name, description, price, category_id, mentor_id, isactive) values ('reward 8', 'description 8', 35000, 2, 2, TRUE);
+insert into rewards (name, description, price, category_id, mentor_id, isactive) values ('reward 9', 'description 9', 38000, 2, 1, TRUE);
+insert into rewards (name, description, price, category_id, mentor_id, isactive) values ('reward 10', 'description 10', 40000, 2, 3, TRUE);
 
 insert into shared_wallets (reward_id, coins) values (8, 25000);
 insert into shared_wallets (reward_id, coins) values (9, 31000);
@@ -81,34 +87,34 @@ insert into quest_statuses (status) values ('submitted');
 insert into quest_statuses (status) values ('approved');
 insert into quest_statuses (status) values ('not approved');
 
-insert into quests (name, description, coins_to_earn, module_id) values ('quest 1', 'description 1', 500, 1);
-insert into quests (name, description, coins_to_earn, module_id) values ('quest 2', 'description 2', 1500, 2);
-insert into quests (name, description, coins_to_earn, module_id) values ('quest 3', 'description 3', 2000, 3);
-insert into quests (name, description, coins_to_earn, module_id) values ('quest 4', 'description 4', 1300, 4);
-insert into quests (name, description, coins_to_earn, module_id) values ('quest 5', 'description 5', 3000, 2);
-insert into quests (name, description, coins_to_earn, module_id) values ('quest 6', 'description 6', 3500, 1);
-insert into quests (name, description, coins_to_earn, module_id) values ('quest 7', 'description 7', 4000, 3);
-insert into quests (name, description, coins_to_earn, module_id) values ('quest 8', 'description 8', 2800, 1);
-insert into quests (name, description, coins_to_earn, module_id) values ('quest 9', 'description 9', 3200, 2);
-insert into quests (name, description, coins_to_earn, module_id) values ('quest 10', 'description 10', 4200, 4);
+insert into quests (name, description, coins_to_earn, module_id, mentor_id, category_id, isactive) values ('quest 1', 'description 1', 500, 1, 1, 1, TRUE);
+insert into quests (name, description, coins_to_earn, module_id, mentor_id, category_id, isactive) values ('quest 2', 'description 2', 1500, 2, 2, 1, FALSE);
+insert into quests (name, description, coins_to_earn, module_id, mentor_id, category_id, isactive) values ('quest 3', 'description 3', 2000, 3, 3, 1, TRUE);
+insert into quests (name, description, coins_to_earn, module_id, mentor_id, category_id, isactive) values ('quest 4', 'description 4', 1300, 4, 2, 1, TRUE);
+insert into quests (name, description, coins_to_earn, module_id, mentor_id, category_id, isactive) values ('quest 5', 'description 5', 3000, 2, 2, 1, TRUE);
+insert into quests (name, description, coins_to_earn, module_id, mentor_id, category_id, isactive) values ('quest 6', 'description 6', 3500, 1, 3, 2, TRUE);
+insert into quests (name, description, coins_to_earn, module_id, mentor_id, category_id, isactive) values ('quest 7', 'description 7', 4000, 3, 1, 2, TRUE);
+insert into quests (name, description, coins_to_earn, module_id, mentor_id, category_id, isactive) values ('quest 8', 'description 8', 2800, 1, 3, 1, TRUE);
+insert into quests (name, description, coins_to_earn, module_id, mentor_id, category_id, isactive) values ('quest 9', 'description 9', 3200, 2, 1, 1, TRUE);
+insert into quests (name, description, coins_to_earn, module_id, mentor_id, category_id, isactive) values ('quest 10', 'description 10', 4200, 4, 2, 2, TRUE);
 
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (4, 2, 5000, 1);
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (5, 2, 6500, null);
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (6, 3, 7200, null);
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (8, 2, 8000, null);
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (9, 3, 7100, 2);
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (10, 4, 6200, null);
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (11, 2, 4200, null);
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (12, 3, 7000, null);
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (13, 2, 7650, null);
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (14, 3, 8000, null);
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (15, 2, 5500, null);
+insert into students (user_id, module_id, wallet) values (4, 2, 5000);
+insert into students (user_id, module_id, wallet) values (5, 2, 6500);
+insert into students (user_id, module_id, wallet) values (6, 3, 7200);
+insert into students (user_id, module_id, wallet) values (8, 2, 8000);
+insert into students (user_id, module_id, wallet) values (9, 3, 7100);
+insert into students (user_id, module_id, wallet) values (10, 4, 6200);
+insert into students (user_id, module_id, wallet) values (11, 2, 4200);
+insert into students (user_id, module_id, wallet) values (12, 3, 7000);
+insert into students (user_id, module_id, wallet) values (13, 2, 7650);
+insert into students (user_id, module_id, wallet) values (14, 3, 8000);
+insert into students (user_id, module_id, wallet) values (15, 2, 5500);
 
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (16, 3, 6000, null);
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (17, 2, 5800, null);
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (18, 4, 6150, null);
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (19, 3, 6900, null);
-insert into students (user_id, module_id, wallet, shared_wallet_id) values (20, 4, 8100, null);
+insert into students (user_id, module_id, wallet) values (16, 3, 6000);
+insert into students (user_id, module_id, wallet) values (17, 2, 5800);
+insert into students (user_id, module_id, wallet) values (18, 4, 6150);
+insert into students (user_id, module_id, wallet) values (19, 3, 6900);
+insert into students (user_id, module_id, wallet) values (20, 4, 8100);
 
 insert into student_quests (quest_id, student_id, quest_status_id, quest_input_area) values (1, 5, 3, 'quest 1 submission');
 insert into student_quests (quest_id, student_id, quest_status_id, quest_input_area) values (4, 4, 3, 'quest 4 submission');

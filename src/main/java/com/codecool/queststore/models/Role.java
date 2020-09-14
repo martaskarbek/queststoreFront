@@ -18,6 +18,10 @@ public enum Role {
         return roleId;
     }
 
+    public static int getRoleValue(Role role){
+        return role.getRoleId();
+    }
+
     public static Role valueOf(int roleId) {
         for (Role role : Role.values()) {
             map.put(role.roleId, role);

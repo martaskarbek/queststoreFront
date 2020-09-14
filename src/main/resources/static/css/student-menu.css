@@ -23,6 +23,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     margin-top: 2em;
+    color: white;
 }
 
 #right-bar-left h2 {

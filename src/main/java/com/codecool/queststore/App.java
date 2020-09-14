@@ -1,10 +1,7 @@
 package com.codecool.queststore;
 
 import com.codecool.queststore.dao.LogoutHandler;
-import com.codecool.queststore.handlers.LoginHandler;
-import com.codecool.queststore.handlers.RewardHandler;
-import com.codecool.queststore.handlers.Static;
-import com.codecool.queststore.handlers.StudentHandler;
+import com.codecool.queststore.handlers.*;
 import com.sun.net.httpserver.HttpServer;
 import java.net.InetSocketAddress;
 
