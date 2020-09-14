@@ -30,7 +30,7 @@ public class UserService {
         return user;
     }
 
-    public User getUserBySessionId(String sessionId) {
+    public User getBySessionId(String sessionId) {
         Session session = sessionDAO.getSessionBySessionId(sessionId);
         System.out.println(session);
         return userDAO.get(session.getUserId());
@@ -42,11 +42,11 @@ public class UserService {
         sessionDAO.remove(session);
     }
 
-    public void addUserToDB(User user){
+    public void addUser(User user){
         userDAO.add(user);
     }
 
-    public User getUserByCredentials(String email, String password){
+    public User getByCredentials(String email, String password){
         return userDAO.getByCredentials(email, password);
     }
 

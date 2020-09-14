@@ -31,7 +31,7 @@ public class StudentHandler implements HttpHandler {
         Optional<HttpCookie> cookie = getSessionIdCookie(exchange);
         if (cookie.isPresent()) {
             String sessionId = cookieHelper.getSessionIdFromCookie(cookie.get());
-            User user =  userService.getUserBySessionId(sessionId);
+            User user =  userService.getBySessionId(sessionId);
             if (user.getRole().equals(Role.STUDENT)) {
                 String templatePath = "templates/student_menu.twig";
                 sendUserPage(user, exchange, templatePath);

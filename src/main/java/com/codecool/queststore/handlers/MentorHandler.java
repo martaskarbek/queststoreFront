@@ -75,8 +75,9 @@ public class MentorHandler implements HttpHandler {
         }
         else if (method.equals("POST")) {
             postActions(actions);
+        } else {
+            sendResponse(HttpHelper.NOT_FOUND);
         }
-        httpHelper.sendResponse(httpExchange, response, HttpHelper.NOT_FOUND);
     }
 
     private void postActions(String[] actions) throws IOException {
@@ -84,10 +85,10 @@ public class MentorHandler implements HttpHandler {
         switch (actions[2]) {
             case "add_artifact" -> rewardService.createReward(formData, mentor);
             case "add_quest" -> questService.createQuest(formData, mentor);
-            case "add_student" -> postStudent(formData);
+            case "add_student" -> studentService.createStudent(formData);
             case "rewards_mentor" -> rewardService.updateReward(formData, mentor);
             case "quests_mentor" -> questService.updateQuest(formData, mentor);
-            case "students_mentor" -> updateStudent(formData);
+            case "students_mentor" -> studentService.updateStudent(formData);
         }
         String redirectURL = "/mentor";
         httpExchange.getResponseHeaders().add("Location", redirectURL);
@@ -95,8 +96,6 @@ public class MentorHandler implements HttpHandler {
     }
 
     private void getActions(String[] actions) throws Exception {
-        System.out.println(Arrays.toString(actions));
-//        String action = actions.length == 2 ? "" : actions[2].matches("\\d+") ? "details" : actions[2];
 
         if (actions[1].equals("mentor") && actions.length == 2) {
             String templatePath = "templates/mentor_menu.twig";
@@ -119,7 +118,6 @@ public class MentorHandler implements HttpHandler {
                     String addRewardPath = "templates/edit_artifact.twig";
                     sendUpdateRewardPage(addRewardPath, reward);
                 }
-
             }
             case "add_quest" -> {
                 String addQuestPath = "templates/add_quest.twig";
@@ -140,7 +138,6 @@ public class MentorHandler implements HttpHandler {
                     String addRewardPath = "templates/edit_quest.twig";
                     sendUpdateQuestPage(addRewardPath, quest);
                 }
-
             }
             case "students_mentor" -> {
                 if(actions.length == 3){
@@ -168,50 +165,13 @@ public class MentorHandler implements HttpHandler {
         Optional<HttpCookie> cookie = cookieHelper.getSessionIdCookie(httpExchange);
         if (cookie.isPresent()) {
             String sessionId = cookieHelper.getSessionIdFromCookie(cookie.get());
-            user =  userService.getUserBySessionId(sessionId);
+            user =  userService.getBySessionId(sessionId);
             }
         else {
             String redirectURL = "/login";
             httpExchange.getResponseHeaders().add("Location", redirectURL);
             httpHelper.sendResponse(httpExchange, response, HttpHelper.MOVED_PERMANENTLY);
         }
-    }
-
-    private void postStudent(Map<String, String> formData) {
-        User userStudent = createUserStudent(formData);
-        userService.addUserToDB(userStudent);
-        Student student = createStudentAccount(formData);
-        studentService.addStudentToDB(student);
-        response = "data saved";
-    }
-
-    private void updateStudent(Map<String, String> formData) {
-        int userId = Integer.parseInt(formData.get("userId"));
-        User userStudent = createUserStudent(formData);
-        userStudent.setId(userId);
-        userService.updateUserStudent(userStudent);
-        studentService.updateStudentByUser(userStudent, formData);
-        response = "data saved";
-    }
-
-    private Student createStudentAccount(Map<String, String> data) {
-        Student student = new Student();
-        User studentUser = userService.getUserByCredentials(data.get("email"), data.get("password"));
-        student.setId(studentUser.getId());
-        student.setModuleId(Integer.parseInt(data.get("modules")));
-        student.setWallet(Integer.parseInt(data.get("coins")));
-        return student;
-    }
-
-    private User createUserStudent(Map<String, String> data) {
-        User user = new Student();
-        user.setFirstName(data.get("name"));
-        user.setLastName(data.get("surname"));
-        user.setEmail(data.get("email"));
-        user.setPassword(data.get("password"));
-        user.setActive(Boolean.parseBoolean(data.get("checkbox")));
-        user.setRole(Role.STUDENT);
-        return user;
     }
 
     private void sendMentorPage(String templatePath) throws Exception {
