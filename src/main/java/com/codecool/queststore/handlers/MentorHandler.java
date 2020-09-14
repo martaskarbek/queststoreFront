@@ -82,7 +82,7 @@ public class MentorHandler implements HttpHandler {
             postActions(httpExchange, actions);
         }
 
-        sendResponse2(response, httpExchange, Helpers.NOT_FOUND);
+        httpHelper.sendResponse(httpExchange, response, HttpHelper.NOT_FOUND);
     }
 
     private void postActions(HttpExchange httpExchange, String[] actions) throws IOException {
@@ -96,11 +96,8 @@ public class MentorHandler implements HttpHandler {
         }
         String redirectURL = "/mentor";
         httpExchange.getResponseHeaders().add("Location", redirectURL);
-        sendResponse(301);
+        httpHelper.sendResponse(httpExchange, response, HttpHelper.MOVED_PERMANENTLY);
     }
-
-
-
 
     private void getActions(HttpExchange httpExchange, String[] actions) throws Exception {
 
@@ -110,65 +107,65 @@ public class MentorHandler implements HttpHandler {
 
         if (actions[1].equals("mentor") && actions.length == 2) {
             String templatePath = "templates/mentor_menu.twig";
-            sendMentorPage(httpExchange, templatePath);
+            sendMentorPage(templatePath);
             return;
         }
         switch (actions[2]) {
             case "add_artifact" -> {
                 String addRewardPath = "templates/add_artifact.twig";
-                sendMentorPage(httpExchange, addRewardPath);
+                sendMentorPage(addRewardPath);
             }
             case "rewards_mentor" -> {
                 if(actions.length == 3){
                     String showRewardPath = "templates/rewards_mentor.twig";
-                    sendMentorPage(httpExchange, showRewardPath);
+                    sendMentorPage(showRewardPath);
                 }
                 else if(actions[3].equals("edit") && actions[4].matches("\\d+")) {
                     Reward reward = rewardService.getReward(Integer.parseInt(actions[4]));
                     System.out.println(reward);
                     String addRewardPath = "templates/edit_artifact.twig";
-                    sendUpdateRewardPage(httpExchange, addRewardPath, reward);
+                    sendUpdateRewardPage(addRewardPath, reward);
                 }
 
             }
             case "add_quest" -> {
                 String addQuestPath = "templates/add_quest.twig";
-                sendMentorPage(httpExchange, addQuestPath);
+                sendMentorPage(addQuestPath);
             }
             case "add_student" -> {
                 String addStudentPath = "templates/student_account.twig";
-                sendMentorPage(httpExchange, addStudentPath);
+                sendMentorPage(addStudentPath);
             }
             case "quests_mentor" -> {
                 if(actions.length == 3){
                     String showRewardPath = "templates/quests_mentor.twig";
-                    sendMentorPage(httpExchange, showRewardPath);
+                    sendMentorPage(showRewardPath);
                 }
                 else if(actions[3].equals("edit") && actions[4].matches("\\d+")) {
                     Quest quest = questService.getQuest(Integer.parseInt(actions[4]));
                     System.out.println(quest);
                     String addRewardPath = "templates/edit_quest.twig";
-                    sendUpdateQuestPage(httpExchange, addRewardPath, quest);
+                    sendUpdateQuestPage(addRewardPath, quest);
                 }
 
             }
             case "students_mentor" -> {
                 if(actions.length == 3){
                     String showRewardPath = "templates/students_mentor.twig";
-                    sendMentorPage(httpExchange, showRewardPath);
+                    sendMentorPage(showRewardPath);
                 }
                 else if(actions[3].equals("edit") && actions[4].matches("\\d+")) {
                     Student student = studentService.getStudent(Integer.parseInt(actions[4]));
                     System.out.println(student);
                     String addRewardPath = "templates/edit_student.twig";
-                    sendUpdateStudentPage(httpExchange, addRewardPath, student);
+                    sendUpdateStudentPage(addRewardPath, student);
                 }
                 else if(actions[3].equals("view") && actions[4].matches("\\d+")) {
                     Student student = studentService.getStudent(Integer.parseInt(actions[4]));
                     System.out.println(student.getRewardList());
                     System.out.println(student.getQuestList());
                     String addRewardPath = "templates/view_student.twig";
-                    sendUpdateStudentPage(httpExchange, addRewardPath, student);
+                    sendUpdateStudentPage(addRewardPath, student);
                 }
 
             }
@@ -184,7 +181,7 @@ public class MentorHandler implements HttpHandler {
         else {
             String redirectURL = "/login";
             httpExchange.getResponseHeaders().add("Location", redirectURL);
-            sendResponse(Helpers.MOVED_PERMANENTLY);
+            httpHelper.sendResponse(httpExchange, response, HttpHelper.MOVED_PERMANENTLY);
         }
     }
 
@@ -319,8 +316,7 @@ public class MentorHandler implements HttpHandler {
         return map;
     }
 
-    private void sendMentorPage(HttpExchange httpExchange, String templatePath) throws Exception {
-        String response = "";
+    private void sendMentorPage(String templatePath) throws Exception {
         JtwigTemplate template = JtwigTemplate.classpathTemplate(templatePath);
         JtwigModel model = JtwigModel.newModel();
         model.with("mentor", mentor);
@@ -328,54 +324,37 @@ public class MentorHandler implements HttpHandler {
         model.with("quests", quests);
         model.with("students", students);
         response = template.render(model);
-        helpers.sendResponse(httpExchange, response, Helpers.OK);
+        sendResponse(HttpHelper.OK);
     }
 
-    private void sendUpdateRewardPage(HttpExchange httpExchange, String templatePath, Reward reward) throws IOException {
-        String response = "";
+    private void sendUpdateRewardPage(String templatePath, Reward reward) throws IOException {
         JtwigTemplate template = JtwigTemplate.classpathTemplate(templatePath);
         JtwigModel model = JtwigModel.newModel();
         model.with("mentor", mentor);
         model.with("reward", reward);
         response = template.render(model);
-        helpers.sendResponse(httpExchange, response, Helpers.OK);
+        sendResponse(HttpHelper.OK);
     }
 
-    private void sendUpdateQuestPage(HttpExchange httpExchange, String templatePath, Quest quest) throws IOException {
-        String response = "";
+    private void sendUpdateQuestPage(String templatePath, Quest quest) throws IOException {
         JtwigTemplate template = JtwigTemplate.classpathTemplate(templatePath);
         JtwigModel model = JtwigModel.newModel();
         model.with("mentor", mentor);
         model.with("quest", quest);
         response = template.render(model);
-        helpers.sendResponse(httpExchange, response, Helpers.OK);
+        sendResponse(HttpHelper.OK);
     }
 
-    private void sendUpdateStudentPage(HttpExchange httpExchange, String templatePath, Student student) throws IOException {
-        String response = "";
+    private void sendUpdateStudentPage(String templatePath, Student student) throws IOException {
         JtwigTemplate template = JtwigTemplate.classpathTemplate(templatePath);
         JtwigModel model = JtwigModel.newModel();
         model.with("mentor", mentor);
         model.with("student", student);
         response = template.render(model);
-        helpers.sendResponse(httpExchange, response, Helpers.OK);
+        sendResponse(HttpHelper.OK);
     }
 
-    private void sendResponse(int status) throws IOException {
-        httpExchange.sendResponseHeaders(status, response.getBytes().length);
-        OutputStream os = httpExchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
-    }
-
-    private void sendResponse2(String response, HttpExchange exchange, int status) throws IOException {
-        if (status == 200) {
-            exchange.getResponseHeaders().put("Content-type", Collections.singletonList("application/json"));
-            exchange.getResponseHeaders().put("Access-Control-Allow-Origin", Collections.singletonList("*"));
-        }
-        exchange.sendResponseHeaders(status, response.getBytes().length);
-        OutputStream os = exchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
+    private void sendResponse(int statusCode) throws IOException {
+        httpHelper.sendResponse(httpExchange, response, statusCode);
     }
 }
