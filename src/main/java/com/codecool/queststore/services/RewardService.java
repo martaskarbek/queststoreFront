@@ -1,7 +1,5 @@
 package com.codecool.queststore.services;
 
-
-import com.codecool.queststore.dao.Connector;
 import com.codecool.queststore.dao.RewardDAO;
 import com.codecool.queststore.models.Category;
 import com.codecool.queststore.models.Reward;
@@ -12,8 +10,11 @@ import java.util.Map;
 
 public class RewardService {
 
-    Connector connector = new Connector();
-    RewardDAO rewardDAO = new RewardDAO(connector);
+    RewardDAO rewardDAO;
+
+    public RewardService(RewardDAO rewardDAO) {
+        this.rewardDAO = rewardDAO;
+    }
 
     public Reward getReward(int id){
         return rewardDAO.get(id);

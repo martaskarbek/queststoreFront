@@ -1,7 +1,6 @@
 package com.codecool.queststore.handlers;
 
-import com.codecool.queststore.dao.*;
-import com.codecool.queststore.helpers.CookieHelper;
+import com.codecool.queststore.helpers.Helpers;
 import com.codecool.queststore.helpers.HttpHelper;
 import com.codecool.queststore.models.Quest;
 import com.codecool.queststore.models.Reward;
@@ -20,15 +19,9 @@ import java.util.*;
 
 public class MentorHandler implements HttpHandler {
 
-    private Connector connector = new Connector();
-    private UserService userService = new UserService(new UserPostgreSQLDAO(connector), new SessionPostgreSQLDAO(connector));
-    private MentorService mentorService = new MentorService(new MentorDAO(connector), new RewardDAO(connector), new ModuleDAO(connector));
-    private RewardService rewardService = new RewardService();
-    private QuestService questService = new QuestService();
-    private StudentService studentService = new StudentService();
+    private final ServiceFactory serviceFactory;
+    private final Helpers helpers;
 
-    private HttpHelper httpHelper = new HttpHelper();
-    private CookieHelper cookieHelper = new CookieHelper();
     private String response;
     private HttpExchange httpExchange;
     private User user;
@@ -36,6 +29,11 @@ public class MentorHandler implements HttpHandler {
     private List<Reward> rewards;
     private List<Quest> quests;
     private List<Student> students;
+
+    public MentorHandler(ServiceFactory serviceFactory, Helpers helpers) {
+        this.serviceFactory = serviceFactory;
+        this.helpers = helpers;
+    }
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
@@ -52,10 +50,10 @@ public class MentorHandler implements HttpHandler {
             e.printStackTrace();
         }
         try {
-            students = studentService.getStudents();
-            rewards = rewardService.getRewards();
-            quests = questService.getQuests();
-            mentor = mentorService.getMentorByUser(user);
+            students = serviceFactory.getStudentService().getStudents();
+            rewards = serviceFactory.getRewardService().getRewards();
+            quests = serviceFactory.getQuestService().getQuests();
+            mentor = serviceFactory.getMentorService().getMentorByUser(user);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -78,18 +76,18 @@ public class MentorHandler implements HttpHandler {
     }
 
     private void postActions(String[] actions) throws IOException {
-        Map<String, String> formData = httpHelper.getFormData(httpExchange);
+        Map<String, String> formData = helpers.getHttpHelper().getFormData(httpExchange);
         switch (actions[2]) {
-            case "add_artifact" -> rewardService.createReward(formData, mentor);
-            case "add_quest" -> questService.createQuest(formData, mentor);
-            case "add_student" -> studentService.createStudent(formData);
-            case "rewards_mentor" -> rewardService.updateReward(formData, mentor);
-            case "quests_mentor" -> questService.updateQuest(formData, mentor);
-            case "students_mentor" -> studentService.updateStudent(formData);
+            case "add_artifact" -> serviceFactory.getRewardService().createReward(formData, mentor);
+            case "add_quest" -> serviceFactory.getQuestService().createQuest(formData, mentor);
+            case "add_student" -> serviceFactory.getStudentService().createStudent(formData);
+            case "rewards_mentor" -> serviceFactory.getRewardService().updateReward(formData, mentor);
+            case "quests_mentor" -> serviceFactory.getQuestService().updateQuest(formData, mentor);
+            case "students_mentor" -> serviceFactory.getStudentService().updateStudent(formData);
         }
         String redirectURL = "/mentor";
         httpExchange.getResponseHeaders().add("Location", redirectURL);
-        httpHelper.sendResponse(httpExchange, response, HttpHelper.MOVED_PERMANENTLY);
+        helpers.getHttpHelper().sendResponse(httpExchange, response, HttpHelper.MOVED_PERMANENTLY);
     }
 
     private void getActions(String[] actions) throws Exception {
@@ -110,7 +108,7 @@ public class MentorHandler implements HttpHandler {
                     sendMentorPage(showRewardPath);
                 }
                 else if(actions[3].equals("edit") && actions[4].matches("\\d+")) {
-                    Reward reward = rewardService.getReward(Integer.parseInt(actions[4]));
+                    Reward reward = serviceFactory.getRewardService().getReward(Integer.parseInt(actions[4]));
                     System.out.println(reward);
                     String addRewardPath = "templates/edit_artifact.twig";
                     sendUpdateRewardPage(addRewardPath, reward);
@@ -130,7 +128,7 @@ public class MentorHandler implements HttpHandler {
                     sendMentorPage(showRewardPath);
                 }
                 else if(actions[3].equals("edit") && actions[4].matches("\\d+")) {
-                    Quest quest = questService.getQuest(Integer.parseInt(actions[4]));
+                    Quest quest = serviceFactory.getQuestService().getQuest(Integer.parseInt(actions[4]));
                     System.out.println(quest);
                     String addRewardPath = "templates/edit_quest.twig";
                     sendUpdateQuestPage(addRewardPath, quest);
@@ -142,13 +140,13 @@ public class MentorHandler implements HttpHandler {
                     sendMentorPage(showRewardPath);
                 }
                 else if(actions[3].equals("edit") && actions[4].matches("\\d+")) {
-                    Student student = studentService.getStudent(Integer.parseInt(actions[4]));
+                    Student student = serviceFactory.getStudentService().getStudent(Integer.parseInt(actions[4]));
                     System.out.println(student);
                     String addRewardPath = "templates/edit_student.twig";
                     sendUpdateStudentPage(addRewardPath, student);
                 }
                 else if(actions[3].equals("view") && actions[4].matches("\\d+")) {
-                    Student student = studentService.getStudent(Integer.parseInt(actions[4]));
+                    Student student = serviceFactory.getStudentService().getStudent(Integer.parseInt(actions[4]));
                     System.out.println(student.getRewardList());
                     System.out.println(student.getQuestList());
                     String addRewardPath = "templates/view_student.twig";
@@ -159,15 +157,15 @@ public class MentorHandler implements HttpHandler {
     }
 
     private void checkUser(HttpExchange httpExchange) throws Exception {
-        Optional<HttpCookie> cookie = cookieHelper.getSessionIdCookie(httpExchange);
+        Optional<HttpCookie> cookie = helpers.getCookieHelper().getSessionIdCookie(httpExchange);
         if (cookie.isPresent()) {
-            String sessionId = cookieHelper.getSessionIdFromCookie(cookie.get());
-            user =  userService.getBySessionId(sessionId);
+            String sessionId = helpers.getCookieHelper().getSessionIdFromCookie(cookie.get());
+            user =  serviceFactory.getUserService().getBySessionId(sessionId);
             }
         else {
             String redirectURL = "/login";
             httpExchange.getResponseHeaders().add("Location", redirectURL);
-            httpHelper.sendResponse(httpExchange, response, HttpHelper.MOVED_PERMANENTLY);
+            helpers.getHttpHelper().sendResponse(httpExchange, response, HttpHelper.MOVED_PERMANENTLY);
         }
     }
 
@@ -210,6 +208,6 @@ public class MentorHandler implements HttpHandler {
     }
 
     private void sendResponse(int statusCode) throws IOException {
-        httpHelper.sendResponse(httpExchange, response, statusCode);
+        helpers.getHttpHelper().sendResponse(httpExchange, response, statusCode);
     }
 }

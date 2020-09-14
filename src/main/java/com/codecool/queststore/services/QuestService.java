@@ -1,6 +1,5 @@
 package com.codecool.queststore.services;
 
-import com.codecool.queststore.dao.Connector;
 import com.codecool.queststore.dao.QuestDAO;
 import com.codecool.queststore.models.Category;
 import com.codecool.queststore.models.Quest;
@@ -11,8 +10,11 @@ import java.util.Map;
 
 public class QuestService {
 
-    Connector connector = new Connector();
-    QuestDAO questDAO = new QuestDAO(connector);
+    QuestDAO questDAO;
+
+    public QuestService(QuestDAO questDAO) {
+        this.questDAO = questDAO;
+    }
 
     public Quest getQuest(int id){
         return questDAO.get(id);
