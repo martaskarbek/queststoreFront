@@ -4,8 +4,6 @@ import com.codecool.queststore.dao.MentorDAO;
 import com.codecool.queststore.dao.ModuleDAO;
 import com.codecool.queststore.dao.RewardDAO;
 import com.codecool.queststore.models.Module;
-import com.codecool.queststore.models.Quest;
-import com.codecool.queststore.models.Reward;
 import com.codecool.queststore.models.users.Mentor;
 import com.codecool.queststore.models.users.User;
 

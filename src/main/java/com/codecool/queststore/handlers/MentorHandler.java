@@ -82,10 +82,10 @@ public class MentorHandler implements HttpHandler {
     private void postActions(String[] actions) throws IOException {
         Map<String, String> formData = httpHelper.getFormData(httpExchange);
         switch (actions[2]) {
-            case "add_artifact" -> postReward(formData);
+            case "add_artifact" -> rewardService.createReward(formData, mentor);
             case "add_quest" -> postQuest(formData);
             case "add_student" -> postStudent(formData);
-            case "rewards_mentor" -> updateReward(formData);
+            case "rewards_mentor" -> rewardService.updateReward(formData, mentor);
             case "quests_mentor" -> updateQuest(formData);
             case "students_mentor" -> updateStudent(formData);
         }
@@ -177,12 +177,6 @@ public class MentorHandler implements HttpHandler {
         }
     }
 
-    private void postReward(Map<String, String> formData) {
-        Reward reward = createReward(formData);
-        rewardService.addRewardToDB(reward);
-        response = "data saved";
-    }
-
     private void postQuest(Map<String, String> formData) {
         Quest quest = createQuest(formData);
         questService.addQuestToDB(quest);
@@ -194,14 +188,6 @@ public class MentorHandler implements HttpHandler {
         userService.addUserToDB(userStudent);
         Student student = createStudentAccount(formData);
         studentService.addStudentToDB(student);
-        response = "data saved";
-    }
-
-    private void updateReward(Map<String, String> formData) {
-        int rewardId = Integer.parseInt(formData.get("rewardId"));
-        Reward reward = createReward(formData);
-        reward.setId(rewardId);
-        rewardService.updateRewardInDB(reward);
         response = "data saved";
     }
 
@@ -252,17 +238,6 @@ public class MentorHandler implements HttpHandler {
         quest.setCategory(Category.valueOf(Integer.parseInt(data.get("radio"))));
         quest.setActive(Boolean.parseBoolean(data.get("checkbox")));
         return quest;
-    }
-
-    private Reward createReward(Map<String, String> data) {
-        Reward reward = new Reward();
-        reward.setName(data.get("name"));
-        reward.setPrice(Integer.parseInt(data.get("price")));
-        reward.setDescription(data.get("description"));
-        reward.setCategory(Category.valueOf(Integer.parseInt(data.get("radio"))));
-        reward.setMentorId(mentor.getMentorId());
-        reward.setActive(Boolean.parseBoolean(data.get("checkbox")));
-        return reward;
     }
 
     private void sendMentorPage(String templatePath) throws Exception {

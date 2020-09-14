@@ -67,16 +67,19 @@ public class Reward {
         return this;
     }
 
-    public void setCategory(Category category) {
+    public Reward setCategory(Category category) {
         this.category = category;
+        return this;
     }
 
-    public void setMentorId(int mentorId) {
+    public Reward setMentorId(int mentorId) {
         this.mentorId = mentorId;
+        return this;
     }
 
-    public void setActive(Boolean active) {
+    public Reward setActive(Boolean active) {
         isActive = active;
+        return this;
     }
 
     public Boolean getIsActive() {

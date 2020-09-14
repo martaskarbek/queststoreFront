@@ -14,16 +14,12 @@ public class QuestService {
     QuestDAO questDAO = new QuestDAO(postgreSQLJDBC);
 
     public Quest getQuest(int id){
-
         return questDAO.get(id);
-
     }
-
 
     public List<Quest> getQuests() throws Exception {
         return  questDAO.getAll();
     }
-
 
     public void addQuestToDB(Quest quest) {
         questDAO.add(quest);
