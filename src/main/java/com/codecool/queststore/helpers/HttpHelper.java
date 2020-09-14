@@ -2,8 +2,10 @@ package com.codecool.queststore.helpers;
 
 import com.sun.net.httpserver.HttpExchange;
 
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
+import java.net.URLDecoder;
+import java.util.HashMap;
+import java.util.Map;
 
 public class HttpHelper {
 
@@ -19,5 +21,23 @@ public class HttpHelper {
         OutputStream outputStream = httpExchange.getResponseBody();
         outputStream.write(response.getBytes());
         outputStream.close();
+    }
+
+    public Map<String, String> getFormData(HttpExchange httpExchange) throws IOException {
+        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
+        BufferedReader br = new BufferedReader(isr);
+        return parseFormData(br.readLine());
+    }
+
+    private Map<String, String> parseFormData(String formData) throws UnsupportedEncodingException {
+        Map<String, String> map = new HashMap<>();
+        String[] pairs = formData.split("&");
+        for(String pair : pairs){
+            String[] keyValue = pair.split("=");
+            // We have to decode the value because it's urlencoded. see: https://en.wikipedia.org/wiki/POST_(HTTP)#Use_for_submitting_web_forms
+            String value = new URLDecoder().decode(keyValue[1], "UTF-8");
+            map.put(keyValue[0], value);
+        }
+        return map;
     }
 }

@@ -71,33 +71,31 @@ public class MentorHandler implements HttpHandler {
 
     private void checkMethod(String method, String[] actions) throws Exception {
         if (method.equals("GET")) {
-            getActions(httpExchange, actions);
+            getActions(actions);
         }
         else if (method.equals("POST")) {
-            postActions(httpExchange, actions);
+            postActions(actions);
         }
-
         httpHelper.sendResponse(httpExchange, response, HttpHelper.NOT_FOUND);
     }
 
-    private void postActions(HttpExchange httpExchange, String[] actions) throws IOException {
+    private void postActions(String[] actions) throws IOException {
+        Map<String, String> formData = httpHelper.getFormData(httpExchange);
         switch (actions[2]) {
-            case "add_artifact" -> postReward(httpExchange);
-            case "add_quest" -> postQuest(httpExchange);
-            case "add_student" -> postStudent(httpExchange);
-            case "rewards_mentor" -> updateReward(httpExchange, actions);
-            case "quests_mentor" -> updateQuest(httpExchange, actions);
-            case "students_mentor" -> updateStudent(httpExchange, actions);
+            case "add_artifact" -> postReward(formData);
+            case "add_quest" -> postQuest(formData);
+            case "add_student" -> postStudent(formData);
+            case "rewards_mentor" -> updateReward(formData);
+            case "quests_mentor" -> updateQuest(formData);
+            case "students_mentor" -> updateStudent(formData);
         }
         String redirectURL = "/mentor";
         httpExchange.getResponseHeaders().add("Location", redirectURL);
         httpHelper.sendResponse(httpExchange, response, HttpHelper.MOVED_PERMANENTLY);
     }
 
-    private void getActions(HttpExchange httpExchange, String[] actions) throws Exception {
-
+    private void getActions(String[] actions) throws Exception {
         System.out.println(Arrays.toString(actions));
-
 //        String action = actions.length == 2 ? "" : actions[2].matches("\\d+") ? "details" : actions[2];
 
         if (actions[1].equals("mentor") && actions.length == 2) {
@@ -162,7 +160,6 @@ public class MentorHandler implements HttpHandler {
                     String addRewardPath = "templates/view_student.twig";
                     sendUpdateStudentPage(addRewardPath, student);
                 }
-
             }
         }
     }
@@ -180,71 +177,48 @@ public class MentorHandler implements HttpHandler {
         }
     }
 
-    private void postReward(HttpExchange httpExchange) throws IOException {
-        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
-        BufferedReader br = new BufferedReader(isr);
-        Map<String, String> data = parseFormData(br.readLine());
-        System.out.println(data);
-        Reward reward = createReward(data);
+    private void postReward(Map<String, String> formData) {
+        Reward reward = createReward(formData);
         rewardService.addRewardToDB(reward);
         response = "data saved";
-
     }
 
-    private void postQuest(HttpExchange httpExchange) throws IOException {
-        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
-        BufferedReader br = new BufferedReader(isr);
-        Map<String, String> data = parseFormData(br.readLine());
-        System.out.println(data);
-        Quest quest = createQuest(data);
+    private void postQuest(Map<String, String> formData) {
+        Quest quest = createQuest(formData);
         questService.addQuestToDB(quest);
         response = "data saved";
     }
 
-    private void postStudent(HttpExchange httpExchange) throws IOException {
-        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
-        BufferedReader br = new BufferedReader(isr);
-        Map<String, String> data = parseFormData(br.readLine());
-        System.out.println(data);
-        User userStudent = createUserStudent(data);
+    private void postStudent(Map<String, String> formData) {
+        User userStudent = createUserStudent(formData);
         userService.addUserToDB(userStudent);
-        Student student = createStudentAccount(data);
+        Student student = createStudentAccount(formData);
         studentService.addStudentToDB(student);
         response = "data saved";
     }
 
-    private void updateReward(HttpExchange httpExchange, String[] actions) throws IOException {
-        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
-        BufferedReader br = new BufferedReader(isr);
-        Map<String, String> data = parseFormData(br.readLine());
-        int rewardId = Integer.parseInt(data.get("rewardId"));
-        Reward reward = createReward(data);
+    private void updateReward(Map<String, String> formData) {
+        int rewardId = Integer.parseInt(formData.get("rewardId"));
+        Reward reward = createReward(formData);
         reward.setId(rewardId);
         rewardService.updateRewardInDB(reward);
         response = "data saved";
     }
 
-    private void updateQuest(HttpExchange httpExchange, String[] actions) throws IOException {
-        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
-        BufferedReader br = new BufferedReader(isr);
-        Map<String, String> data = parseFormData(br.readLine());
-        int rewardId = Integer.parseInt(data.get("questId"));
-        Quest quest = createQuest(data);
+    private void updateQuest(Map<String, String> formData) {
+        int rewardId = Integer.parseInt(formData.get("questId"));
+        Quest quest = createQuest(formData);
         quest.setId(rewardId);
         questService.updateQuestInDB(quest);
         response = "data saved";
     }
 
-    private void updateStudent(HttpExchange httpExchange, String[] actions) throws IOException {
-        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
-        BufferedReader br = new BufferedReader(isr);
-        Map<String, String> data = parseFormData(br.readLine());
-        System.out.println(data);
-        int userId = Integer.parseInt(data.get("userId"));
-        User userStudent = createUserStudent(data);
+    private void updateStudent(Map<String, String> formData) {
+        int userId = Integer.parseInt(formData.get("userId"));
+        User userStudent = createUserStudent(formData);
         userStudent.setId(userId);
         userService.updateUserStudent(userStudent);
-        studentService.updateStudentByUser(userStudent, data);
+        studentService.updateStudentByUser(userStudent, formData);
         response = "data saved";
     }
 
@@ -289,18 +263,6 @@ public class MentorHandler implements HttpHandler {
         reward.setMentorId(mentor.getMentorId());
         reward.setActive(Boolean.parseBoolean(data.get("checkbox")));
         return reward;
-    }
-
-    private static Map<String, String> parseFormData(String formData) throws UnsupportedEncodingException {
-        Map<String, String> map = new HashMap<>();
-        String[] pairs = formData.split("&");
-        for(String pair : pairs){
-            String[] keyValue = pair.split("=");
-            // We have to decode the value because it's urlencoded. see: https://en.wikipedia.org/wiki/POST_(HTTP)#Use_for_submitting_web_forms
-            String value = new URLDecoder().decode(keyValue[1], "UTF-8");
-            map.put(keyValue[0], value);
-        }
-        return map;
     }
 
     private void sendMentorPage(String templatePath) throws Exception {
