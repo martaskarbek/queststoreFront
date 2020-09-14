@@ -83,10 +83,10 @@ public class MentorHandler implements HttpHandler {
         Map<String, String> formData = httpHelper.getFormData(httpExchange);
         switch (actions[2]) {
             case "add_artifact" -> rewardService.createReward(formData, mentor);
-            case "add_quest" -> postQuest(formData);
+            case "add_quest" -> questService.createQuest(formData, mentor);
             case "add_student" -> postStudent(formData);
             case "rewards_mentor" -> rewardService.updateReward(formData, mentor);
-            case "quests_mentor" -> updateQuest(formData);
+            case "quests_mentor" -> questService.updateQuest(formData, mentor);
             case "students_mentor" -> updateStudent(formData);
         }
         String redirectURL = "/mentor";
@@ -177,25 +177,11 @@ public class MentorHandler implements HttpHandler {
         }
     }
 
-    private void postQuest(Map<String, String> formData) {
-        Quest quest = createQuest(formData);
-        questService.addQuestToDB(quest);
-        response = "data saved";
-    }
-
     private void postStudent(Map<String, String> formData) {
         User userStudent = createUserStudent(formData);
         userService.addUserToDB(userStudent);
         Student student = createStudentAccount(formData);
         studentService.addStudentToDB(student);
-        response = "data saved";
-    }
-
-    private void updateQuest(Map<String, String> formData) {
-        int rewardId = Integer.parseInt(formData.get("questId"));
-        Quest quest = createQuest(formData);
-        quest.setId(rewardId);
-        questService.updateQuestInDB(quest);
         response = "data saved";
     }
 
@@ -226,18 +212,6 @@ public class MentorHandler implements HttpHandler {
         user.setActive(Boolean.parseBoolean(data.get("checkbox")));
         user.setRole(Role.STUDENT);
         return user;
-    }
-
-    private Quest createQuest(Map<String, String> data) {
-        Quest quest = new Quest();
-        quest.setName(data.get("name"));
-        quest.setDescription(data.get("description"));
-        quest.setCoinsToEarn(Integer.parseInt(data.get("price")));
-        quest.setModuleId(Integer.parseInt(data.get("modules")));
-        quest.setMentorId(mentor.getMentorId());
-        quest.setCategory(Category.valueOf(Integer.parseInt(data.get("radio"))));
-        quest.setActive(Boolean.parseBoolean(data.get("checkbox")));
-        return quest;
     }
 
     private void sendMentorPage(String templatePath) throws Exception {
