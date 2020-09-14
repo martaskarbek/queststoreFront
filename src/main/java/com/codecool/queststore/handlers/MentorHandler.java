@@ -2,7 +2,7 @@ package com.codecool.queststore.handlers;
 
 import com.codecool.queststore.dao.*;
 import com.codecool.queststore.helpers.CookieHelper;
-import com.codecool.queststore.helpers.Helpers;
+import com.codecool.queststore.helpers.HttpHelper;
 import com.codecool.queststore.models.Category;
 import com.codecool.queststore.models.Quest;
 import com.codecool.queststore.models.Reward;
@@ -30,7 +30,7 @@ public class MentorHandler implements HttpHandler {
     private QuestService questService = new QuestService();
     private StudentService studentService = new StudentService();
 
-    private Helpers helpers = new Helpers();
+    private HttpHelper httpHelper = new HttpHelper();
     private CookieHelper cookieHelper = new CookieHelper();
     private String response;
     private HttpExchange httpExchange;
