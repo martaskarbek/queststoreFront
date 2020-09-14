@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="/static/css/style.css/">
   <link rel="stylesheet" type="text/css" href="/static/css/mentor-menu.css/">
+  <link rel="stylesheet" type="text/css" href="/static/css/students.css/">
   <link rel="icon" href="/static/img/favicon.ico/">
   <!-- <script src="main.js" defer></script> -->
   <title>Profile</title>
@@ -49,6 +50,35 @@
       <section class="main-content">
         <h1>Assignments to check</h1>
         <div class="items-content">
+
+          <table>
+            <tr>
+              <th>NAME</th>
+              <th>SURNAME</th>
+              <th>EMAIL</th>
+              <th>MODULE</th>
+              <th>EDIT</th>
+            </tr>
+            {% for student in students %}
+{#            {% for quest in students.getQuestList() %}#}
+{#              {% if quest.getQuestStatus().equals("SUBMITTED") %}#}
+              <tr>
+                <td>{{ student.getFirstName() }}</td>
+                <td>{{ student.getLastName() }}</td>
+                <td>{{ student.getEmail() }}</td>
+                <td>{{ student.getModuleName() }}</td>
+                <td><a class="edit" href="/mentor/students_mentor/edit/{{ student.getId() }}">EDIT</a></td>
+
+              </tr>
+
+{#              {% endif %}#}
+{#            {% endfor %}#}
+
+            {% endfor %}
+
+
+
+          </table>
 {#          <div class="item">#}
 {#            <a href="/mentor/students_mentor">Show students' list</a>#}
 {#          </div>#}
