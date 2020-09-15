@@ -32,7 +32,7 @@ public class UserService {
 
     public User getBySessionId(String sessionId) {
         Session session = sessionDAO.getSessionBySessionId(sessionId);
-        System.out.println(session);
+//        System.out.println(session);
         return userDAO.get(session.getUserId());
 
     }

@@ -100,67 +100,64 @@ public class MentorHandler implements HttpHandler {
     private void getActions(String[] actions) {
 
         if (actions[1].equals("mentor") && actions.length == 2) {
-            String templatePath = "templates/mentor_menu.twig";
-            sendMentorPage(templatePath);
+            sendMentorPage("templates/mentor_menu.twig");
             return;
         }
         switch (actions[2]) {
-            case "add_artifact" -> {
-                String addRewardPath = "templates/add_artifact.twig";
-                sendMentorPage(addRewardPath);
-            }
-            case "rewards_mentor" -> {
-                if(actions.length == 3){
-                    String showRewardPath = "templates/rewards_mentor.twig";
-                    sendMentorPage(showRewardPath);
-                }
-                else if(actions[3].equals("edit") && actions[4].matches("\\d+")) {
-                    Reward reward = serviceFactory.getRewardService().getReward(Integer.parseInt(actions[4]));
-                    System.out.println(reward);
-                    String addRewardPath = "templates/edit_artifact.twig";
-                    sendUpdateRewardPage(addRewardPath, reward);
-                }
-            }
-            case "add_quest" -> {
-                String addQuestPath = "templates/add_quest.twig";
-                sendMentorPage(addQuestPath);
-            }
-            case "add_student" -> {
-                String addStudentPath = "templates/student_account.twig";
-                sendMentorPage(addStudentPath);
-            }
-            case "quests_mentor" -> {
-                if(actions.length == 3){
-                    String showRewardPath = "templates/quests_mentor.twig";
-                    sendMentorPage(showRewardPath);
-                }
-                else if(actions[3].equals("edit") && actions[4].matches("\\d+")) {
-                    Quest quest = serviceFactory.getQuestService().getQuest(Integer.parseInt(actions[4]));
-                    System.out.println(quest);
-                    String addRewardPath = "templates/edit_quest.twig";
-                    sendUpdateQuestPage(addRewardPath, quest);
-                }
-            }
-            case "students_mentor" -> {
-                if(actions.length == 3){
-                    String showRewardPath = "templates/students_mentor.twig";
-                    sendMentorPage(showRewardPath);
-                }
-                else if(actions[3].equals("edit") && actions[4].matches("\\d+")) {
-                    Student student = serviceFactory.getStudentService().getStudent(Integer.parseInt(actions[4]));
-                    System.out.println(student);
-                    String addRewardPath = "templates/edit_student.twig";
-                    sendUpdateStudentPage(addRewardPath, student);
-                }
-                else if(actions[3].equals("view") && actions[4].matches("\\d+")) {
-                    Student student = serviceFactory.getStudentService().getStudent(Integer.parseInt(actions[4]));
-                    System.out.println(student.getRewardList());
-                    System.out.println(student.getQuestList());
-                    String addRewardPath = "templates/view_student.twig";
-                    sendUpdateStudentPage(addRewardPath, student);
-                }
-            }
+            case "add_artifact" -> initializeAddReward();
+            case "rewards_mentor" -> initializeMentorRewards(actions);
+            case "add_quest" -> initializeAddQuest();
+            case "add_student" -> initializeAddStudent();
+            case "quests_mentor" -> initializeMentorQuests(actions);
+            case "students_mentor" -> initializeMentorStudents(actions);
         }
+    }
+
+    private void initializeMentorStudents(String[] actions) {
+        if(actions.length == 3){
+            sendMentorPage("templates/students_mentor.twig");
+        }
+        else if(actions[3].equals("edit") && actions[4].matches("\\d+")) {
+            Student student = serviceFactory.getStudentService().getStudent(Integer.parseInt(actions[4]));
+            sendUpdateStudentPage("templates/edit_student.twig", student);
+        }
+        else if(actions[3].equals("view") && actions[4].matches("\\d+")) {
+            Student student = serviceFactory.getStudentService().getStudent(Integer.parseInt(actions[4]));
+            sendUpdateStudentPage("templates/view_student.twig", student);
+        }
+    }
+
+    private void initializeMentorQuests(String[] actions) {
+        if(actions.length == 3){
+            sendMentorPage("templates/quests_mentor.twig");
+        }
+        else if(actions[3].equals("edit") && actions[4].matches("\\d+")) {
+            Quest quest = serviceFactory.getQuestService().getQuest(Integer.parseInt(actions[4]));
+            sendUpdateQuestPage("templates/edit_quest.twig", quest);
+        }
+    }
+
+    private void initializeAddStudent() {
+        sendMentorPage("templates/student_account.twig");
+    }
+
+    private void initializeAddQuest() {
+        sendMentorPage("templates/add_quest.twig");
+    }
+
+    private void initializeMentorRewards(String[] actions) {
+        if(actions.length == 3){
+            sendMentorPage("templates/rewards_mentor.twig");
+        }
+        else if(actions[3].equals("edit") && actions[4].matches("\\d+")) {
+            Reward reward = serviceFactory.getRewardService().getReward(Integer.parseInt(actions[4]));
+            sendUpdateRewardPage("templates/edit_artifact.twig", reward);
+        }
+    }
+
+
+    private void initializeAddReward() {
+        sendMentorPage("templates/add_artifact.twig");
     }
 
     private void checkUser(HttpExchange httpExchange) throws Exception {
@@ -168,13 +165,14 @@ public class MentorHandler implements HttpHandler {
         if (cookie.isPresent()) {
             String sessionId = helpers.getCookieHelper().getSessionIdFromCookie(cookie.get());
             user =  serviceFactory.getUserService().getBySessionId(sessionId);
-            }
+        }
         else {
             String redirectURL = "/login";
             httpExchange.getResponseHeaders().add("Location", redirectURL);
-            helpers.getHttpHelper().sendResponse(httpExchange, response, HttpHelper.MOVED_PERMANENTLY);
+            sendResponse(HttpHelper.MOVED_PERMANENTLY);
         }
     }
+
 
     private void sendMentorPage(String templatePath) {
         JtwigTemplate template = JtwigTemplate.classpathTemplate(templatePath);

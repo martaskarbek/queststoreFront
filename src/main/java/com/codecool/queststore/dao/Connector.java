@@ -11,9 +11,9 @@ public class Connector {
 //    private final String USER = System.getenv("USER");
 //    private final String PASSWORD = System.getenv("PASSWORD");
 
-    private String user = "aldona";
-    private String password = "123";
-    private static final String CONNECTION_STRING = "jdbc:postgresql://localhost:5432/qs";
+    private String user = "wt80";
+    private String password = "dupa123";
+    private static final String CONNECTION_STRING = "jdbc:postgresql://localhost:5432/QUESTstore6";
 
     protected Connection connection = null;
     protected Statement statement;
