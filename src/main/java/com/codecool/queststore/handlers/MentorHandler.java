@@ -2,8 +2,10 @@ package com.codecool.queststore.handlers;
 
 import com.codecool.queststore.helpers.Helpers;
 import com.codecool.queststore.helpers.HttpHelper;
+import com.codecool.queststore.models.Module;
 import com.codecool.queststore.models.Quest;
 import com.codecool.queststore.models.Reward;
+import com.codecool.queststore.models.StudentQuest;
 import com.codecool.queststore.models.users.Mentor;
 import com.codecool.queststore.models.users.Student;
 import com.codecool.queststore.models.users.User;
@@ -91,6 +93,7 @@ public class MentorHandler implements HttpHandler {
             case "rewards_mentor" -> serviceFactory.getRewardService().updateReward(formData, mentor);
             case "quests_mentor" -> serviceFactory.getQuestService().updateQuest(formData, mentor);
             case "students_mentor" -> serviceFactory.getStudentService().updateStudent(formData);
+//            case "mark_quest" -> serviceFactory.getStudentService().updateStudent(formData);
         }
         String redirectURL = "/mentor";
         httpExchange.getResponseHeaders().add("Location", redirectURL);
@@ -100,7 +103,7 @@ public class MentorHandler implements HttpHandler {
     private void getActions(String[] actions) {
 
         if (actions[1].equals("mentor") && actions.length == 2) {
-            sendMentorPage("templates/mentor_menu.twig");
+            initializeMentorPage();
             return;
         }
         switch (actions[2]) {
@@ -110,8 +113,24 @@ public class MentorHandler implements HttpHandler {
             case "add_student" -> initializeAddStudent();
             case "quests_mentor" -> initializeMentorQuests(actions);
             case "students_mentor" -> initializeMentorStudents(actions);
+            case "mark_quest" -> initializeMarkQuest(actions);
         }
     }
+
+    private void initializeMarkQuest(String[] actions) {
+
+        if(actions[3].matches("\\d+") && actions[4].matches("\\d+")) {
+            int studentId = Integer.parseInt(actions[3]);
+            int questId = Integer.parseInt(actions[4]);
+            StudentQuest studentQuest = serviceFactory.getStudentQuestService().getStudentQuest(studentId, questId);
+            System.out.println(studentQuest);
+//            sendMarkQuestPage("templates/mark_quest.twig", studentQuest);
+            sendMarkQuestPage("templates/mark_quest.twig", studentQuest);
+
+        }
+
+    }
+
 
     private void initializeMentorStudents(String[] actions) {
         if(actions.length == 3){
@@ -173,6 +192,10 @@ public class MentorHandler implements HttpHandler {
         }
     }
 
+    private void initializeMentorPage() {
+        List<Student> studentsWithQuestsToMark = serviceFactory.getStudentService().createStudentListWithQuestsToMark(mentor, students);
+        sendMentorStartPage("templates/mentor_menu.twig", studentsWithQuestsToMark);
+    }
 
     private void sendMentorPage(String templatePath) {
         JtwigTemplate template = JtwigTemplate.classpathTemplate(templatePath);
@@ -183,6 +206,25 @@ public class MentorHandler implements HttpHandler {
         model.with("students", students);
         response = template.render(model);
         sendResponse(HttpHelper.OK);
+    }
+
+    private void sendMarkQuestPage(String templatePath, StudentQuest studentQuest) {
+        JtwigTemplate template = JtwigTemplate.classpathTemplate(templatePath);
+        JtwigModel model = JtwigModel.newModel();
+        model.with("mentor", mentor);
+        model.with("studentQuest", studentQuest);
+        response = template.render(model);
+        sendResponse(HttpHelper.OK);
+    }
+
+    private void sendMentorStartPage(String templatePath, List<Student> mentorStudents) {
+        JtwigTemplate template = JtwigTemplate.classpathTemplate(templatePath);
+        JtwigModel model = JtwigModel.newModel();
+        model.with("mentor", mentor);
+        model.with("mentorStudents", mentorStudents);
+        response = template.render(model);
+        sendResponse(HttpHelper.OK);
+
     }
 
     private void sendUpdateRewardPage(String templatePath, Reward reward) {

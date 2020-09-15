@@ -53,29 +53,29 @@
 
           <table>
             <tr>
-              <th>NAME</th>
-              <th>SURNAME</th>
-              <th>EMAIL</th>
-              <th>MODULE</th>
-              <th>EDIT</th>
+              <th>QUEST_NAME</th>
+              <th>QUEST_STATUS</th>
+              <th>STUDENT_NAME</th>
+              <th>STUDENT_SURNAME</th>
+              <th>STUDENT_MODULE</th>
+              <th>MARK</th>
             </tr>
-            {% for student in students %}
-{#            {% for quest in students.getQuestList() %}#}
-{#              {% if quest.getQuestStatus().equals("SUBMITTED") %}#}
-              <tr>
-                <td>{{ student.getFirstName() }}</td>
-                <td>{{ student.getLastName() }}</td>
-                <td>{{ student.getEmail() }}</td>
-                <td>{{ student.getModuleName() }}</td>
-                <td><a class="edit" href="/mentor/students_mentor/edit/{{ student.getId() }}">EDIT</a></td>
+            {% for student in mentorStudents %}
+              {% for quest in student.getQuestList() %}
 
-              </tr>
+                <tr>
+                  <td>{{ quest.getName() }}</td>
+                  <td>{{ quest.getQuestStatus() }}</td>
+                  <td>{{ student.getFirstName() }}</td>
+                  <td>{{ student.getLastName() }}</td>
+                  <td>{{ student.getModuleName() }}</td>
+                  <td><a class="edit" href="/mentor/mark_quest/{{ student.getStudentId() }}/{{ quest.getId() }}">MARK</a></td>
 
-{#              {% endif %}#}
-{#            {% endfor %}#}
+                </tr>
+
+              {% endfor %}
 
             {% endfor %}
-
 
 
           </table>

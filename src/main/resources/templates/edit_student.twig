@@ -54,7 +54,7 @@
             <section class="main-content">
                 <div class="items-content">
 
-                    <form id="add-student" action="http://localhost:8000/mentor/students_mentor" method="POST">
+                    <form id="add-student">
                         <h1>EDIT STUDENT'S ACCOUNT <span id="userId">{{ student.getId() }}</span></h1>
                         <label for="name"></label>
                         <input class="input" id="name" name="name" type="text" placeholder="name" value="{{ student.getFirstName() }}">

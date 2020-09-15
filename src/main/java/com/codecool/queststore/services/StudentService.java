@@ -1,12 +1,16 @@
 package com.codecool.queststore.services;
 
 import com.codecool.queststore.dao.*;
+import com.codecool.queststore.models.Module;
 import com.codecool.queststore.models.Quest;
+import com.codecool.queststore.models.QuestStatus;
 import com.codecool.queststore.models.Reward;
 import com.codecool.queststore.models.Role;
+import com.codecool.queststore.models.users.Mentor;
 import com.codecool.queststore.models.users.Student;
 import com.codecool.queststore.models.users.User;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -90,5 +94,33 @@ public class StudentService {
         student.setModuleId(Integer.parseInt(data.get("modules")));
         student.setWallet(Integer.parseInt(data.get("coins")));
         return student;
+    }
+
+    public List<Quest> getSubmittedQuests(Student student) {
+        List<Quest> submittedQuests = new ArrayList<>();
+        List<Quest> studentQuests = questDAO.getStudentQuests(student);
+        for (Quest quest : studentQuests){
+            if (quest.getQuestStatus().equals(QuestStatus.SUBMITTED)){
+                submittedQuests.add(quest);
+            }
+        }
+        return submittedQuests;
+    }
+
+    public List<Student> createStudentListWithQuestsToMark(Mentor mentor, List<Student> students) {
+        List<Student> mentorStudents = new ArrayList<>();
+        for (Module module : mentor.getModules()) {
+            for (Student student : students){
+                if (module.getName().equals(student.getModuleName())){
+                    List<Quest> studentSubmittedQuests = getSubmittedQuests(student);
+                    if(!studentSubmittedQuests.isEmpty()){
+                        student.setQuestList(studentSubmittedQuests);
+                        mentorStudents.add(student);
+
+                    }
+                }
+            }
+        }
+        return mentorStudents;
     }
 }

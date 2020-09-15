@@ -48,4 +48,10 @@ public class ServiceFactory {
                 new QuestDAO(connector)
         );
     }
+
+    public StudentQuestService getStudentQuestService(){
+        return new StudentQuestService(
+                new StudentQuestDAO(connector)
+        );
+    }
 }
