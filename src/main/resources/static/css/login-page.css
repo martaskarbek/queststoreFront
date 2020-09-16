@@ -1,7 +1,7 @@
 .form-image {
-    background-image: url("/static/img/platform.jpg/");
-    height: 80vh;
-    width: 60vh;
+    background-image: url(/static/img/platform3.jpg);
+    height: 100%;
+    width: 40vw;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -9,5 +9,9 @@
 }
 
 .login-form {
-    margin-top: 20vh;
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
 }

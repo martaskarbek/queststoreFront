@@ -77,7 +77,11 @@
                   <img alt="severus" src="/static/img/severus.png">
                   <h2>Name: {{ mentor.getFirstName() }}</h2><br>
                   <h2>Surname: {{ mentor.getLastName() }}</h2><br>
-                  <h2>Spec: Code brewing</h2><br>
+                    {% for module in mentor.getModules() %}
+
+                        <h2>Module: {{ module.getName() }}</h2><br>
+
+                    {% endfor %}
                 </div>
                 <div id="right-bar-right">
 
