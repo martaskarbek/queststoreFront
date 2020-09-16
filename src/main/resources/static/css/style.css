@@ -28,7 +28,7 @@ header {
     flex-direction: row;
     justify-content: center;
     align-items: flex-end;
-    height: 40vh;
+    height: 30vh;
     width: 100%;
     background: url(/static/img/train.jpg) no-repeat center center;
     background-size: cover;
@@ -41,7 +41,7 @@ header div {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-size: 2em;
+    font-size: 1.8em;
     text-transform: uppercase;
     letter-spacing: 2px;
     padding-bottom: 4vh;
@@ -50,30 +50,32 @@ header div {
 
 nav {
     
-    line-height: 7vh;
+    line-height: 5vh;
     width: 100%;
     background-color: black;
-    padding-left: 30em;
+    padding-left: 30%;
 
 }
 
 nav ul {
     display: flex;
     flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
     list-style: none;
 }
 
 
-nav ul li {
-    display: flex;
-    flex-direction: row;
-}
+/*nav ul li {*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*}*/
 
  nav a {
     display: block;
     background-color: black;
     margin-left: 1em;
-    width: 4vw;
+    min-width: 4.5em;
     font-size: 1em;
     color: white;
     text-decoration: none;
@@ -95,7 +97,7 @@ main {
     justify-content: space-between;
     align-items: stretch;
     width: 90%;
-    min-height: 48vh;
+    min-height: 60vh;
     color: white;
 
 }
