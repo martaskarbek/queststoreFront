@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/static/css/style.css/">
     <link rel="stylesheet" type="text/css" href="/static/css/edit-student-Quest.css/">
     <link rel="icon" href="/static/img/favicon.ico/">
-{#    <script src="/static/js/addQuest.js" defer></script>#}
+    <script src="/static/js/markQuest.js" defer></script>
     <title>Add quest</title>
 </head>
 
@@ -45,16 +45,16 @@
 
                     <h1>MARK QUEST </h1>
                     <h3><span id="author">Submitted by: {{ studentQuest.getAuthor() }}, studentId: <span id="studentId">{{ studentQuest.getStudentId() }}</span></span></h3>
-                    <h3><span id="questName">Quest name: {{ studentQuest.getQuestName() }},</span><span id="questId"> questId: {{ studentQuest.getQuestId() }}</span></h3>
-                    <h3><span id="value">Coins to earn:  {{ studentQuest.getValue() }} mc</span></h3>
+                    <h3><span id="questName">Quest name: {{ studentQuest.getQuestName() }},</span> quest id: <span id="questId">{{ studentQuest.getQuestId() }}</span></h3>
+                    <h3>Coins to earn:  <span id="value">{{ studentQuest.getValue() }}</span> mc</h3>
 
                     <label for="submission">Quest submission</label>
                     <textarea class="input" id="submission" name="submission" placeholder="Quest submission">{{ studentQuest.getQuestSubmission() }}</textarea>
                     <label for="status" id="modules-label">Status</label>
                     <select class="input" id="status" name="status" size="1">
-                        <option value="1">SUBMITTED</option>
-                        <option value="2">APPROVED</option>
-                        <option value="3">NOT-APPROVED</option>
+                        <option value="3">SUBMITTED</option>
+                        <option value="4">APPROVED</option>
+                        <option value="5">NOT-APPROVED</option>
                      </select>
 
                     <div class="button">

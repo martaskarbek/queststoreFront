@@ -25,7 +25,17 @@ public class StudentQuestDAO implements IStudentQuestDAO {
 
     @Override
     public void edit(StudentQuest studentQuest) {
-
+        connector.connect();
+        try {
+            PreparedStatement preparedStatement = connector.connection.prepareStatement("UPDATE student_quests SET quest_status_id=?, quest_input_area=? WHERE student_id=? AND quest_id=?");
+            preparedStatement.setInt(1, QuestStatus.getQuestStatusValue(studentQuest.getQuestStatus()));
+            preparedStatement.setString(2, studentQuest.getQuestSubmission());
+            preparedStatement.setInt(3, studentQuest.getStudentId());
+            preparedStatement.setInt(4, studentQuest.getQuestId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.codecool.queststore.dao;
 
+import com.codecool.queststore.models.StudentQuest;
 import com.codecool.queststore.models.users.Student;
 
 import java.sql.PreparedStatement;
@@ -130,5 +131,19 @@ public class StudentDAO implements IStudentDAO {
             e.printStackTrace();
         }
         return student;
+    }
+
+    @Override
+    public void editStudentWallet(StudentQuest studentQuest) {
+        connector.connect();
+        try {
+            PreparedStatement preparedStatement = connector.connection.prepareStatement("UPDATE students SET wallet=wallet+? WHERE id=?");
+            preparedStatement.setInt(1, studentQuest.getValue());
+            preparedStatement.setInt(2, studentQuest.getStudentId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 }

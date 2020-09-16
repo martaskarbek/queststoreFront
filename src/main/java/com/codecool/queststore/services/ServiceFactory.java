@@ -51,7 +51,8 @@ public class ServiceFactory {
 
     public StudentQuestService getStudentQuestService(){
         return new StudentQuestService(
-                new StudentQuestDAO(connector)
+                new StudentQuestDAO(connector),
+                new StudentDAO(connector)
         );
     }
 }

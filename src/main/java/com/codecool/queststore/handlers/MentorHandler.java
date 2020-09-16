@@ -93,7 +93,7 @@ public class MentorHandler implements HttpHandler {
             case "rewards_mentor" -> serviceFactory.getRewardService().updateReward(formData, mentor);
             case "quests_mentor" -> serviceFactory.getQuestService().updateQuest(formData, mentor);
             case "students_mentor" -> serviceFactory.getStudentService().updateStudent(formData);
-//            case "mark_quest" -> serviceFactory.getStudentService().updateStudent(formData);
+            case "mark_quest" -> serviceFactory.getStudentQuestService().updateStudentQuest(formData);
         }
         String redirectURL = "/mentor";
         httpExchange.getResponseHeaders().add("Location", redirectURL);
