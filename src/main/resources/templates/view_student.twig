@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css/">
+    <link rel="stylesheet" type="text/css" href="/static/css/student_content.css/">
+    <link rel="icon" href="/static/img/favicon.ico/">
+    <script src="/static/js/studentContent.js" defer></script>
+    <title>Rewards</title>
+</head>
+
+<body>
+<div class="container">
+
+    <header>
+        <div>
+            <h1>School of Code</h1><br>
+            <p>Magical ways of coding</p>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="/mentor/students_mentor">Back</a></li>
+
+        </ul>
+
+    </nav>
+
+    <main>
+
+        <aside class="options">
+            <div id="options-right">
+                <h1>Sort options by: </h1>
+                <ul>
+                    <li><a href="#">
+                            <p>ADD</p>
+                        </a></li>
+                    <li><a href="#">
+                            <p>SHOW</p>
+                        </a></li>
+                    <li><a href="#">
+                            <p>UPDATE</p>
+                        </a></li>
+                    <li><a href="#">
+                            <p>DELETE</p>
+                        </a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <section class="main-content">
+            <h1>STUDENT WALLET</h1>
+            <div class="items-content">
+
+
+                {% for reward in student.getRewardList() %}
+                    <div class="reward-content">
+                        <div class="item">
+                            <p class="item-name">{{ reward.getName() }}</p>
+                            <p class="item-price">{{ reward.getPrice() }}</p>
+                        </div>
+                        <div class="data">
+                            <p><span>Description: </span>{{ reward.getDescription() }}</p>
+                            <p><span>Category: </span>{{ reward.getCategory() }}</p>
+                            <p><span>Status: </span>{{ reward.getOrderStatus() }}</p>
+                        </div>
+
+                    </div>
+
+
+                {% endfor %}
+
+
+
+                {% for quest in student.getQuestList() %}
+                    <div class="quest-content">
+                        <div class="quest">
+                            <p class="item-quest-name">{{ quest.getName() }}</p>
+                            <p class="item-quest-value">Value</p>
+                            <p class="item-quest-price">{{ quest.getCoinsToEarn() }}</p>
+                        </div>
+                        <div class="data">
+                            <p><span>Description: </span>{{ quest.getDescription() }}</p>
+                            <p><span>Category: </span>{{ quest.getCategory() }}</p>
+                            <p><span>Module: </span>{{ quest.getModuleName() }}</p>
+                            <p><span>Quest status: </span>{{ quest.getQuestStatus() }}</p>
+                            <p><span>Student submission: </span>{{ quest.getQuestInputArea() }}</p>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+
+
+            </div>
+
+
+        </section>
+
+        <aside class="right-bar">
+            <div id="right-bar-left">
+                <img alt="severus" src="/static/img/harry2avatar.png">
+                <h2>Name: {{ student.getFirstName() }}</h2><br>
+                <h2>Surname: {{ student.getLastName() }}</h2><br>
+                <h2>Module: {{ student.getModuleName() }}</h2><br>
+                <h2>Coins: {{ student.getWallet() }}</h2><br>
+            </div>
+            <div id="right-bar-right">
+
+            </div>
+        </aside>
+
+    </main>
+
+    <footer>&copy; Dumbledore's Army</footer>
+</div>
+
+</body>
+
+</html>
+

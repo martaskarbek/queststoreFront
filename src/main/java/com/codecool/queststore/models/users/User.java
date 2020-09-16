@@ -27,8 +27,7 @@ public abstract class User {
 
     public User() {
 
-    }
-
+    };
 
     public int getId() {
         return id;
@@ -50,10 +49,6 @@ public abstract class User {
         return isActive;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -66,8 +61,44 @@ public abstract class User {
         return session;
     }
 
-    public void setSession(Session session) {
+    public User setId(int id) {
+        this.id = id;
+        return this;
+    }
+
+    public User setFirstName(String firstName) {
+        this.firstName = firstName;
+        return this;
+    }
+
+    public User setLastName(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
+    public User setRole(Role role) {
+        this.role = role;
+        return this;
+    }
+
+    public User setActive(boolean active) {
+        isActive = active;
+        return this;
+    }
+
+    public User setEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public User setPassword(String password) {
+        this.password = password;
+        return this;
+    }
+
+    public User setSession(Session session) {
         this.session = session;
+        return this;
     }
 
     @Override

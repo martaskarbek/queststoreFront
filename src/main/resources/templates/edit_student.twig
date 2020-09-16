@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css/">
+    <link rel="stylesheet" type="text/css" href="/static/css/add-artifact.css/">
+    <link rel="icon" href="/static/img/favicon.ico/">
+    <script src="/static/js/editStudent.js" defer></script>
+    <title>Create a CodeCooler account</title>
+</head>
+
+<body>
+    <div class="container">
+
+        <header>
+            <div>
+                <h1>School of Code</h1><br>
+                <p>Magical ways of coding</p>
+            </div>
+
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="/mentor/students_mentor">Back</a></li>
+
+            </ul>
+        </nav>
+
+        <main>
+
+            <aside class="options">
+                <div id="options-right">
+                    <h1>Sort options by: </h1>
+                    <ul>
+                        <li><a href="#">
+                                <p>ADD</p>
+                            </a></li>
+                        <li><a href="#">
+                                <p>SHOW</p>
+                            </a></li>
+                        <li><a href="#">
+                                <p>UPDATE</p>
+                            </a></li>
+                        <li><a href="#">
+                                <p>DELETE</p>
+                            </a></li>
+                    </ul>
+                </div>
+            </aside>
+
+            <section class="main-content">
+                <div class="items-content">
+
+                    <form id="add-student">
+                        <h1>EDIT STUDENT'S ACCOUNT <span id="userId">{{ student.getId() }}</span></h1>
+                        <label for="name"></label>
+                        <input class="input" id="name" name="name" type="text" placeholder="name" value="{{ student.getFirstName() }}">
+                        <label for="surname"></label>
+                        <input class="input" id="surname" name="surname" type="text" placeholder="surname" value="{{ student.getLastName() }}">
+                        <label for="email"></label>
+                        <input class="input" id="email" name="email" type="email" placeholder="e-mail" value="{{ student.getEmail() }}">
+                        <label for="password"></label>
+                        <input class="input" id="password" name="password" type="text" placeholder="password" value="{{ student.getPassword }}">
+                        <label for="modules" id="modules-label">Module name</label>
+                        <select id="modules" name="modules" size="1">
+                            <option value="1">ProgBase</option>
+                            <option value="2">JavaOOP</option>
+                            <option value="3">Web with SQL</option>
+                            <option value="4">Advanced</option>
+                        </select>
+                        <label for="coins"></label>
+                        <input class="input" id="coins" name="coins" type="text" placeholder="coins" value="{{ student.getWallet() }}">
+                        <div class="button">
+                            <button type="submit">SUBMIT</button>
+                            <button type="reset">RESET</button>
+                            <div class="checkbox">
+                                <label><input id="checkbox" type="checkbox" name="checkbox" value="true"> Is active</label>
+                            </div>
+                        </div>
+
+                    </form>
+                    <div id="item">
+
+                    </div>
+
+
+                </div>
+            </section>
+
+            <aside class="right-bar">
+                <div id="right-bar-left">
+                    <img alt="severus" src="/static/img/harry2avatar.png">
+                    <label for="picture">Choose a profile picture:</label>
+                    <input type="file" id="picture" name="picture" accept="image/png, image/jpeg">
+                </div>
+                <div id="right-bar-right">
+
+                </div>
+            </aside>
+
+        </main>
+
+        <footer>&copy; Dumbledore's Army</footer>
+    </div>
+
+</body>
+
+</html>

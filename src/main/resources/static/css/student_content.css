@@ -1,0 +1,139 @@
+.main-content {
+    min-width: 60%;
+    max-width: 72%;
+}
+
+.items-content {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 95%;
+}
+
+.reward-content {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    margin-top: 1em;
+
+}
+
+.quest-content {
+
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    margin-top: 1em;
+}
+
+.item {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 2%;
+    margin: 2em;
+    min-width: 10.6em;
+
+}
+
+.quest {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-image: url(/static/img/parchment.jpg);
+    background-size: cover;
+    margin: 2em;
+    padding: 2%;
+    min-width: 10.6em;
+    height: 15em;
+    background-color: blue;
+    border-radius: 20px;
+    color: black;
+
+}
+
+.data {
+
+    margin-top: 1em;
+}
+
+.data > p > span {
+
+    font-weight: bold;
+    color: chocolate;
+}
+
+.data > p {
+    margin-top: 1em;
+    line-height: 1.6;
+}
+
+
+.item-name {
+    margin: 3em auto;
+    color: white;
+    font-weight: bold;
+}
+
+.item-price {
+    margin: 3em auto;
+    color: black;
+    font-weight: bold;
+}
+
+
+.item-quest-value {
+    margin: 1em auto;
+    color: black;
+}
+
+.item-quest-name {
+    margin: 2em auto;
+    color: black;
+    font-weight: bold;
+}
+
+.item-quest-price {
+    margin: 1em auto;
+    color: black;
+    font-weight: bold;
+}
+
+
+.del {
+    color: crimson;
+    text-decoration: none;
+}
+
+.upd {
+    color: burlywood;
+    text-decoration: none;
+}
+
+.edit {
+    display: block;
+    margin-top: 1em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+    background-color: #ccc;
+    color: black;
+    line-height: 1.5em;
+    text-decoration: none;
+    text-align: center;
+    width: 3em;
+    border-radius: 5px;
+    border: 2px solid green;
+}
+
+.edit:hover {
+    background-color: #eee;
+    cursor: pointer;
+}
+
+

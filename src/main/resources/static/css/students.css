@@ -1,0 +1,48 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+
+table {
+    line-height: 2em;
+    border: 1px solid lightslategrey;
+    border-radius: 1em;
+    margin-bottom: 1em;
+}
+
+td, th{
+    border-bottom: 1px solid grey;
+    padding: 0 1em;
+}
+
+table > tr:last-child > td{
+    border-bottom: none;
+}
+
+.edit, .view {
+    display: block;
+    /*margin-top: 1em;*/
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+    background-color: #ccc;
+    color: black;
+    line-height: 1.1em;
+    text-decoration: none;
+    text-align: center;
+    width: 3em;
+    border-radius: 5px;
+    border: 2px solid green;
+}
+
+.view:hover {
+    background-color: #eee;
+    cursor: pointer;
+}
+.edit:hover {
+    background-color: #eee;
+    cursor: pointer;
+}

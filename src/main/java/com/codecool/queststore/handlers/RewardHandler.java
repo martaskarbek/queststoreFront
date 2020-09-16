@@ -1,8 +1,10 @@
 package com.codecool.queststore.handlers;
 
 import com.codecool.queststore.helpers.Helpers;
+import com.codecool.queststore.helpers.HttpHelper;
 import com.codecool.queststore.models.Reward;
 import com.codecool.queststore.services.RewardService;
+import com.codecool.queststore.services.ServiceFactory;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -14,9 +16,13 @@ import java.util.List;
 
 public class RewardHandler implements HttpHandler {
 
+    private final ServiceFactory serviceFactory;
+    private final Helpers helpers;
 
-    private final RewardService rewardService = new RewardService();
-    private final Helpers helpers = new Helpers();
+    public RewardHandler(ServiceFactory serviceFactory, Helpers helpers) {
+        this.serviceFactory = serviceFactory;
+        this.helpers = helpers;
+    }
 
 
     @Override
@@ -55,9 +61,9 @@ public class RewardHandler implements HttpHandler {
         String response = "";
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/rewards_mentor.twig");
         JtwigModel model = JtwigModel.newModel();
-        List<Reward> rewards = rewardService.getRewards();
+        List<Reward> rewards = serviceFactory.getRewardService().getRewards();
         model.with("rewards", rewards);
         response = template.render(model);
-        helpers.sendResponse(httpExchange, response, Helpers.OK);
+        helpers.getHttpHelper().sendResponse(httpExchange, response, HttpHelper.OK);
     }
 }

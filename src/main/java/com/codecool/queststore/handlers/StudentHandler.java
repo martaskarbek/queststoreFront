@@ -1,10 +1,10 @@
 package com.codecool.queststore.handlers;
 
-import com.codecool.queststore.dao.PostgreSQLJDBC;
+import com.codecool.queststore.dao.Connector;
 import com.codecool.queststore.dao.SessionPostgreSQLDAO;
 import com.codecool.queststore.dao.UserPostgreSQLDAO;
 import com.codecool.queststore.helpers.CookieHelper;
-import com.codecool.queststore.helpers.Helpers;
+import com.codecool.queststore.helpers.HttpHelper;
 import com.codecool.queststore.models.Role;
 import com.codecool.queststore.models.users.User;
 import com.codecool.queststore.services.UserService;
@@ -21,9 +21,9 @@ import java.util.Optional;
 
 public class StudentHandler implements HttpHandler {
     private CookieHelper cookieHelper = new CookieHelper();
-    private PostgreSQLJDBC postgreSQLJDBC = new PostgreSQLJDBC();
-    private UserService userService = new UserService(new UserPostgreSQLDAO(postgreSQLJDBC), new SessionPostgreSQLDAO(postgreSQLJDBC));
-    private Helpers helpers = new Helpers();
+    private Connector connector = new Connector();
+    private UserService userService = new UserService(new UserPostgreSQLDAO(connector), new SessionPostgreSQLDAO(connector));
+    private HttpHelper httpHelper = new HttpHelper();
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
@@ -31,7 +31,7 @@ public class StudentHandler implements HttpHandler {
         Optional<HttpCookie> cookie = getSessionIdCookie(exchange);
         if (cookie.isPresent()) {
             String sessionId = cookieHelper.getSessionIdFromCookie(cookie.get());
-            User user =  userService.getUserBySessionId(sessionId);
+            User user =  userService.getBySessionId(sessionId);
             if (user.getRole().equals(Role.STUDENT)) {
                 String templatePath = "templates/student_menu.twig";
                 sendUserPage(user, exchange, templatePath);
@@ -55,7 +55,7 @@ public class StudentHandler implements HttpHandler {
         JtwigModel model = JtwigModel.newModel();
         model.with("student", user);
         response = template.render(model);
-        helpers.sendResponse(httpExchange, response, Helpers.OK);
+        httpHelper.sendResponse(httpExchange, response, HttpHelper.OK);
     }
 
     private Optional<HttpCookie> getSessionIdCookie(HttpExchange httpExchange){
@@ -63,7 +63,7 @@ public class StudentHandler implements HttpHandler {
         System.out.println(cookieStr);
         List<HttpCookie> cookies = cookieHelper.parseCookies(cookieStr);
         System.out.println(cookies);
-        return cookieHelper.findCookieByName(Helpers.SESSION_COOKIE_NAME, cookies);
+        return cookieHelper.findCookieByName(HttpHelper.SESSION_COOKIE_NAME, cookies);
 
     }
 }

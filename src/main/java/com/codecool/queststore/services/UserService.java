@@ -30,9 +30,9 @@ public class UserService {
         return user;
     }
 
-    public User getUserBySessionId(String sessionId) {
+    public User getBySessionId(String sessionId) {
         Session session = sessionDAO.getSessionBySessionId(sessionId);
-        System.out.println(session);
+//        System.out.println(session);
         return userDAO.get(session.getUserId());
 
     }
@@ -40,6 +40,18 @@ public class UserService {
     public void logout(String sessionId) {
         Session session = sessionDAO.getSessionBySessionId(sessionId);
         sessionDAO.remove(session);
+    }
+
+    public void addUser(User user){
+        userDAO.add(user);
+    }
+
+    public User getByCredentials(String email, String password){
+        return userDAO.getByCredentials(email, password);
+    }
+
+    public void updateUserStudent(User userStudent) {
+        userDAO.edit(userStudent);
     }
 }
 

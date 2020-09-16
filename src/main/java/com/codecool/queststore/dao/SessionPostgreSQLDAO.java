@@ -1,29 +1,23 @@
 package com.codecool.queststore.dao;
 
-import com.codecool.queststore.models.Category;
-import com.codecool.queststore.models.Reward;
-import com.codecool.queststore.models.Role;
 import com.codecool.queststore.models.Session;
-import com.codecool.queststore.models.users.User;
-import com.codecool.queststore.models.users.UserFactory;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class SessionPostgreSQLDAO implements ISessionDAO {
-    private  PostgreSQLJDBC postgreSQLJDBC;
-    public SessionPostgreSQLDAO(PostgreSQLJDBC postgreSQLJDBC) {
-        this.postgreSQLJDBC = postgreSQLJDBC;
+    private Connector connector;
+    public SessionPostgreSQLDAO(Connector connector) {
+        this.connector = connector;
     }
 
     @Override
     public void add(Session session) {
-        postgreSQLJDBC.connect();
+        connector.connect();
         try {
-            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("INSERT INTO sessions (uuid, user_id) VALUES (?, ?)");
+            PreparedStatement preparedStatement = connector.connection.prepareStatement("INSERT INTO sessions (uuid, user_id) VALUES (?, ?)");
             preparedStatement.setString(1, session.getUuid());
             preparedStatement.setInt(2, session.getUserId());
             preparedStatement.executeUpdate();
@@ -33,15 +27,15 @@ public class SessionPostgreSQLDAO implements ISessionDAO {
     }
 
     @Override
-    public void edit(Session session, String[] params) {
+    public void edit(Session session) {
 
     }
 
     @Override
     public void remove(Session session) {
-        postgreSQLJDBC.connect();
+        connector.connect();
         try {
-            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("DELETE FROM sessions WHERE uuid = ?;");
+            PreparedStatement preparedStatement = connector.connection.prepareStatement("DELETE FROM sessions WHERE uuid = ?;");
             preparedStatement.setString(1, session.getUuid());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -62,10 +56,10 @@ public class SessionPostgreSQLDAO implements ISessionDAO {
 
     @Override
     public Session getSessionBySessionId(String sessionId) {
-        postgreSQLJDBC.connect();
+        connector.connect();
         Session session = new Session();
         try {
-            PreparedStatement preparedStatement = postgreSQLJDBC.connection.prepareStatement("SELECT * FROM sessions WHERE uuid = ?;");
+            PreparedStatement preparedStatement = connector.connection.prepareStatement("SELECT * FROM sessions WHERE uuid = ?;");
             preparedStatement.setString(1, sessionId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {

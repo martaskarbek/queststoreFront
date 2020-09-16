@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class PostgreSQLJDBC {
+public class Connector {
 
 //    private final String URL = System.getenv("URL");
 //    private final String USER = System.getenv("USER");
@@ -13,7 +13,7 @@ public class PostgreSQLJDBC {
 
     private String user = "wt80";
     private String password = "dupa123";
-    private static final String CONNECTION_STRING = "jdbc:postgresql://localhost:5432/QUESTstore2";
+    private static final String CONNECTION_STRING = "jdbc:postgresql://localhost:5432/QUESTstore6";
 
     protected Connection connection = null;
     protected Statement statement;

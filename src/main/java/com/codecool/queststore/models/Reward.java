@@ -1,5 +1,7 @@
 package com.codecool.queststore.models;
 
+import com.codecool.queststore.models.users.Mentor;
+
 public class Reward {
     private int id;
     private String name;
@@ -7,17 +9,42 @@ public class Reward {
     private int price;
     private Category category;
     private int mentorId;
+    private Boolean isActive;
+    private String author;
+    private OrderStatus orderStatus;
 
-    public Reward(int id, String name, String description, int price, Category category, int mentorId) {
+    public Reward(int id, String name, String description, int price, Category category, int mentorId, boolean isActive) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.category = category;
         this.mentorId = mentorId;
+        this.isActive = isActive;
     }
 
     public Reward(){};
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public Reward setAuthor(String author) {
+        this.author = author;
+        return this;
+    }
 
     public Reward setId(int id) {
         this.id = id;
@@ -50,6 +77,15 @@ public class Reward {
         return this;
     }
 
+    public Reward setActive(Boolean active) {
+        isActive = active;
+        return this;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
     public int getId() {
         return id;
     }
@@ -74,6 +110,8 @@ public class Reward {
         return mentorId;
     }
 
+
+
     @Override
     public String toString() {
         return "Reward{" +
@@ -82,7 +120,8 @@ public class Reward {
                 ", description='" + description + '\'' +
                 ", price=" + price +
                 ", category=" + category +
-                ", mentor=" + mentorId +
+                ", mentorId=" + mentorId +
+                ", orderStatus=" + orderStatus +
                 '}';
     }
 }

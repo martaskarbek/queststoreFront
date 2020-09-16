@@ -1,0 +1,28 @@
+
+.item {
+    background-image: url(/static/img/parchment.jpg);
+    background-size: cover;
+    margin: 1em;
+    padding: 5%;
+    width: 10.6em;
+    height: 15em;
+    background-color: blue;
+    border-radius: 20px;
+}
+
+.item-value {
+    margin: 0.5em auto;
+    color: black;
+}
+
+.item-name {
+    margin: 0.5em auto 3em;
+    color: black;
+    font-weight: bold;
+}
+
+.item-price {
+    margin: 0.5em auto;
+    color: black;
+    font-weight: bold;
+}
