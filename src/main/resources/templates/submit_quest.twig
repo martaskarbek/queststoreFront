@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/static/css/style.css/">
     <link rel="stylesheet" type="text/css" href="/static/css/edit-student-Quest.css/">
     <link rel="icon" href="/static/img/favicon.ico/">
-    <script src="/static/js/markQuest.js" defer></script>
+    <script src="/static/js/submitQuest.js" defer></script>
     <title>Add quest</title>
 </head>
 
@@ -24,7 +24,7 @@
 
     <nav>
         <ul>
-            <li><a href="/mentor">Back</a></li>
+            <li><a href="/student">Back</a></li>
         </ul>
 
     </nav>
@@ -41,20 +41,19 @@
         <section class="main-content">
             <div class="items-content">
 
-                <form id="add-reward" action="http://localhost:8000/mentor/mark_quest" method="POST">
+                <form id="add-reward" action="http://localhost:8000/student/student_menu" method="POST">
 
-                    <h1>MARK QUEST </h1>
-                    <h3><span id="author">Submitted by: {{ studentQuest.getAuthor() }}<span id="studentId">{{ studentQuest.getStudentId() }}</span></span></h3>
-                    <h3><span id="questName">Quest name: {{ studentQuest.getQuestName() }},</span><span id="questId">{{ studentQuest.getQuestId() }}</span></h3>
+                    <h1>SUBMIT QUEST</h1>
+                    <h3><span id="questName">Quest name: {{ studentQuest.getQuestName() }}</span></h3>
                     <h3>Coins to earn:  <span id="value">{{ studentQuest.getValue() }}</span> mc</h3>
 
                     <label for="submission">Quest submission</label>
                     <textarea class="input" id="submission" name="submission" placeholder="Quest submission">{{ studentQuest.getQuestSubmission() }}</textarea>
                     <label for="status" id="modules-label">Status</label>
                     <select class="input" id="status" name="status" size="1">
-                        <option value="3">SUBMITTED</option>
-                        <option value="4">APPROVED</option>
-                        <option value="5">NOT-APPROVED</option>
+                        <option value="2">IN PROGRESS</option>
+                        <option value="3">SUBMIT</option>
+
                      </select>
 
                     <div class="button">
@@ -77,6 +76,8 @@
                 <div id="avatar">
 
                 </div>
+                <span id="questId">{{ studentQuest.getQuestId() }}</span>
+                <span id="studentId">{{ studentQuest.getStudentId() }}</span>
             </div>
             <div id="right-bar-right">
             </div>

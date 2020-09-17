@@ -1,0 +1,93 @@
+{% extends 'base.twig' %}
+
+{% block title %}
+    {{ parent() }} | rewards
+{% endblock %}
+
+{% block styles %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="/static/css/student-menu.css/">
+
+    <link rel="stylesheet" type="text/css" href="/static/css/rewards.css/">
+{% endblock %}
+
+{% block scripts %}
+    <script src="/static/js/rewards.js" defer></script>
+{% endblock %}
+
+{% block container %}
+    <header>
+        <div>
+            <h1>School of Code</h1><br>
+            <p>Magical ways of coding</p>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="/student">Back</a></li>
+
+        </ul>
+
+    </nav>
+
+    <main>
+
+        <aside class="options">
+            <div id="options-right">
+                <ul>
+
+                </ul>
+                <br><br><br><br><br><br><br><br><br><br><br>
+
+                <br><br>
+
+            </div>
+        </aside>
+
+        <section class="main-content">
+            <h1>REWARDS</h1>
+            <div class="items-content">
+
+                {% for reward in rewards %}
+                    <div class="item-content">
+                        <div class="item">
+                            <p class="item-name">{{ reward.getName() }}</p>
+                            <p class="item-price">{{ reward.getPrice() }}</p>
+                        </div>
+                        <div class="data">
+                            <p><span>Description: </span>{{ reward.getDescription() }}
+                            </p>
+                            <p><span>Category: </span>{{ reward.getCategory() }}</p>
+                            <p><span>Author: </span>{{ reward.getAuthor() }}</p>
+{#                            <p><span>Is active: </span>{{ reward.getIsActive() }}</p>#}
+                            <a class="edit" href="/student/rewards_mentor/buy/{{ reward.getId() }}">BUY</a>
+                        </div>
+                    </div>
+
+
+                {% endfor %}
+
+
+            </div>
+        </section>
+
+        <aside class="right-bar">
+            <div id="right-bar-left">
+                <img alt="severus" src="/static/img/harry2avatar.png">
+                <h2>Name: {{ stuent.getFirstName() }}</h2><br>
+                <h2>Surname: {{ student.getLastName() }}</h2><br>
+                <h2>Module: {{ student.getModuleName() }}</h2><br>
+                <h2>Coins: {{ student.getWallet() }}</h2><br>
+
+
+            </div>
+            <div id="right-bar-right">
+
+            </div>
+        </aside>
+
+    </main>
+
+    <footer>&copy; Dumbledore's Army</footer>
+{% endblock %}

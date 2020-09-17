@@ -131,6 +131,10 @@
     border: 2px solid green;
 }
 
+#sub {
+    width: 4em;
+}
+
 .edit:hover {
     background-color: #eee;
     cursor: pointer;

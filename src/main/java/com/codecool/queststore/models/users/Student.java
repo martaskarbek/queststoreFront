@@ -72,6 +72,8 @@ public class Student extends User{
     public String toString() {
         return "Student{" +
                 "studentId=" + studentId +
+                ", firstName=" + super.getFirstName() +
+                ", lastName=" + super.getLastName() +
                 ", moduleId=" + moduleId +
                 ", wallet=" + wallet +
                 ", moduleName='" + moduleName + '\'' +

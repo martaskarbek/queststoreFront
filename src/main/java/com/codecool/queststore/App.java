@@ -4,6 +4,7 @@ import com.codecool.queststore.dao.Connector;
 import com.codecool.queststore.dao.LogoutHandler;
 import com.codecool.queststore.handlers.*;
 import com.codecool.queststore.helpers.CookieHelper;
+import com.codecool.queststore.helpers.HandlerHelper;
 import com.codecool.queststore.helpers.Helpers;
 import com.codecool.queststore.helpers.HttpHelper;
 import com.codecool.queststore.services.ServiceFactory;
@@ -16,7 +17,8 @@ public class App {
 
         HttpHelper httpHelper = new HttpHelper();
         CookieHelper cookieHelper = new CookieHelper();
-        Helpers helpers = new Helpers(httpHelper, cookieHelper);
+        HandlerHelper handlerHelper = new HandlerHelper();
+        Helpers helpers = new Helpers(httpHelper, cookieHelper, handlerHelper);
 
         Connector connector = new Connector();
         ServiceFactory serviceFactory = new ServiceFactory(connector);
@@ -30,7 +32,7 @@ public class App {
             /student/quests
             /student/artifact
          */
-        server.createContext("/student", new StudentHandler());
+        server.createContext("/student", new StudentHandler(serviceFactory, helpers));
 
         /*
             /quest/{quest_id}/submit/{user_id}

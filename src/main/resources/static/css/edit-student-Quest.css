@@ -114,3 +114,7 @@ form .radio input {
 form > h3 {
     margin-bottom: 1em;
 }
+
+#studentId, #questId {
+    display: none;
+}
