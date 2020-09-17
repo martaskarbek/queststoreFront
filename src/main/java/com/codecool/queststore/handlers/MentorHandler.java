@@ -2,10 +2,8 @@ package com.codecool.queststore.handlers;
 
 import com.codecool.queststore.helpers.Helpers;
 import com.codecool.queststore.helpers.HttpHelper;
+import com.codecool.queststore.models.*;
 import com.codecool.queststore.models.Module;
-import com.codecool.queststore.models.Quest;
-import com.codecool.queststore.models.Reward;
-import com.codecool.queststore.models.StudentQuest;
 import com.codecool.queststore.models.users.Mentor;
 import com.codecool.queststore.models.users.Student;
 import com.codecool.queststore.models.users.User;
@@ -46,7 +44,7 @@ public class MentorHandler implements HttpHandler {
 
         try {
             checkUser(httpExchange);
-            if (user.getId() == 0) {
+            if (user.getId() == 0 || !user.getRole().equals(Role.MENTOR)) {
                 String redirectURL = "/login";
                 httpExchange.getResponseHeaders().add("Location", redirectURL);
                 sendResponse(HttpHelper.MOVED_PERMANENTLY);
@@ -180,7 +178,7 @@ public class MentorHandler implements HttpHandler {
         sendMentorPage("templates/add_artifact.twig");
     }
 
-    private void checkUser(HttpExchange httpExchange) throws Exception {
+    private void checkUser(HttpExchange httpExchange) {
         Optional<HttpCookie> cookie = helpers.getCookieHelper().getSessionIdCookie(httpExchange);
         if (cookie.isPresent()) {
             String sessionId = helpers.getCookieHelper().getSessionIdFromCookie(cookie.get());

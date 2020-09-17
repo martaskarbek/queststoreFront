@@ -4,6 +4,7 @@ import com.codecool.queststore.helpers.Helpers;
 import com.codecool.queststore.helpers.HttpHelper;
 import com.codecool.queststore.models.Quest;
 import com.codecool.queststore.models.Reward;
+import com.codecool.queststore.models.Role;
 import com.codecool.queststore.models.StudentQuest;
 import com.codecool.queststore.models.users.Student;
 import com.codecool.queststore.models.users.User;
@@ -43,6 +44,11 @@ public class StudentHandler implements HttpHandler {
 
         try {
             user = loggedUser(httpExchange);
+            if (user.getId() == 0 || !user.getRole().equals(Role.STUDENT)) {
+                String redirectURL = "/login";
+                httpExchange.getResponseHeaders().add("Location", redirectURL);
+                sendResponse(HttpHelper.MOVED_PERMANENTLY);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

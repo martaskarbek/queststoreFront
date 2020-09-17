@@ -2,6 +2,7 @@ package com.codecool.queststore.handlers;
 
 import com.codecool.queststore.helpers.Helpers;
 import com.codecool.queststore.helpers.HttpHelper;
+import com.codecool.queststore.models.Role;
 import com.codecool.queststore.models.users.User;
 import com.codecool.queststore.services.ServiceFactory;
 import com.sun.net.httpserver.HttpExchange;
@@ -13,12 +14,14 @@ import java.net.HttpCookie;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class LoginHandler implements HttpHandler {
     private final ServiceFactory serviceFactory;
     private final Helpers helpers;
     private HttpExchange exchange;
     private String response;
+    private User user;
 
     public LoginHandler(ServiceFactory serviceFactory, Helpers helpers) {
         this.serviceFactory = serviceFactory;
@@ -31,6 +34,19 @@ public class LoginHandler implements HttpHandler {
         this.response = "";
         String method = this.exchange.getRequestMethod();
 
+        checkUser();
+        if (user != null && user.getId() != 0) {
+            String redirectURL = null;
+            switch (user.getRole()) {
+                case STUDENT -> redirectURL = "/student";
+                case MENTOR -> redirectURL = "/mentor";
+            }
+            if (redirectURL != null) {
+                exchange.getResponseHeaders().add("Location", redirectURL);
+                sendResponse(HttpHelper.MOVED_PERMANENTLY);
+            }
+        }
+
         if(method.equals("GET")) {
             sendPage("templates/login-page.twig", null);
         }
@@ -38,6 +54,14 @@ public class LoginHandler implements HttpHandler {
             tryUserLogin(exchange);
         }
      }
+
+    private void checkUser(){
+        Optional<HttpCookie> cookie = helpers.getCookieHelper().getSessionIdCookie(exchange);
+        if (cookie.isPresent()) {
+            String sessionId = helpers.getCookieHelper().getSessionIdFromCookie(cookie.get());
+            user =  serviceFactory.getUserService().getBySessionId(sessionId);
+        }
+    }
 
     private void tryUserLogin(HttpExchange exchange) throws IOException {
         String formData = transformBodyToString();
