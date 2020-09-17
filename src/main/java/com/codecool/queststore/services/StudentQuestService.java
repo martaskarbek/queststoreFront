@@ -31,9 +31,11 @@ public class StudentQuestService {
         studentQuest.setQuestStatus(QuestStatus.valueOf(Integer.parseInt(formData.get("status"))));
         studentQuest.setQuestSubmission(formData.get("submission"));
         studentQuest.setValue(Integer.parseInt(formData.get("value")));
-        System.out.println(studentQuest);
         update(studentQuest);
-        updateStudentWallet(studentQuest);
+        if (studentQuest.getValue() != 0){
+            updateStudentWallet(studentQuest);
+        }
+
 
 
 

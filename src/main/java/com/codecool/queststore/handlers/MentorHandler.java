@@ -126,7 +126,6 @@ public class MentorHandler implements HttpHandler {
             int questId = Integer.parseInt(actions[4]);
             StudentQuest studentQuest = serviceFactory.getStudentQuestService().getStudentQuest(studentId, questId);
             System.out.println(studentQuest);
-//            sendMarkQuestPage("templates/mark_quest.twig", studentQuest);
             sendMarkQuestPage("templates/mark_quest.twig", studentQuest);
 
         }

@@ -123,4 +123,13 @@ public class StudentService {
         }
         return mentorStudents;
     }
+
+    public Student getStudentByUser(User user) {
+        Student student = studentDAO.get(user.getId());
+        List<Quest> studentQuests = questDAO.getStudentQuests(student);
+        List<Reward> studentRewards = rewardDAO.getStudentRewards(student);
+        student.setQuestList(studentQuests);
+        student.setRewardList(studentRewards);
+        return student;
+    }
 }
