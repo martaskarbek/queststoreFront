@@ -16,8 +16,8 @@ public class Student extends User{
     List<Quest> questList;
     List<Reward> rewardList;
 
-    public Student(int id, String firstName, String lastName, Role role, boolean isActive, String email, String password) {
-        super(id, firstName, lastName, role, isActive, email, password);
+    public Student(int id, String firstName, String lastName, Role role, boolean isActive, String email, String password, String salt) {
+        super(id, firstName, lastName, role, isActive, email, password, salt);
     }
 
     public Student() {

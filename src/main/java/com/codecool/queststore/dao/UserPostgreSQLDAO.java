@@ -21,13 +21,14 @@ public class UserPostgreSQLDAO implements IUserDAO {
         connector.connect();
         try {
             PreparedStatement preparedStatement = connector.connection.prepareStatement("INSERT INTO users" +
-                    "(first_name, last_name, role_id, isactive, email, password) VALUES (?, ?, ?, ?, ?, ?)");
+                    "(first_name, last_name, role_id, isactive, email, password, salt) VALUES (?, ?, ?, ?, ?, ?, ?)");
             preparedStatement.setString(1, user.getFirstName());
             preparedStatement.setString(2, user.getLastName());
             preparedStatement.setInt(3, Role.getRoleValue(user.getRole()));
             preparedStatement.setBoolean(4, user.isActive());
             preparedStatement.setString(5, user.getEmail());
             preparedStatement.setString(6, user.getPassword());
+            preparedStatement.setString(7, user.getSalt());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -81,7 +82,8 @@ public class UserPostgreSQLDAO implements IUserDAO {
                 boolean isActive = resultSet.getBoolean("isactive");
                 String email = resultSet.getString("email");
                 String password = resultSet.getString("password");
-                user = UserFactory.create(id, firstName, lastName, role, isActive, email, password);
+                String salt = resultSet.getString("salt");
+                user = UserFactory.create(id, firstName, lastName, role, isActive, email, password, salt);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -90,21 +92,22 @@ public class UserPostgreSQLDAO implements IUserDAO {
     }
 
     @Override
-    public User getByCredentials(String email, String password) {
+    public User getByCredentials(String email) {
         connector.connect();
         User user = UserFactory.USER_NOT_FOUND;
         try {
-            PreparedStatement preparedStatement = connector.connection.prepareStatement("SELECT * FROM users WHERE email = ? AND password = ?;");
+            PreparedStatement preparedStatement = connector.connection.prepareStatement("SELECT * FROM users WHERE email = ?;");
             preparedStatement.setString(1, email);
-            preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
+                String password = resultSet.getString("password");
+                String salt = resultSet.getString("salt");
                 Role role = Role.valueOf(resultSet.getInt("role_id"));
                 boolean isActive = resultSet.getBoolean("isactive");
-                user = UserFactory.create(id, firstName, lastName, role, isActive, email, password);
+                user = UserFactory.create(id, firstName, lastName, role, isActive, email, password, salt);
             }
         } catch (SQLException e) {
             e.printStackTrace();

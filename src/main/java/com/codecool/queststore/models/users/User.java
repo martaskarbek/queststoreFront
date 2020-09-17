@@ -11,10 +11,11 @@ public abstract class User {
     private boolean isActive;
     private String email;
     private String password;
+    private String salt;
     private Session session;
 
     public User(int id, String firstName, String lastName,
-                Role role, boolean isActive, String email, String password
+                Role role, boolean isActive, String email, String password, String salt
     ) {
         this.id = id;
         this.firstName = firstName;
@@ -23,6 +24,7 @@ public abstract class User {
         this.isActive = isActive;
         this.email = email;
         this.password = password;
+        this.salt = salt;
     }
 
     public User() {
@@ -113,5 +115,13 @@ public abstract class User {
                 ", password='" + password + '\'' +
                 ", session=" + session +
                 '}';
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 }

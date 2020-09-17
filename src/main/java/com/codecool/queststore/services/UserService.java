@@ -2,6 +2,7 @@ package com.codecool.queststore.services;
 
 import com.codecool.queststore.dao.SessionPostgreSQLDAO;
 import com.codecool.queststore.dao.UserPostgreSQLDAO;
+import com.codecool.queststore.models.Password;
 import com.codecool.queststore.models.Session;
 import com.codecool.queststore.models.users.Mentor;
 import com.codecool.queststore.models.users.User;
@@ -19,7 +20,16 @@ public class UserService {
     }
 
     public User login(String email, String password) {
-        User user = this.userDAO.getByCredentials(email, password);
+        User user = this.userDAO.getByCredentials(email);
+        // if user does not exists by email
+        if (user.getId() == 0) {
+            return user;
+        }
+
+        // validate password
+        if (!user.getSalt().equals("salt") && !Password.checkPasswords(password, user)) {
+            return user;
+        }
 
         if (user.getId() != 0) {
             UUID uuid = UUID.randomUUID();
@@ -46,8 +56,8 @@ public class UserService {
         userDAO.add(user);
     }
 
-    public User getByCredentials(String email, String password){
-        return userDAO.getByCredentials(email, password);
+    public User getByCredentials(String email){
+        return userDAO.getByCredentials(email);
     }
 
     public void updateUserStudent(User userStudent) {

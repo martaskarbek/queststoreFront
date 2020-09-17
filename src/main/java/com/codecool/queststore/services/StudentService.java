@@ -1,11 +1,8 @@
 package com.codecool.queststore.services;
 
 import com.codecool.queststore.dao.*;
+import com.codecool.queststore.models.*;
 import com.codecool.queststore.models.Module;
-import com.codecool.queststore.models.Quest;
-import com.codecool.queststore.models.QuestStatus;
-import com.codecool.queststore.models.Reward;
-import com.codecool.queststore.models.Role;
 import com.codecool.queststore.models.users.Mentor;
 import com.codecool.queststore.models.users.Student;
 import com.codecool.queststore.models.users.User;
@@ -62,6 +59,7 @@ public class StudentService {
     }
 
     public void createStudent(Map<String, String> formData) {
+        Password.hashPasswordAddSalt(formData);
         User userStudent = createStudentModel(formData);
         addUser(userStudent);
         Student student = createStudentAccount(formData);
@@ -82,6 +80,7 @@ public class StudentService {
         user.setLastName(data.get("surname"));
         user.setEmail(data.get("email"));
         user.setPassword(data.get("password"));
+        user.setSalt(data.get("salt"));
         user.setActive(Boolean.parseBoolean(data.get("checkbox")));
         user.setRole(Role.STUDENT);
         return user;
@@ -89,7 +88,7 @@ public class StudentService {
 
     private Student createStudentAccount(Map<String, String> data) {
         Student student = new Student();
-        User studentUser = userDAO.getByCredentials(data.get("email"), data.get("password"));
+        User studentUser = userDAO.getByCredentials(data.get("email"));
         student.setId(studentUser.getId());
         student.setModuleId(Integer.parseInt(data.get("modules")));
         student.setWallet(Integer.parseInt(data.get("coins")));
