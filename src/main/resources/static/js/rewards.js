@@ -1,12 +1,6 @@
 const container = document.querySelector(".items-content");
 const rightBar = document.getElementById("")
 
-
-
-
-
-
-
 function getRewards() {
     fetch(`http://localhost:8000/rewards_mentor`)
         .then(function (response) {

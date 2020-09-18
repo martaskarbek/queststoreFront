@@ -11,6 +11,7 @@ function checkForWhitespace(firstValue, secondValue) {
 }
 
 function alertTheUser(email) {
+    //TODO TERNARY OPERATOR
     if ((!validateEmail(email))) {
         alert("Invalid email format.");
     } else {
@@ -21,11 +22,14 @@ function alertTheUser(email) {
 function changeButtonStatus(){
     let email = document.getElementById('email').value;
     let password = document.getElementById('password').value;
-    if(checkForWhitespace(email, password)) {
-        enableButton()
-    } else {
-        disableButton()
-    }
+    //TODO TERNARY OPERATOR
+
+    // if(checkForWhitespace(email, password)) {
+    //     enableButton()
+    // } else {
+    //     disableButton()
+    // }
+    checkForWhitespace(email, password) ?  enableButton() : disableButton();
 }
 
 function enableButton(){

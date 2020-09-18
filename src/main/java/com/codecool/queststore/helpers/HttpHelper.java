@@ -15,6 +15,7 @@ public class HttpHelper {
     public static final int NOT_FOUND = 404;
     public static final int TEAPOT = 418;
     public static final int MOVED_PERMANENTLY = 301;
+    public static final int SERVER_ERROR = 500;
 
     public void sendResponse(HttpExchange httpExchange, String response, int status) throws IOException {
         httpExchange.getResponseHeaders().add("Cache-Control", "no-store");

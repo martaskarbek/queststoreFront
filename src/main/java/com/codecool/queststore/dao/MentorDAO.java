@@ -44,7 +44,7 @@ public class MentorDAO implements IMentorDAO{
     }
 
     @Override
-    public Mentor get(int id) {
+    public Mentor get(int id) throws ObjectNotFoundException {
         connector.connect();
         Mentor mentor = new Mentor();
         try {
@@ -54,10 +54,11 @@ public class MentorDAO implements IMentorDAO{
             while (resultSet.next()) {
                 mentor = create(resultSet);
             }
+            return mentor;
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new ObjectNotFoundException("Mentor not found")
         }
-        return mentor;
     }
 
     @Override

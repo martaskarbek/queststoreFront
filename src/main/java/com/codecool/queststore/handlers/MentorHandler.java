@@ -47,17 +47,19 @@ public class MentorHandler implements HttpHandler {
             if (user.getId() == 0 || !user.getRole().equals(Role.MENTOR)) {
                 String redirectURL = "/login";
                 httpExchange.getResponseHeaders().add("Location", redirectURL);
-                sendResponse(HttpHelper.MOVED_PERMANENTLY);
+                helpers.getHttpHelper().sendResponse(httpExchange, response, HttpHelper.MOVED_PERMANENTLY);
             }
-        } catch (Exception e) {
-            // send page you are not authorized 401
-        }
-        students = serviceFactory.getStudentService().getStudents();
-        rewards = serviceFactory.getRewardService().getRewards();
-        quests = serviceFactory.getQuestService().getQuests();
-        mentor = serviceFactory.getMentorService().getMentorByUser(user);
+            students = serviceFactory.getStudentService().getStudents();
+            rewards = serviceFactory.getRewardService().getRewards();
+            quests = serviceFactory.getQuestService().getQuests();
+            mentor = serviceFactory.getMentorService().getMentorByUser(user);
 
-        checkMethod(method, actions);
+            checkMethod(method, actions);
+        } catch (ObjectNotFoundException e) {
+            helpers.getHttpHelper().sendResponse(httpExchange, e.getMessage(), HttpHelper.NOT_FOUND);
+        } catch (Exception e) {
+            helpers.getHttpHelper().sendResponse(httpExchange, e.getMessage(), HttpHelper.SERVER_ERROR);
+        }
     }
 
     private void init(HttpExchange httpExchange) {
@@ -66,23 +68,24 @@ public class MentorHandler implements HttpHandler {
     }
 
     private void checkMethod(String method, String[] actions) {
+        //TODO change to switch
         if (method.equals("GET")) {
             getActions(actions);
         }
         else if (method.equals("POST")) {
             postActions(actions);
-        } else {
-            sendResponse(HttpHelper.NOT_FOUND);
         }
     }
 
     private void postActions(String[] actions) {
         Map<String, String> formData = null;
-        try {
-            formData = helpers.getHttpHelper().getFormData(httpExchange);
-        } catch (IOException e) {
-            // send page 500
-        }
+
+        formData = helpers.getHttpHelper().getFormData(httpExchange);
+
+        // /mentor/artifiact/add
+        // /mentor/quest/add
+        // /mentor/rewards
+
         switch (actions[2]) {
             case "add_artifact" -> serviceFactory.getRewardService().createReward(formData, mentor);
             case "add_quest" -> serviceFactory.getQuestService().createQuest(formData, mentor);
@@ -106,8 +109,8 @@ public class MentorHandler implements HttpHandler {
         switch (actions[2]) {
             case "add_artifact" -> initializeAddReward();
             case "rewards_mentor" -> initializeMentorRewards(actions);
-            case "add_quest" -> initializeAddQuest();
-            case "add_student" -> initializeAddStudent();
+            case "add_quest" ->  sendMentorPage("templates/add_quest.twig");
+            case "add_student" -> sendMentorPage("templates/student_account.twig");
             case "quests_mentor" -> initializeMentorQuests(actions);
             case "students_mentor" -> initializeMentorStudents(actions);
             case "mark_quest" -> initializeMarkQuest(actions);
@@ -149,14 +152,6 @@ public class MentorHandler implements HttpHandler {
         }
     }
 
-    private void initializeAddStudent() {
-        sendMentorPage("templates/student_account.twig");
-    }
-
-    private void initializeAddQuest() {
-        sendMentorPage("templates/add_quest.twig");
-    }
-
     private void initializeMentorRewards(String[] actions) {
         if(actions.length == 3){
             sendMentorPage("templates/rewards_mentor.twig");
@@ -171,7 +166,7 @@ public class MentorHandler implements HttpHandler {
         sendMentorPage("templates/add_artifact.twig");
     }
 
-    private void checkUser(HttpExchange httpExchange) {
+    private void checkUser(HttpExchange httpExchange) throws ObjectNotFoundException {
         Optional<HttpCookie> cookie = helpers.getCookieHelper().getSessionIdCookie(httpExchange);
         if (cookie.isPresent()) {
             String sessionId = helpers.getCookieHelper().getSessionIdFromCookie(cookie.get());
@@ -236,6 +231,23 @@ public class MentorHandler implements HttpHandler {
         sendResponse(HttpHelper.OK);
     }
 
+    private JtwigModel createJtwigModel(Map<String, Object> map) {
+        JtwigModel model = JtwigModel.newModel();
+        for (String key : map.keySet()) {
+            model.with(key, map.get(key));
+        }
+        return model
+    }
+
+    private void sendUpdate(String templatePath, Map<String, Object> map) {
+        JtwigTemplate template = JtwigTemplate.classpathTemplate(templatePath);
+        JtwigModel model = createJtwigModel(map);
+        response = template.render(model);
+//        sendResponse(HttpHelper.OK);
+        helpers.getHttpHelper().sendResponse(httpExchange, e.getMessage(), HttpHelper.OK);
+
+    }
+
     private void sendUpdateStudentPage(String templatePath, Student student) {
         JtwigTemplate template = JtwigTemplate.classpathTemplate(templatePath);
         JtwigModel model = JtwigModel.newModel();
@@ -243,13 +255,5 @@ public class MentorHandler implements HttpHandler {
         model.with("student", student);
         response = template.render(model);
         sendResponse(HttpHelper.OK);
-    }
-
-    private void sendResponse(int statusCode) {
-        try {
-            helpers.getHttpHelper().sendResponse(httpExchange, response, statusCode);
-        } catch (IOException e) {
-            // send page 500
-        }
     }
 }

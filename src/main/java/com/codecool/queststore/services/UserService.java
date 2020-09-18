@@ -37,7 +37,7 @@ public class UserService {
         return user;
     }
 
-    public User getBySessionId(String sessionId) {
+    public User getBySessionId(String sessionId) throws ObjectNotFoundException {
         Session session = sessionDAO.getBySessionId(sessionId);
         return userDAO.get(session.getUserId());
     }
