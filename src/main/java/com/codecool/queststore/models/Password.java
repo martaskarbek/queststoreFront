@@ -2,16 +2,10 @@ package com.codecool.queststore.models;
 
 import com.codecool.queststore.models.users.User;
 import org.mindrot.jbcrypt.BCrypt;
-
-import java.security.SecureRandom;
 import java.util.Map;
-import java.util.Random;
 
 public class Password {
 
-    private static final Random RANDOM = new SecureRandom();
-    private static final int ITERATIONS = 10000;
-    private static final int KEY_LENGTH = 256;
 
     public static void hashPasswordAddSalt(Map<String, String> formData) {
         String password = formData.get("password");
