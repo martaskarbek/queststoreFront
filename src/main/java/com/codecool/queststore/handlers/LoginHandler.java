@@ -93,6 +93,7 @@ public class LoginHandler implements HttpHandler {
     }
 
     private void sendResponse(int rCode) throws IOException {
+        exchange.getResponseHeaders().add("Cache-Control", "no-store");
         exchange.sendResponseHeaders(rCode, response.length());
         OutputStream os = exchange.getResponseBody();
         os.write(response.getBytes());

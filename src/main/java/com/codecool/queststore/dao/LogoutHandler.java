@@ -23,6 +23,7 @@ public class LogoutHandler implements HttpHandler {
         HttpCookie cookie = new HttpCookie(HttpHelper.SESSION_COOKIE_NAME, "");
         cookie.setMaxAge(-1);
         System.out.println(cookie.toString());
+        exchange.getResponseHeaders().add("Cache-Control", "no-store");
         exchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
         exchange.getResponseHeaders().add("Location", "/login");
         sendResponse(exchange, 301, "");
