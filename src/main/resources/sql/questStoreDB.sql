@@ -12,7 +12,8 @@ CREATE TABLE users
     role_id BIGINT REFERENCES roles (id),
     isActive BOOLEAN NOT NULL,
     email VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(50) NOT NULL
+    password VARCHAR(150) NOT NULL,
+    salt VARCHAR(150) NOT NULL
 );
 
 CREATE TABLE categories
@@ -86,7 +87,7 @@ CREATE TABLE students
     id BIGSERIAL NOT NULL PRIMARY KEY,
     user_id BIGINT REFERENCES users (id),
     module_id BIGINT REFERENCES modules (id),
-    wallet BIGINT,
+    wallet BIGINT
 );
 
 CREATE TABLE student_quests

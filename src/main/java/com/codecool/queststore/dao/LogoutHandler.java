@@ -16,7 +16,6 @@ public class LogoutHandler implements HttpHandler {
     private UserService userService = new UserService(new UserPostgreSQLDAO(connector), new SessionPostgreSQLDAO(connector));
 
     public void handle(HttpExchange exchange) throws IOException {
-        System.out.println("dupa");
         String cookieStr = exchange.getRequestHeaders().getFirst("Cookie");
         List<HttpCookie> cookies = parseCookies(cookieStr);
         String sessionId = findSessionFromCookie(cookies);
@@ -24,6 +23,7 @@ public class LogoutHandler implements HttpHandler {
         HttpCookie cookie = new HttpCookie(HttpHelper.SESSION_COOKIE_NAME, "");
         cookie.setMaxAge(-1);
         System.out.println(cookie.toString());
+        exchange.getResponseHeaders().add("Cache-Control", "no-store");
         exchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
         exchange.getResponseHeaders().add("Location", "/login");
         sendResponse(exchange, 301, "");
@@ -58,5 +58,4 @@ public class LogoutHandler implements HttpHandler {
         os.write(response.getBytes());
         os.close();
     }
-
 }

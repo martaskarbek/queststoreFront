@@ -17,6 +17,7 @@ public class HttpHelper {
     public static final int MOVED_PERMANENTLY = 301;
 
     public void sendResponse(HttpExchange httpExchange, String response, int status) throws IOException {
+        httpExchange.getResponseHeaders().add("Cache-Control", "no-store");
         httpExchange.sendResponseHeaders(status, response.length());
         OutputStream outputStream = httpExchange.getResponseBody();
         outputStream.write(response.getBytes());

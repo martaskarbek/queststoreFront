@@ -4,46 +4,46 @@ insert into roles (role) values ('mentor');
 insert into roles (role) values ('student');
 
 
-insert into users (first_name, last_name, role_id, isActive, email, password) values
-('Severus', 'Snape', 2, TRUE, 'severus@snape.com', 'severus123');
-insert into users (first_name, last_name, role_id, isActive, email, password) values
-('Agnieszka', 'Koszany', 2, TRUE, 'agnieszka.koszany@codecool.com', 'agnieszka123');
-insert into users (first_name, last_name, role_id, isActive, email, password) values
-('Marcin', 'Izworski', 2, TRUE, 'marcin.izworski@codecool.com', 'marcin123');
-insert into users (first_name, last_name, role_id, isActive, email, password) values
-('Roman', 'Wolny', 3, TRUE, 'roman@wolny.net', 'roman123');
-insert into users (first_name, last_name, role_id, isActive, email, password) values
-('Zenek', 'Prosty', 3, TRUE, 'zenek@prosty.com', 'zenek123');
-insert into users (first_name, last_name, role_id, isActive, email, password) values
-('Ala', 'Paskuda', 3, TRUE, 'ala@paskuda.com', 'ala123');
-insert into users (first_name, last_name, role_id, isActive, email, password) values
-('Franek', 'Kimono', 1, TRUE, 'franek.kimono@codecool.com', 'franek123');
-insert into users (first_name, last_name, role_id, isActive, email, password) values
-('Imre', 'Williams', 3, TRUE, 'imre@williams.com', 'imre123');
-insert into users (first_name, last_name, role_id, isActive, email, password) values
-('Max', 'Kolanko', 3, FALSE, 'max@kolanko.com', 'max123');
-insert into users (first_name, last_name, role_id, isActive, email, password) values
-('Wojtek', 'Tokarz', 3, TRUE, 'wojtek@tokarz.com', 'wojtek123');
-insert into users (first_name, last_name, role_id, isActive, email, password) values
-('Tomek', 'Zielonka', 3, FALSE, 'tomek@zielonka.com', 'tomek123');
-insert into users (first_name, last_name, role_id, isActive, email, password) values
-('Kuba', 'Waldemar', 3, FALSE, 'kuba@waldemar.com', 'kuba123');
-insert into users (first_name, last_name, role_id, isActive, email, password) values
-('Jurek', 'Killer', 3, TRUE, 'jurek@killer.com', 'kuba123');
-insert into users (first_name, last_name, role_id, isActive, email, password) values
-('Ola', 'Ziemba', 3, FALSE, 'ola@ziemba.com', 'ola123');
-insert into users (first_name, last_name, role_id, isActive, email, password) values
-('Marta', 'Jurkiewicz', 3, FALSE, 'marta@jurkiewicz.com', 'marta123');
-insert into users (first_name, last_name, role_id, isActive, email, password) values
-('Emil', 'Bomba', 3, FALSE, 'emil@bomba.com', 'emil123');
-insert into users (first_name, last_name, role_id, isActive, email, password) values
-('Dorota', 'Jaworek', 3, TRUE, 'dorota@jaworek.com', 'dorota123');
-insert into users (first_name, last_name, role_id, isActive, email, password) values
-('Ewa', 'Piskarska', 3, TRUE, 'ewa@piskarska.com', 'ewa123');
-insert into users (first_name, last_name, role_id, isActive, email, password) values
-('Leon', 'Bezdomny', 3, TRUE, 'leon@bezdomny.com', 'leon123');
-insert into users (first_name, last_name, role_id, isActive, email, password) values
-('Chris', 'Beck', 3, TRUE, 'chris@beck.com', 'chris123');
+insert into users (first_name, last_name, role_id, isActive, email, password, salt) values
+('Severus', 'Snape', 2, TRUE, 'severus@snape.com', 'severus123', 'salt');
+insert into users (first_name, last_name, role_id, isActive, email, password, salt) values
+('Agnieszka', 'Koszany', 2, TRUE, 'agnieszka.koszany@codecool.com', 'agnieszka123', 'salt');
+insert into users (first_name, last_name, role_id, isActive, email, password, salt) values
+('Marcin', 'Izworski', 2, TRUE, 'marcin.izworski@codecool.com', 'marcin123', 'salt');
+insert into users (first_name, last_name, role_id, isActive, email, password, salt) values
+('Roman', 'Wolny', 3, TRUE, 'roman@wolny.net', 'roman123', 'salt');
+insert into users (first_name, last_name, role_id, isActive, email, password, salt) values
+('Zenek', 'Prosty', 3, TRUE, 'zenek@prosty.com', 'zenek123', 'salt');
+insert into users (first_name, last_name, role_id, isActive, email, password, salt) values
+('Ala', 'Paskuda', 3, TRUE, 'ala@paskuda.com', 'ala123', 'salt');
+insert into users (first_name, last_name, role_id, isActive, email, password, salt) values
+('Franek', 'Kimono', 1, TRUE, 'franek.kimono@codecool.com', 'franek123', 'salt');
+insert into users (first_name, last_name, role_id, isActive, email, password, salt) values
+('Imre', 'Williams', 3, TRUE, 'imre@williams.com', 'imre123', 'salt');
+insert into users (first_name, last_name, role_id, isActive, email, password, salt) values
+('Max', 'Kolanko', 3, FALSE, 'max@kolanko.com', 'max123', 'salt');
+insert into users (first_name, last_name, role_id, isActive, email, password, salt) values
+('Wojtek', 'Tokarz', 3, TRUE, 'wojtek@tokarz.com', 'wojtek123', 'salt');
+insert into users (first_name, last_name, role_id, isActive, email, password, salt) values
+('Tomek', 'Zielonka', 3, FALSE, 'tomek@zielonka.com', 'tomek123', 'salt');
+insert into users (first_name, last_name, role_id, isActive, email, password, salt) values
+('Kuba', 'Waldemar', 3, FALSE, 'kuba@waldemar.com', 'kuba123', 'salt');
+insert into users (first_name, last_name, role_id, isActive, email, password, salt) values
+('Jurek', 'Killer', 3, TRUE, 'jurek@killer.com', 'kuba123', 'salt');
+insert into users (first_name, last_name, role_id, isActive, email, password, salt) values
+('Ola', 'Ziemba', 3, FALSE, 'ola@ziemba.com', 'ola123', 'salt');
+insert into users (first_name, last_name, role_id, isActive, email, password, salt) values
+('Marta', 'Jurkiewicz', 3, FALSE, 'marta@jurkiewicz.com', 'marta123', 'salt');
+insert into users (first_name, last_name, role_id, isActive, email, password, salt) values
+('Emil', 'Bomba', 3, FALSE, 'emil@bomba.com', 'emil123', 'salt');
+insert into users (first_name, last_name, role_id, isActive, email, password, salt) values
+('Dorota', 'Jaworek', 3, TRUE, 'dorota@jaworek.com', 'dorota123', 'salt');
+insert into users (first_name, last_name, role_id, isActive, email, password, salt) values
+('Ewa', 'Piskarska', 3, TRUE, 'ewa@piskarska.com', 'ewa123', 'salt');
+insert into users (first_name, last_name, role_id, isActive, email, password, salt) values
+('Leon', 'Bezdomny', 3, TRUE, 'leon@bezdomny.com', 'leon123', 'salt');
+insert into users (first_name, last_name, role_id, isActive, email, password, salt) values
+('Chris', 'Beck', 3, TRUE, 'chris@beck.com', 'chris123', 'salt');
 
 insert into categories (category) values ('basic');
 insert into categories (category) values ('extra');
