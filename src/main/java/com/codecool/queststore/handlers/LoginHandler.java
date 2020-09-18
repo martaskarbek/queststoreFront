@@ -2,7 +2,6 @@ package com.codecool.queststore.handlers;
 
 import com.codecool.queststore.helpers.Helpers;
 import com.codecool.queststore.helpers.HttpHelper;
-import com.codecool.queststore.models.Role;
 import com.codecool.queststore.models.users.User;
 import com.codecool.queststore.services.ServiceFactory;
 import com.sun.net.httpserver.HttpExchange;

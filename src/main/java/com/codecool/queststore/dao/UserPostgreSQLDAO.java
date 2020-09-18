@@ -33,7 +33,6 @@ public class UserPostgreSQLDAO implements IUserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -52,7 +51,6 @@ public class UserPostgreSQLDAO implements IUserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -114,6 +112,4 @@ public class UserPostgreSQLDAO implements IUserDAO {
         }
         return user;
     }
-
-
 }
