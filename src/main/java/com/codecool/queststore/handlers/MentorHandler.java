@@ -52,9 +52,6 @@ public class MentorHandler implements HttpHandler {
         } catch (Exception e) {
             // send page you are not authorized 401
         }
-
-        // to improve
-
         students = serviceFactory.getStudentService().getStudents();
         rewards = serviceFactory.getRewardService().getRewards();
         quests = serviceFactory.getQuestService().getQuests();
@@ -125,11 +122,8 @@ public class MentorHandler implements HttpHandler {
             StudentQuest studentQuest = serviceFactory.getStudentQuestService().getStudentQuest(studentId, questId);
             System.out.println(studentQuest);
             sendMarkQuestPage("templates/mark_quest.twig", studentQuest);
-
         }
-
     }
-
 
     private void initializeMentorStudents(String[] actions) {
         if(actions.length == 3){
@@ -172,7 +166,6 @@ public class MentorHandler implements HttpHandler {
             sendUpdateRewardPage("templates/edit_artifact.twig", reward);
         }
     }
-
 
     private void initializeAddReward() {
         sendMentorPage("templates/add_artifact.twig");
@@ -223,7 +216,6 @@ public class MentorHandler implements HttpHandler {
         model.with("mentorStudents", mentorStudents);
         response = template.render(model);
         sendResponse(HttpHelper.OK);
-
     }
 
     private void sendUpdateRewardPage(String templatePath, Reward reward) {

@@ -37,7 +37,6 @@ public class StudentHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange httpExchange){
-
         init(httpExchange);
         String method = httpExchange.getRequestMethod();
         String[] actions = getStringsFromURL(httpExchange);
@@ -53,10 +52,8 @@ public class StudentHandler implements HttpHandler {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         checkMethod(method, actions);
     }
-
 
     private String[] getStringsFromURL(HttpExchange httpExchange) {
         String url = httpExchange.getRequestURI().getRawPath();
@@ -68,8 +65,6 @@ public class StudentHandler implements HttpHandler {
         this.httpExchange = httpExchange;
         this.response = "";
     }
-
-
 
     private void checkMethod(String method, String[] actions) {
         if (method.equals("GET")) {
@@ -91,8 +86,6 @@ public class StudentHandler implements HttpHandler {
         }
         switch (actions[2]) {
             case "student_menu" -> serviceFactory.getStudentQuestService().updateStudentQuest(formData);
-
-
         }
         String redirectURL = "/student";
         httpExchange.getResponseHeaders().add("Location", redirectURL);
@@ -108,7 +101,6 @@ public class StudentHandler implements HttpHandler {
             case "student_menu" -> initializeStudentAction(actions);
             case "rewards_student" -> initializeStudentRewards(actions);
             case "quests_student" -> initializeStudentQuests(actions);
-
         }
     }
 
@@ -116,10 +108,6 @@ public class StudentHandler implements HttpHandler {
         if(actions.length == 3){
             sendStudentQuestsPage("templates/quests_student.twig");
         }
-//        else if(actions[3].equals("edit") && actions[4].matches("\\d+")) {
-//            Reward reward = serviceFactory.getRewardService().getReward(Integer.parseInt(actions[4]));
-//            sendUpdateRewardPage("templates/edit_artifact.twig", reward);
-//        }
     }
 
     private void sendStudentQuestsPage(String templatePath) {
@@ -136,10 +124,6 @@ public class StudentHandler implements HttpHandler {
         if(actions.length == 3){
             sendStudentRewardsPage("templates/rewards_student.twig");
         }
-//        else if(actions[3].equals("edit") && actions[4].matches("\\d+")) {
-//            Reward reward = serviceFactory.getRewardService().getReward(Integer.parseInt(actions[4]));
-//            sendUpdateRewardPage("templates/edit_artifact.twig", reward);
-//        }
     }
 
     private void sendStudentRewardsPage(String templatePath) {
@@ -177,24 +161,18 @@ public class StudentHandler implements HttpHandler {
         sendResponse(HttpHelper.OK);
     }
 
-
-
     private void initializeStudentPage() {
-//        List<Student> studentsWithQuestsToMark = serviceFactory.getStudentService().createStudentListWithQuestsToMark(mentor, students);
         student = serviceFactory.getStudentService().getStudentByUser(user);
-
         sendStudentStartPage("templates/student_menu.twig", student);
     }
 
     private void sendStudentStartPage(String templatePath, Student student) {
-
-        JtwigTemplate template = JtwigTemplate.classpathTemplate(templatePath);
+       JtwigTemplate template = JtwigTemplate.classpathTemplate(templatePath);
         JtwigModel model = JtwigModel.newModel();
         model.with("student", student);
         response = template.render(model);
         sendResponse(HttpHelper.OK);
     }
-
 
     public User loggedUser(HttpExchange httpExchange){
         user = UserFactory.USER_NOT_FOUND;
@@ -208,7 +186,6 @@ public class StudentHandler implements HttpHandler {
             httpExchange.getResponseHeaders().add("Location", redirectURL);
             sendResponse(HttpHelper.MOVED_PERMANENTLY);
         }
-
         return user;
     }
 
@@ -219,6 +196,4 @@ public class StudentHandler implements HttpHandler {
             // send page 500
         }
     }
-
-
 }

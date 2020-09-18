@@ -30,7 +30,7 @@ public class HttpHelper {
         return parseFormData(br.readLine());
     }
 
-    private Map<String, String> parseFormData(String formData) throws UnsupportedEncodingException {
+    public Map<String, String> parseFormData(String formData) throws UnsupportedEncodingException {
         Map<String, String> map = new HashMap<>();
         String[] pairs = formData.split("&");
         for(String pair : pairs){

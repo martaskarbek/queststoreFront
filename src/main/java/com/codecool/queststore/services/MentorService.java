@@ -9,7 +9,6 @@ import com.codecool.queststore.models.users.User;
 
 import java.util.List;
 
-
 public class MentorService {
 
     private MentorDAO mentorDAO;
@@ -35,14 +34,6 @@ public class MentorService {
         List<Module> mentorModules = moduleDAO.getMentorModules(mentorId);
         mentor.setMentorId(mentorId);
         mentor.setModules(mentorModules);
-
-//        mentor.setRewards(rewardDAO.getAllMentorRewards(user));
-
         return mentor;
     }
-
-
-
-
-
 }

@@ -8,38 +8,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ModuleDAO implements IModuleDAO {
-
+public class ModuleDAO {
 
     private Connector connector;
 
     public ModuleDAO(Connector connector) {
         this.connector = connector;
-    }
-
-    @Override
-    public void add(Module module) {
-
-    }
-
-    @Override
-    public void edit(Module module) {
-
-    }
-
-    @Override
-    public void remove(Module module) {
-
-    }
-
-    @Override
-    public List<Module> getAll() throws Exception {
-        return null;
-    }
-
-    @Override
-    public Module get(int id) {
-        return null;
     }
 
     public List<Module> getMentorModules(int mentorId) {
@@ -56,23 +30,17 @@ public class ModuleDAO implements IModuleDAO {
             while (resultSet.next()) {
                 Module module = create(resultSet);
                 mentorModules.add(module);
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return mentorModules;
     }
 
     private Module create(ResultSet rs) throws SQLException {
         int id = rs.getInt("id");
         String name = rs.getString("name");
-
         Module module = new Module(id,name);
-
         return module;
         }
-
-
 }

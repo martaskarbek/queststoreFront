@@ -22,7 +22,7 @@ public class CookieHelper {
         for(String cookie : cookieString.split(";")){
             int indexOfEq = cookie.indexOf('=');
             String cookieName = cookie.substring(0, indexOfEq);
-            String cookieValue = cookie.substring(indexOfEq + 1, cookie.length());
+            String cookieValue = cookie.substring(indexOfEq + 1);
             cookies.add(new HttpCookie(cookieName, cookieValue));
         }
         return cookies;
@@ -40,7 +40,15 @@ public class CookieHelper {
         String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
         List<HttpCookie> cookies = parseCookies(cookieStr);
         return findCookieByName(HttpHelper.SESSION_COOKIE_NAME, cookies);
+    }
 
+    public String findSessionFromCookie(List<HttpCookie> cookies) {
+        for (HttpCookie cookie : cookies) {
+            if (cookie.getName().equals(HttpHelper.SESSION_COOKIE_NAME)) {
+                return cookie.getValue();
+            }
+        }
+        return null;
     }
 }
 

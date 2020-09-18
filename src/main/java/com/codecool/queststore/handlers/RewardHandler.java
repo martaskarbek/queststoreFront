@@ -31,7 +31,6 @@ public class RewardHandler implements HttpHandler {
         this.helpers = helpers;
     }
 
-
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         init(httpExchange);
@@ -62,7 +61,6 @@ public class RewardHandler implements HttpHandler {
         } else if (requestURI.contains("logout")){
             redirectToLogin(httpExchange);
         }
-
     }
 
     private void init(HttpExchange httpExchange) {
@@ -89,10 +87,8 @@ public class RewardHandler implements HttpHandler {
         httpExchange.sendResponseHeaders(302, 0);
     }
 
-
     private void initializePost(HttpExchange httpExchange) {
     }
-
 
     private void initializeGet(HttpExchange httpExchange) throws Exception {
         String response = "";

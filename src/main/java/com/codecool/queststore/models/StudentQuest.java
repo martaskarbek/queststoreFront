@@ -1,6 +1,7 @@
 package com.codecool.queststore.models;
 
 public class StudentQuest {
+
     int id;
     int studentId;
     int questId;
@@ -9,7 +10,6 @@ public class StudentQuest {
     String author;
     String questName;
     int value;
-
 
     public StudentQuest(int id, int studentId, int questId, QuestStatus questStatus, String questSubmission) {
         this.id = id;

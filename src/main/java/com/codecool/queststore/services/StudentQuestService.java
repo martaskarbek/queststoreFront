@@ -35,10 +35,6 @@ public class StudentQuestService {
         if (studentQuest.getValue() != 0){
             updateStudentWallet(studentQuest);
         }
-
-
-
-
     }
 
     private void updateStudentWallet(StudentQuest studentQuest) {
@@ -49,6 +45,5 @@ public class StudentQuestService {
 
     private void update(StudentQuest studentQuest) {
         studentQuestDAO.edit(studentQuest);
-
     }
 }

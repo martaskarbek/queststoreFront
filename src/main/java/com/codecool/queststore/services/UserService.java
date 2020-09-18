@@ -4,7 +4,6 @@ import com.codecool.queststore.dao.SessionPostgreSQLDAO;
 import com.codecool.queststore.dao.UserPostgreSQLDAO;
 import com.codecool.queststore.models.Password;
 import com.codecool.queststore.models.Session;
-import com.codecool.queststore.models.users.Mentor;
 import com.codecool.queststore.models.users.User;
 
 import java.util.UUID;
@@ -25,12 +24,10 @@ public class UserService {
         if (user.getId() == 0) {
             return user;
         }
-
         // validate password
         if (!user.getSalt().equals("salt") && !Password.checkPasswords(password, user)) {
             return user;
         }
-
         if (user.getId() != 0) {
             UUID uuid = UUID.randomUUID();
             Session session = new Session(uuid.toString(), user.getId());
@@ -41,25 +38,13 @@ public class UserService {
     }
 
     public User getBySessionId(String sessionId) {
-        Session session = sessionDAO.getSessionBySessionId(sessionId);
+        Session session = sessionDAO.getBySessionId(sessionId);
         return userDAO.get(session.getUserId());
     }
 
     public void logout(String sessionId) {
-        Session session = sessionDAO.getSessionBySessionId(sessionId);
+        Session session = sessionDAO.getBySessionId(sessionId);
         sessionDAO.remove(session);
-    }
-
-    public void addUser(User user){
-        userDAO.add(user);
-    }
-
-    public User getByCredentials(String email){
-        return userDAO.getByCredentials(email);
-    }
-
-    public void updateUserStudent(User userStudent) {
-        userDAO.edit(userStudent);
     }
 }
 

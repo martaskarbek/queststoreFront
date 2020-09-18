@@ -45,7 +45,6 @@ public class LoginHandler implements HttpHandler {
                 sendResponse(HttpHelper.MOVED_PERMANENTLY);
             }
         }
-
         if(method.equals("GET")) {
             sendPage("templates/login-page.twig", null);
         }
@@ -63,8 +62,8 @@ public class LoginHandler implements HttpHandler {
     }
 
     private void tryUserLogin(HttpExchange exchange) throws IOException {
-        String formData = transformBodyToString();
-        Map<String, String> inputs = parseFormData(formData);
+        String formData = helpers.getHandlerHelper().transformBodyToString(exchange);
+        Map<String, String> inputs = helpers.getHttpHelper().parseFormData(formData);
         User user = serviceFactory.getUserService().login(inputs.get("email"), inputs.get("password"));
         if (user.getSession() != null && user.getSession().getUuid() != null) {
             HttpCookie httpCookie = new HttpCookie(HttpHelper.SESSION_COOKIE_NAME, user.getSession().getUuid());
@@ -88,33 +87,14 @@ public class LoginHandler implements HttpHandler {
         JtwigModel model = JtwigModel.newModel();
         model.with("message", message);
         response = template.render(model);
-        //HttpResponse
         sendResponse(HttpHelper.OK);
     }
 
-    private void sendResponse(int rCode) throws IOException {
-        exchange.getResponseHeaders().add("Cache-Control", "no-store");
-        exchange.sendResponseHeaders(rCode, response.length());
-        OutputStream os = exchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
-    }
-
-    private String transformBodyToString() throws IOException {
-        InputStreamReader isr = new InputStreamReader(exchange.getRequestBody(), "utf-8");
-        BufferedReader br = new BufferedReader(isr);
-        return br.readLine();
-    }
-
-    private static Map<String, String> parseFormData(String formData) throws UnsupportedEncodingException {
-        Map<String, String> map = new HashMap<>();
-        String[] pairs = formData.split("&");
-        for(String pair : pairs){
-            String[] keyValue = pair.split("=");
-            // We have to decode the value because it's urlencoded. see: https://en.wikipedia.org/wiki/POST_(HTTP)#Use_for_submitting_web_forms
-            String value = new URLDecoder().decode(keyValue[1], "UTF-8");
-            map.put(keyValue[0], value);
+    private void sendResponse(int statusCode) {
+        try {
+            helpers.getHttpHelper().sendResponse(exchange, response, statusCode);
+        } catch (IOException e) {
+            // send page 500
         }
-        return map;
     }
 }

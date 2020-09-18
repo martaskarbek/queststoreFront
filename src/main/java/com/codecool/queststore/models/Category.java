@@ -11,7 +11,6 @@ public enum Category {
     private final int categoryId;
     private static final Map<Integer, Category> map = new HashMap<>();
 
-
     Category(int categoryId) {
         this.categoryId = categoryId;
     }

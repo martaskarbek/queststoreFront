@@ -18,17 +18,14 @@ public class MentorDAO implements IMentorDAO{
 
     @Override
     public void add(Mentor mentor) {
-
     }
 
     @Override
     public void edit(Mentor mentor) {
-
     }
 
     @Override
     public void remove(Mentor mentor) {
-
     }
 
     @Override
@@ -43,7 +40,6 @@ public class MentorDAO implements IMentorDAO{
 //        int price = rs.getInt("price");
 //        int categoryId = rs.getInt("category_id");
 //        int mentorId = rs.getInt("mentor_id");
-
         return null;
     }
 
@@ -84,9 +80,6 @@ public class MentorDAO implements IMentorDAO{
         }
         return mentorId;
     }
-
-
-
 }
 
 

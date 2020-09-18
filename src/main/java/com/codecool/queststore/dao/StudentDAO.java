@@ -31,7 +31,6 @@ public class StudentDAO implements IStudentDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -46,12 +45,10 @@ public class StudentDAO implements IStudentDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
     public void remove(Student student) {
-
     }
 
     public Student create(ResultSet rs) throws SQLException {
@@ -79,20 +76,10 @@ public class StudentDAO implements IStudentDAO {
         student.setModuleName(moduleName);
 
         return student;
-
-//        try {
-//            rs.findColumn("author");
-//            String author = rs.getString("author");
-//            quest.setAuthor(author);
-//            return quest;
-//        } catch (SQLException sqlex){
-//            return quest;
-//        }
     }
 
     @Override
     public List<Student> getAll() {
-
         List<Student> students = new ArrayList<>();
 
         try {
@@ -144,6 +131,5 @@ public class StudentDAO implements IStudentDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 }
