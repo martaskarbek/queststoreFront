@@ -1,5 +1,8 @@
-package com.codecool.queststore.dao;
+package com.codecool.queststore.handlers;
 
+import com.codecool.queststore.dao.Connector;
+import com.codecool.queststore.dao.SessionPostgreSQLDAO;
+import com.codecool.queststore.dao.UserPostgreSQLDAO;
 import com.codecool.queststore.helpers.HttpHelper;
 import com.codecool.queststore.services.UserService;
 import com.sun.net.httpserver.HttpExchange;

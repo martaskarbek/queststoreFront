@@ -28,7 +28,6 @@ public class SessionPostgreSQLDAO implements ISessionDAO {
 
     @Override
     public void edit(Session session) {
-
     }
 
     @Override
@@ -55,7 +54,7 @@ public class SessionPostgreSQLDAO implements ISessionDAO {
 
 
     @Override
-    public Session getSessionBySessionId(String sessionId) {
+    public Session getBySessionId(String sessionId) {
         connector.connect();
         Session session = new Session();
         try {

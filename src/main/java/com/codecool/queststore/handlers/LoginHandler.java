@@ -45,7 +45,6 @@ public class LoginHandler implements HttpHandler {
                 sendResponse(HttpHelper.MOVED_PERMANENTLY);
             }
         }
-
         if(method.equals("GET")) {
             sendPage("templates/login-page.twig", null);
         }
@@ -88,7 +87,6 @@ public class LoginHandler implements HttpHandler {
         JtwigModel model = JtwigModel.newModel();
         model.with("message", message);
         response = template.render(model);
-        //HttpResponse
         sendResponse(HttpHelper.OK);
     }
 

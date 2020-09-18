@@ -36,7 +36,6 @@ public class RewardDAO implements IRewardDao{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -55,12 +54,10 @@ public class RewardDAO implements IRewardDao{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
     public void remove(Reward reward) {
-
     }
 
     public Reward create(ResultSet rs) throws SQLException {
@@ -72,7 +69,6 @@ public class RewardDAO implements IRewardDao{
         int mentorId = rs.getInt("mentor_id");
         Boolean isActive = rs.getBoolean("isactive");
 
-
         Reward reward = new Reward(id, name, description, price, Category.valueOf(categoryId), mentorId, isActive);
 
         try {
@@ -83,10 +79,7 @@ public class RewardDAO implements IRewardDao{
         } catch (SQLException sqlex){
             return reward;
         }
-
     }
-
-
 
     @Override
     public List<Reward> getAll() {
@@ -141,12 +134,10 @@ public class RewardDAO implements IRewardDao{
             while (resultSet.next()) {
                 Reward reward = create(resultSet);
                 mentorRewards.add(reward);
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return mentorRewards;
     }
 
@@ -167,13 +158,10 @@ public class RewardDAO implements IRewardDao{
                 OrderStatus orderStatus = OrderStatus.valueOf(orderStatusId);
                 reward.setOrderStatus(orderStatus);
                 studentRewards.add(reward);
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return studentRewards;
     }
 }
-

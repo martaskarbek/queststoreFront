@@ -14,8 +14,6 @@ public class Quest {
     private QuestStatus questStatus;
     private String questInputArea;
 
-
-
     public Quest(int id, String name, String description, int coinsToEarn, int moduleId, int mentorId, Category category, Boolean isActive) {
         this.id = id;
         this.name = name;

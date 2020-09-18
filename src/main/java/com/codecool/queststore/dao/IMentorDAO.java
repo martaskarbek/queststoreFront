@@ -7,6 +7,4 @@ import java.util.List;
 
 public interface IMentorDAO  extends IDAO<Mentor> {
     int getMentorId(User user);
-
-
 }

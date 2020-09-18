@@ -7,10 +7,8 @@ public enum OrderStatus {
     USED(1),
     NOTUSED(2);
 
-
     private final int orderStatusId;
     private static final Map<Integer, OrderStatus> map = new HashMap<>();
-
 
     OrderStatus(int orderStatusId) {
         this.orderStatusId = orderStatusId;

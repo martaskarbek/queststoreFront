@@ -1,7 +1,7 @@
 package com.codecool.queststore;
 
 import com.codecool.queststore.dao.Connector;
-import com.codecool.queststore.dao.LogoutHandler;
+import com.codecool.queststore.handlers.LogoutHandler;
 import com.codecool.queststore.handlers.*;
 import com.codecool.queststore.helpers.CookieHelper;
 import com.codecool.queststore.helpers.HandlerHelper;
@@ -28,15 +28,7 @@ public class App {
         server.createContext("/logout", new LogoutHandler());
         server.createContext("/mentor", new MentorHandler(serviceFactory, helpers));
         server.createContext("/rewards", new RewardHandler(serviceFactory, helpers));
-        /*
-            /student/quests
-            /student/artifact
-         */
         server.createContext("/student", new StudentHandler(serviceFactory, helpers));
-
-        /*
-            /quest/{quest_id}/submit/{user_id}
-         */
         server.createContext("/static", new Static());
         server.setExecutor(null);
         server.start();

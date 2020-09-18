@@ -1,8 +1,6 @@
 package com.codecool.queststore.dao;
 
-import com.codecool.queststore.models.Category;
 import com.codecool.queststore.models.QuestStatus;
-import com.codecool.queststore.models.Reward;
 import com.codecool.queststore.models.StudentQuest;
 
 import java.sql.PreparedStatement;
@@ -20,7 +18,6 @@ public class StudentQuestDAO implements IStudentQuestDAO {
 
     @Override
     public void add(StudentQuest studentQuest) {
-
     }
 
     @Override
@@ -40,7 +37,6 @@ public class StudentQuestDAO implements IStudentQuestDAO {
 
     @Override
     public void remove(StudentQuest studentQuest) {
-
     }
 
     @Override
@@ -87,12 +83,10 @@ public class StudentQuestDAO implements IStudentQuestDAO {
         String questName = rs.getString("quest_name");
 
         StudentQuest studentQuest = new StudentQuest(id, studentId, questId, QuestStatus.valueOf(questStatusId), questSubmission);
-
         studentQuest.setAuthor(author);
         studentQuest.setQuestName(questName);
         studentQuest.setValue(value);
 
         return studentQuest;
-
     }
 }

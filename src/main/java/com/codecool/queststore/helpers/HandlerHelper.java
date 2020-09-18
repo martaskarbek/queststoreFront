@@ -11,7 +11,5 @@ public class HandlerHelper {
         this.httpExchange = httpExchange;
         this.response = "";
     }
-
-
 }
 
