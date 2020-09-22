@@ -7,6 +7,8 @@ import java.sql.Statement;
 
 public class Connector {
 
+    // TODO set environment variables
+
     private final String URL = System.getenv("URL");
     private final String USER = System.getenv("USER");
     private final String PASSWORD = System.getenv("PASSWORD");
