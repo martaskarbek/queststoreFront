@@ -7,9 +7,12 @@ import java.sql.Statement;
 
 public class Connector {
 
+/*
     private final String URL = System.getenv("URL");
     private final String USER = System.getenv("USER");
     private final String PASSWORD = System.getenv("PASSWORD");
+*/
+
 
 
 
@@ -19,7 +22,7 @@ public class Connector {
     public void connect() {
         try {
             Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Aldona", "Aldona", "Aldona");
             System.out.println("Connected to DB");
             statement = connection.createStatement();
         } catch(SQLException | ClassNotFoundException e) {
