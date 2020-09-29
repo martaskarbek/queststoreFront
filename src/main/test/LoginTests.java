@@ -10,10 +10,12 @@ import com.codecool.queststore.services.ServiceFactory;
 import com.codecool.queststore.services.UserService;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
+import java.lang.Object;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -69,8 +71,8 @@ public class LoginTests {
         handler.handle(exchange);
 
         //Assert
-        Mockito.verify(exchange, Mockito.times(2)).getResponseHeaders().add("Location", "/student");
-
+        Mockito.verify(exchange, Mockito.times(2)).getResponseHeaders();
+        Assertions.assertEquals(headers.get("Location").get(0), "/mentor");
     }
 
 }
