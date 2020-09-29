@@ -1,7 +1,9 @@
 import com.codecool.queststore.handlers.LoginHandler;
 import com.codecool.queststore.helpers.CookieHelper;
+import com.codecool.queststore.helpers.HandlerHelper;
 import com.codecool.queststore.helpers.Helpers;
 import com.codecool.queststore.helpers.HttpHelper;
+import com.codecool.queststore.models.users.Student;
 import com.codecool.queststore.services.ServiceFactory;
 import com.sun.net.httpserver.HttpExchange;
 import org.junit.jupiter.api.DisplayName;
@@ -33,6 +35,29 @@ public class LoginTests {
 
         //Assert
         Mockito.verify(exchange).getRequestMethod();
+    }
+
+    @Test
+    void loginPageCheckUser() throws IOException {
+        //Arrange
+        HttpExchange exchange = Mockito.mock(HttpExchange.class);
+        Mockito.when(exchange.getRequestMethod()).thenReturn("POST");
+/*        ServiceFactory serviceFactory = Mockito.mock(ServiceFactory.class);*/
+        Student student = Mockito.mock(Student.class);
+        CookieHelper cookieHelper = Mockito.mock(CookieHelper.class);
+        HandlerHelper handlerHelper = Mockito.mock(HandlerHelper.class);
+
+        Mockito.when(cookieHelper.getSessionIdCookie(exchange)).thenReturn(Optional.empty());
+        HttpHelper helper = Mockito.mock(HttpHelper.class);
+        Mockito.doNothing().when(helper).sendResponse(exchange, "Default response", 200);
+        Helpers helpers = new Helpers(helper, cookieHelper, handlerHelper);
+        LoginHandler handler = new LoginHandler(null, helpers);
+
+        //Act
+        handler.handle(exchange);
+
+        //Assert
+        Mockito.verify(exchange).getResponseHeaders().add("Location", "/student");
     }
 
 }
