@@ -14,7 +14,6 @@ import com.codecool.queststore.services.UserService;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -57,8 +56,8 @@ class LoginHandlerTest {
         Headers headers = new Headers();
         when(exchange.getResponseHeaders()).thenReturn(headers);
         when(serviceFactory.getUserService()).thenReturn(userService);
-        Student student = new Student(1, "Karol", "Nowak", Role.STUDENT, true, "a@wp.pl",
-                "password", "salt");
+        Student student = new Student(1, "Albus", "Dumbledore", Role.STUDENT, true,
+                "dumbledore@coolschool.com", "dumbledore", "salt");
         Session session = new Session("session", student.getId());
         student.setSession(session);
         when(userService.login(null, null)).thenReturn(student);
@@ -84,8 +83,8 @@ class LoginHandlerTest {
         Headers headers = new Headers();
         when(exchange.getResponseHeaders()).thenReturn(headers);
         when(serviceFactory.getUserService()).thenReturn(userService);
-        Admin admin = new Admin(1, "Karol", "Nowak", Role.ADMIN, true, "a@wp.pl",
-                "password", "salt");
+        Admin admin = new Admin(1, "Harry", "Potter", Role.ADMIN, true,
+                "harry.p@coolschool.com", "harry", "salt");
         Session session = new Session("session", admin.getId());
         admin.setSession(session);
         when(userService.login(null, null)).thenReturn(admin);
@@ -111,8 +110,8 @@ class LoginHandlerTest {
         Headers headers = new Headers();
         when(exchange.getResponseHeaders()).thenReturn(headers);
         when(serviceFactory.getUserService()).thenReturn(userService);
-        Mentor mentor = new Mentor(1, "Karol", "Nowak", Role.MENTOR, true, "a@wp.pl",
-                "password", "salt");
+        Mentor mentor = new Mentor(1, "Severus", "Snape", Role.MENTOR, true,
+                "severus@coolschool.com", "severus", "salt");
         Session session = new Session("session", mentor.getId());
         mentor.setSession(session);
         when(userService.login(null, null)).thenReturn(mentor);
