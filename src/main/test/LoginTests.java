@@ -12,11 +12,10 @@ import com.codecool.queststore.services.ServiceFactory;
 import com.codecool.queststore.services.UserService;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
+import static org.mockito.Mockito.*;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -24,22 +23,22 @@ import java.util.Optional;
 public class LoginTests {
 
     @Mock
-    HttpExchange exchange = Mockito.mock(HttpExchange.class);
+    HttpExchange exchange = mock(HttpExchange.class);
 
     @Mock
-    CookieHelper cookieHelper = Mockito.mock(CookieHelper.class);
+    CookieHelper cookieHelper = mock(CookieHelper.class);
 
     @Mock
-    HttpHelper helper = Mockito.mock(HttpHelper.class);
+    HttpHelper helper = mock(HttpHelper.class);
 
     @Mock
-    ServiceFactory serviceFactory = Mockito.mock(ServiceFactory.class);
+    ServiceFactory serviceFactory = mock(ServiceFactory.class);
 
     @Mock
-    UserService userService = Mockito.mock(UserService.class);
+    UserService userService = mock(UserService.class);
 
     @Mock
-    HandlerHelper handlerHelper = Mockito.mock(HandlerHelper.class);
+    HandlerHelper handlerHelper = mock(HandlerHelper.class);
 
     @Mock
     Helpers helpers = new Helpers(helper, cookieHelper, handlerHelper);
@@ -48,9 +47,9 @@ public class LoginTests {
     void loginPageCheck() throws IOException {
 
         //Arrange
-        Mockito.when(exchange.getRequestMethod()).thenReturn("GET");
-        Mockito.when(cookieHelper.getSessionIdCookie(exchange)).thenReturn(Optional.empty());
-        Mockito.doNothing().when(helper).sendResponse(exchange, "Default response", 200);
+        when(exchange.getRequestMethod()).thenReturn("GET");
+        when(cookieHelper.getSessionIdCookie(exchange)).thenReturn(Optional.empty());
+        doNothing().when(helper).sendResponse(exchange, "Default response", 200);
         Helpers helpers = new Helpers(helper, cookieHelper, null);
         LoginHandler handler = new LoginHandler(null, helpers);
 
@@ -58,82 +57,82 @@ public class LoginTests {
         handler.handle(exchange);
 
         //Assert
-        Mockito.verify(exchange).getRequestMethod();
+        verify(exchange).getRequestMethod();
     }
 
     @Test
     void loginPageCheckUserStudent() throws IOException {
 
         //Arrange
-        Mockito.when(exchange.getRequestMethod()).thenReturn("POST");
+        when(exchange.getRequestMethod()).thenReturn("POST");
         Headers headers = new Headers();
-        Mockito.when(exchange.getResponseHeaders()).thenReturn(headers);
-        Mockito.when(serviceFactory.getUserService()).thenReturn(userService);
+        when(exchange.getResponseHeaders()).thenReturn(headers);
+        when(serviceFactory.getUserService()).thenReturn(userService);
         Student student = new Student(1, "Karol", "Nowak", Role.STUDENT, true, "a@wp.pl",
                 "password", "salt");
         Session session = new Session("session", student.getId());
         student.setSession(session);
-        Mockito.when(userService.login(null, null)).thenReturn(student);
-        Mockito.when(cookieHelper.getSessionIdCookie(exchange)).thenReturn(Optional.empty());
-        Mockito.doNothing().when(helper).sendResponse(exchange, "Default response", 200);
+        when(userService.login(null, null)).thenReturn(student);
+        when(cookieHelper.getSessionIdCookie(exchange)).thenReturn(Optional.empty());
+        doNothing().when(helper).sendResponse(exchange, "Default response", 200);
         LoginHandler handler = new LoginHandler(serviceFactory, helpers);
 
         //Act
         handler.handle(exchange);
 
         //Assert
-        Mockito.verify(exchange, Mockito.times(2)).getResponseHeaders();
-        Assertions.assertEquals(headers.get("Location").get(0), "/student");
+        verify(exchange, times(2)).getResponseHeaders();
+        assertEquals(headers.get("Location").get(0), "/student");
     }
 
     @Test
     void loginPageCheckUserAdmin() throws IOException {
 
         //Arrange
-        Mockito.when(exchange.getRequestMethod()).thenReturn("POST");
+        when(exchange.getRequestMethod()).thenReturn("POST");
         Headers headers = new Headers();
-        Mockito.when(exchange.getResponseHeaders()).thenReturn(headers);
-        Mockito.when(serviceFactory.getUserService()).thenReturn(userService);
+        when(exchange.getResponseHeaders()).thenReturn(headers);
+        when(serviceFactory.getUserService()).thenReturn(userService);
         Admin admin = new Admin(1, "Karol", "Nowak", Role.ADMIN, true, "a@wp.pl",
                 "password", "salt");
         Session session = new Session("session", admin.getId());
         admin.setSession(session);
-        Mockito.when(userService.login(null, null)).thenReturn(admin);
-        Mockito.when(cookieHelper.getSessionIdCookie(exchange)).thenReturn(Optional.empty());
-        Mockito.doNothing().when(helper).sendResponse(exchange, "Default response", 200);
+        when(userService.login(null, null)).thenReturn(admin);
+        when(cookieHelper.getSessionIdCookie(exchange)).thenReturn(Optional.empty());
+        doNothing().when(helper).sendResponse(exchange, "Default response", 200);
         LoginHandler handler = new LoginHandler(serviceFactory, helpers);
 
         //Act
         handler.handle(exchange);
 
         //Assert
-        Mockito.verify(exchange, Mockito.times(2)).getResponseHeaders();
-        Assertions.assertEquals(headers.get("Location").get(0), "/admin");
+        verify(exchange, times(2)).getResponseHeaders();
+        assertEquals(headers.get("Location").get(0), "/admin");
     }
 
     @Test
     void loginPageCheckUserMentor() throws IOException {
 
         //Arrange
-        Mockito.when(exchange.getRequestMethod()).thenReturn("POST");
+        when(exchange.getRequestMethod()).thenReturn("POST");
         Headers headers = new Headers();
-        Mockito.when(exchange.getResponseHeaders()).thenReturn(headers);
-        Mockito.when(serviceFactory.getUserService()).thenReturn(userService);
+        when(exchange.getResponseHeaders()).thenReturn(headers);
+        when(serviceFactory.getUserService()).thenReturn(userService);
         Mentor mentor = new Mentor(1, "Karol", "Nowak", Role.MENTOR, true, "a@wp.pl",
                 "password", "salt");
         Session session = new Session("session", mentor.getId());
         mentor.setSession(session);
-        Mockito.when(userService.login(null, null)).thenReturn(mentor);
-        Mockito.when(cookieHelper.getSessionIdCookie(exchange)).thenReturn(Optional.empty());
-        Mockito.doNothing().when(helper).sendResponse(exchange, "Default response", 200);
+        when(userService.login(null, null)).thenReturn(mentor);
+        when(cookieHelper.getSessionIdCookie(exchange)).thenReturn(Optional.empty());
+        doNothing().when(helper).sendResponse(exchange, "Default response", 200);
         LoginHandler handler = new LoginHandler(serviceFactory, helpers);
 
         //Act
         handler.handle(exchange);
 
         //Assert
-        Mockito.verify(exchange, Mockito.times(2)).getResponseHeaders();
-        Assertions.assertEquals(headers.get("Location").get(0), "/mentor");
+        verify(exchange, times(2)).getResponseHeaders();
+        assertEquals(headers.get("Location").get(0), "/mentor");
     }
 
 }
