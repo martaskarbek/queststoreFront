@@ -55,19 +55,6 @@ class CookieHelperTest {
         );
     }
 
-//    @Test
-//    void getSessionIdCookie() {
-//        CookieHelper cookieHelper = new CookieHelper();
-//        HttpExchange exchange = Mockito.mock(HttpExchange.class);
-//        Mockito.when(cookieHelper.getSessionIdFromCookie(new HttpCookie("cookie", "cookie")));
-//
-//        cookieHelper.getSessionIdCookie(exchange);
-//
-//        Mockito.verify(cookieHelper.);
-//
-//
-//    }
-
     @Test
     void findSessionFromCookie() {
     }
