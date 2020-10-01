@@ -1,15 +1,7 @@
 package com.codecool.queststore.helpers;
 
-import com.codecool.queststore.helpers.CookieHelper;
-import com.sun.net.httpserver.HttpExchange;
-import org.junit.jupiter.api.*;
-
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.net.HttpCookie;
 import java.util.ArrayList;
@@ -20,7 +12,7 @@ class CookieHelperTest {
 
     @Test
     void getSessionIdFromCookie() {
-        HttpCookie cookie = new HttpCookie("Cookie", "this\"is\"cookie" );
+        HttpCookie cookie = new HttpCookie("Cookie", "this\"is\"cookie");
         CookieHelper cookieHelper = new CookieHelper();
         String value = cookieHelper.getSessionIdFromCookie(cookie);
         Assertions.assertEquals(value, "thisiscookie");
@@ -35,8 +27,8 @@ class CookieHelperTest {
         cookies = cookieHelper.parseCookies(cookieString);
 
         Assertions.assertAll(
-            () -> Assertions.assertEquals(cookies.get(0).getName(), "this"),
-            () -> Assertions.assertEquals(cookies.get(0).getValue(), "iscookie")
+                () -> Assertions.assertEquals(cookies.get(0).getName(), "this"),
+                () -> Assertions.assertEquals(cookies.get(0).getValue(), "iscookie")
         );
     }
 
@@ -50,12 +42,20 @@ class CookieHelperTest {
         Optional<HttpCookie> noCookie = cookieHelper.findCookieByName("noCookie", cookies);
 
         Assertions.assertAll(
-                ()-> Assertions.assertEquals(cookie.isPresent(), true ),
-                ()-> Assertions.assertEquals(noCookie, Optional.empty())
+                () -> Assertions.assertEquals(cookie.isPresent(), true),
+                () -> Assertions.assertEquals(noCookie, Optional.empty())
         );
     }
 
+
     @Test
     void findSessionFromCookie() {
+        CookieHelper cookieHelper = new CookieHelper();
+        HttpCookie cookie = new HttpCookie("SessionID", "this=is=cookie");
+        List<HttpCookie> cookies = new ArrayList<>();
+        cookies.add(cookie);
+        String sessionFromCookie = cookieHelper.findSessionFromCookie(cookies);
+
+        Assertions.assertEquals(sessionFromCookie, "this=is=cookie");
     }
 }
